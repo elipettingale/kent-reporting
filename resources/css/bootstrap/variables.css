@@ -1,0 +1,49 @@
+:root {
+    --font-family-1: "Nunito Sans", sans-serif;
+    --font-family-2: "Gothic A1", sans-serif;
+
+    --white: #ffffff;
+
+    --gray-50: #ececec;
+    --gray-100: #d8d8d8;
+    --gray-200: #b1b1b1;
+    --gray-300: #8b8b8b;
+    --gray-400: #646464;
+    --gray-500: #3d3d3d;
+    --gray-600: #313131;
+    --gray-700: #252525;
+    --gray-800: #181818;
+    --gray-900: #0c0c0c;
+
+    --red-50: #fef9f9;
+    --red-100: #fce2e2;
+    --red-200: #f7b4b4;
+    --red-300: #f26868;
+    --red-400: #ed5858;
+    --red-500: #e82a2a;
+    --red-600: #c51515;
+    --red-700: #921010;
+    --red-800: #5f0a0a;
+    --red-900: #2d0505;
+
+    --green-50: #eef8f1;
+    --green-100: #dcf0e3;
+    --green-200: #b8e1c7;
+    --green-300: #94d2aa;
+    --green-400: #71c28e;
+    --green-500: #4db371;
+    --green-600: #3c8c58;
+    --green-700: #2b653f;
+    --green-800: #1a3d27;
+    --green-900: #09160e;
+
+    --blue-100: #cdd0dc;
+    --blue-200: #9aa1b9;
+    --blue-300: #687396;
+    --blue-400: #354473;
+    --blue-500: #031550;
+    --blue-600: #021140;
+    --blue-700: #020d30;
+    --blue-800: #010820;
+    --blue-900: #010410;
+}
