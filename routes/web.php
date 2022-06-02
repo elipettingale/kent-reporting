@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\ReportController as UserReportController;
+use App\Http\Controllers\User\AccountController as UserAccountController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+require __DIR__.'/auth.php';
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group([
+    'middleware' => ['auth', 'verified']
+], function() {
 
-require __DIR__.'/auth.php';
+    Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::get('reports', [UserReportController::class, 'index'])->name('user.report.index');
+    Route::get('account', [UserAccountController::class, 'show'])->name('user.account.show');
+    
+});
