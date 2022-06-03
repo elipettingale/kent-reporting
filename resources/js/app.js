@@ -1,11 +1,11 @@
 require("./bootstrap");
 
 import { createApp } from "vue";
-import VForm from "./Components/VForm";
+import KForm from "./Components/KForm";
 
 let report = createApp({
     components: {
-        VForm,
+        KForm,
     },
 });
 

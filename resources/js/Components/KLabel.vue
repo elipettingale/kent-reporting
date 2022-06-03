@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "VLabel",
+    name: "KLabel",
     props: ["value"],
 };
 </script>

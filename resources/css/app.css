@@ -1,5 +1,16 @@
-/* Bootstrap */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "bootstrap/variables.css";
+@import "variables.css";
+
+.k-input__input {
+    @apply rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full;
+}
+
+.k-input.has-prefix {
+    @apply flex items-center;
+}
+
+.k-input__prefix {
+    @apply mr-2;
+}
