@@ -14,3 +14,11 @@
 .k-input__prefix {
     @apply mr-2;
 }
+
+.k-table th {
+    @apply py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900;
+}
+
+.k-table td {
+    @apply whitespace-nowrap px-3 py-4 text-sm text-gray-500;
+}
