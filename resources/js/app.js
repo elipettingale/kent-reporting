@@ -1,7 +1,14 @@
-require('./bootstrap');
+require("./bootstrap");
 
-import Alpine from 'alpinejs';
+import { createApp } from "vue";
+import VInput from "./Components/VInput";
+import VLabel from "./Components/VLabel";
 
-window.Alpine = Alpine;
+let report = createApp({
+    components: {
+        VInput,
+        VLabel,
+    },
+});
 
-Alpine.start();
+report.mount("#report");

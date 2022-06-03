@@ -25,11 +25,13 @@
                             </x-td>
                             <x-td>{{ $report->submitted_at?->format('d/m/Y') }}</x-td>
                             <x-td class="text-right">
-                                @if($report->hasNotBeenSubmitted())
-                                    <x-button>Continue</x-button>
-                                @else
-                                    <x-button>View</x-button>
-                                @endif
+                                <x-button href="{{ route('user.report.show', $report) }}">
+                                    @if($report->hasNotBeenSubmitted())
+                                        Continue
+                                    @else
+                                        View
+                                    @endif
+                                </x-button>
                             </x-td>
                         </tr>
                     @endforeach

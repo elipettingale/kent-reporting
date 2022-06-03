@@ -13,9 +13,16 @@ class ReportController extends Controller
             ->where('user_id', auth()->user()->id)
             ->orderByDesc('financial_year')
             ->get();
-            
+
         return view('user.reports', [
             'reports' => $reports
+        ]);
+    }
+
+    public function show(Report $report)
+    {
+        return view('user.report', [
+            'report' => $report
         ]);
     }
 }
