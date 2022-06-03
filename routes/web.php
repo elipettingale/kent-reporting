@@ -29,5 +29,6 @@ Route::group([
     Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
     Route::get('reports', [UserReportController::class, 'index'])->name('user.report.index');
     Route::get('account', [UserAccountController::class, 'show'])->name('user.account.show');
+    Route::post('account', [UserAccountController::class, 'update'])->name('user.account.update');
     
 });
