@@ -17,36 +17,22 @@
                     </th>
                 </x-slot>
                 <x-slot name="tbody">
-                    <tr>
-                        <x-td>2022</x-td>
-                        <x-td>
-                            <x-status status="pending" />
-                        </x-td>
-                        <x-td></x-td>
-                        <x-td class="text-right">
-                            <x-button>Continue</x-button>
-                        </x-td>
-                    </tr>
-                    <tr>
-                        <x-td>2021</x-td>
-                        <x-td>
-                            <x-status status="overdue" />
-                        </x-td>
-                        <x-td></x-td>
-                        <x-td class="text-right">
-                            <x-button>Continue</x-button>
-                        </x-td>
-                    </tr>
-                    <tr>
-                        <x-td>2020</x-td>
-                        <x-td>
-                            <x-status status="complete" />
-                        </x-td>
-                        <x-td>22/08/2021</x-td>
-                        <x-td class="text-right">
-                            <x-button>View</x-button>
-                        </x-td>
-                    </tr>
+                    @foreach($reports as $report)
+                        <tr>
+                            <x-td>{{ $report->financial_year }}</x-td>
+                            <x-td>
+                                <x-status status="{{ $report->status() }}" />
+                            </x-td>
+                            <x-td>{{ $report->submitted_at?->format('d/m/Y') }}</x-td>
+                            <x-td class="text-right">
+                                @if($report->hasNotBeenSubmitted())
+                                    <x-button>Continue</x-button>
+                                @else
+                                    <x-button>View</x-button>
+                                @endif
+                            </x-td>
+                        </tr>
+                    @endforeach
                 </x-slot>
             </x-table>
         </div>
