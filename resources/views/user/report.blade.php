@@ -10,14 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div id="report">
-                        <div>
-                            <v-label value="Name"></v-label>
-                            <v-input class="block mt-1 w-full"></v-input>
-                        </div>
-                        <div class="mt-4">
-                            <v-label value="Name"></v-label>
-                            <v-input class="block mt-1 w-full"></v-input>
-                        </div>
+                        <v-form></v-form>
                     </div>
                 </div>
             </div>
