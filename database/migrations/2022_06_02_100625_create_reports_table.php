@@ -14,6 +14,7 @@ return new class extends Migration
             $table->integer('financial_year');
             $table->integer('form_version');
             $table->json('data');
+            $table->dateTime('submitted_at')->nullable();
             $table->timestamps();
         });
     }

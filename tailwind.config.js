@@ -34,6 +34,7 @@ module.exports = {
             gray: color_variables("gray"),
             red: color_variables("red"),
             green: color_variables("green"),
+            yellow: color_variables("yellow"),
             blue: color_variables("blue"),
         },
     },
