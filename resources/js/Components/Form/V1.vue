@@ -2,19 +2,13 @@
     <div class="mb-4">
         <div class="flex">
             <k-form-nav-item
+                v-for="index in 4"
+                :key="index"
                 class="mr-4"
-                :class="{ 'is-active': section === 1 }"
-                @click="section = 1"
+                :class="{ 'is-active': section === index }"
+                @click="section = index"
             >
-                Section 1
-            </k-form-nav-item>
-
-            <k-form-nav-item
-                class="mr-4"
-                :class="{ 'is-active': section === 2 }"
-                @click="section = 2"
-            >
-                Section 2
+                Section {{ index }}
             </k-form-nav-item>
         </div>
     </div>
@@ -98,7 +92,9 @@
                         </tr>
                     </tbody>
                 </k-table>
+            </k-form-section>
 
+            <k-form-section v-if="section === 3">
                 <h2 class="text-lg font-bold mt-4 mb-2">Club Running Costs</h2>
                 <k-table>
                     <thead>
@@ -164,7 +160,61 @@
                             <td></td>
                             <td class="text-center">
                                 <k-button @click="other_club_running_costs++">
-                                    Add Additional Category
+                                    Add Additional Club Running Cost
+                                </k-button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </k-table>
+            </k-form-section>
+
+            <k-form-section v-if="section === 4">
+                <h2 class="text-lg font-bold mt-4 mb-2">Staffing Costs</h2>
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Monthly £</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'Bar Staff',
+                                'Admin Staff',
+                                'Coach',
+                                'Medics',
+                                'Players',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr v-for="item in other_staffing_costs" :key="item">
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <k-button @click="other_staffing_costs++">
+                                    Add Additional Staffing Cost
                                 </k-button>
                             </td>
                             <td></td>
@@ -206,6 +256,7 @@ export default {
         return {
             section: 1,
             other_club_running_costs: 0,
+            other_staffing_costs: 0,
         };
     },
 };
