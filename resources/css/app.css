@@ -34,3 +34,11 @@
 .k-table td {
     @apply whitespace-nowrap px-3 py-4 text-sm text-gray-500;
 }
+
+.k-form-nav-item {
+    @apply bg-white border-2 border-gray-200 sm:rounded-lg px-6 py-4;
+}
+
+.k-form-nav-item.is-active {
+    @apply bg-blue-300 text-white;
+}

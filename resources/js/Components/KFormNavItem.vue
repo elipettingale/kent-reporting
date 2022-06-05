@@ -1,11 +1,11 @@
 <template>
-    <div class="">
+    <div class="k-form-nav-item">
         <slot></slot>
     </div>
 </template>
 
 <script>
 export default {
-    name: "KFormSection",
+    name: "KFormNavItem",
 };
 </script>
