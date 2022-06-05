@@ -3,6 +3,10 @@
 @tailwind utilities;
 @import "variables.css";
 
+.k-input {
+    @apply mt-1 w-full;
+}
+
 .k-input__input {
     @apply rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full;
 }
@@ -13,6 +17,14 @@
 
 .k-input__prefix {
     @apply mr-2;
+}
+
+.k-select {
+    @apply mt-1 w-full;
+}
+
+.k-select__select {
+    @apply rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full;
 }
 
 .k-table th {

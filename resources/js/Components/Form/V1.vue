@@ -2,35 +2,38 @@
     <k-form-section v-if="section === 1">
         <div>
             <k-label value="Group Entities" />
-            <k-textarea class="mt-1 w-full" />
+            <k-textarea />
         </div>
         <div class="mt-4">
             <k-label value="Related Parties" />
-            <k-textarea class="mt-1 w-full" />
+            <k-textarea />
         </div>
         <div class="mt-4">
             <k-label value="Ground Status" />
-            <k-input class="mt-1 w-full" />
+            <k-input />
         </div>
         <div class="mt-4">
             <k-label value="Local Authority" />
-            <k-input class="mt-1 w-full" />
+            <k-input />
         </div>
         <div class="mt-4">
             <k-label value="Turnover Band" />
-            <k-input class="mt-1 w-full" />
+            <k-select
+                class="mt-1 w-full"
+                :options="['£1000-£1999', '£2000-£3000']"
+            />
         </div>
         <div class="mt-4">
             <k-label value="Details of Related Parties" />
-            <k-textarea class="mt-1 w-full" />
+            <k-textarea />
         </div>
         <div class="mt-4">
             <k-label value="Accounts Upload" />
-            <k-upload class="mt-1 w-full" />
+            <k-upload />
         </div>
         <div class="mt-4">
             <k-label value="Howden's Risk Assesment Data" />
-            <k-textarea class="mt-1 w-full" />
+            <k-textarea />
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -40,7 +43,7 @@
     <k-form-section v-if="section === 2">
         <div>
             <k-label value="Club" />
-            <k-input class="mt-1 w-full" type="number" prefix="£" />
+            <k-input type="number" prefix="£" />
         </div>
 
         <h2 class="text-lg font-bold mt-4 mb-2">Current Financial Position</h2>
@@ -114,6 +117,7 @@
 <script>
 import KLabel from "../KLabel.vue";
 import KInput from "../KInput.vue";
+import KSelect from "../KSelect.vue";
 import KTextarea from "../KTextarea.vue";
 import KUpload from "../KUpload.vue";
 import KFormSection from "../KFormSection.vue";
@@ -126,6 +130,7 @@ export default {
     components: {
         KLabel,
         KInput,
+        KSelect,
         KTextarea,
         KUpload,
         KFormSection,
