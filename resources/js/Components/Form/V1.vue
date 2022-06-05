@@ -146,6 +146,29 @@
                                 <k-input class="w-full" />
                             </td>
                         </tr>
+                        <tr
+                            v-for="item in other_club_running_costs"
+                            :key="item"
+                        >
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <k-button @click="other_club_running_costs++">
+                                    Add Additional Category
+                                </k-button>
+                            </td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </k-table>
             </k-form-section>
@@ -182,6 +205,7 @@ export default {
     data: function () {
         return {
             section: 1,
+            other_club_running_costs: 0,
         };
     },
 };
