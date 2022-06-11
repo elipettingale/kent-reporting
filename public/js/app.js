@@ -24551,7 +24551,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   mounted: function mounted() {
-    this.debounced_save = _.debounce(this.save, 1000);
+    this.debounced_save = _.debounce(this.save, 5000);
   },
   data: function data() {
     return {
@@ -24591,11 +24591,21 @@ __webpack_require__.r(__webpack_exports__);
     save: function save(data) {
       var _this2 = this;
 
-      axios.put(window.location.href, {
+      axios.patch(window.location.href, {
         data: data
-      }).then(function (response) {
-        console.log(response);
+      }).then(function (_ref2) {
+        var data = _ref2.data;
         _this2.is_saved = true;
+      });
+    },
+    submit: function submit() {
+      this.debounced_save.cancel();
+      axios.patch(window.location.href, {
+        data: this.form,
+        status: "complete"
+      }).then(function (_ref3) {
+        var data = _ref3.data;
+        window.location.href = "/reports";
       });
     }
   }
@@ -25403,7 +25413,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_49, _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
-        onClick: _ctx.submit
+        onClick: $options.submit
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_52];

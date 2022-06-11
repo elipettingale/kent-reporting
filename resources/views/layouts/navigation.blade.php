@@ -17,11 +17,11 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
-                        {{ __('Reports') }}
+                        {{ __('Your Reports') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('user.account.show')" :active="request()->routeIs('user.account.show')">
-                        {{ __('Account') }}
+                        {{ __('Your Account') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -76,11 +76,11 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
-                {{ __('Reports') }}
+                {{ __('Your Reports') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('user.account.show')" :active="request()->routeIs('user.account.show')">
-                {{ __('Account') }}
+                {{ __('Your Account') }}
             </x-responsive-nav-link>
         </div>
 

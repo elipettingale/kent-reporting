@@ -376,7 +376,7 @@ export default {
         });
     },
     mounted() {
-        this.debounced_save = _.debounce(this.save, 1000);
+        this.debounced_save = _.debounce(this.save, 5000);
     },
     data: function () {
         return {
@@ -415,12 +415,24 @@ export default {
     methods: {
         save(data) {
             axios
-                .put(window.location.href, {
+                .patch(window.location.href, {
                     data: data,
                 })
-                .then((response) => {
-                    console.log(response);
+                .then(({ data }) => {
                     this.is_saved = true;
+                });
+        },
+
+        submit() {
+            this.debounced_save.cancel();
+
+            axios
+                .patch(window.location.href, {
+                    data: this.form,
+                    status: "complete",
+                })
+                .then(({ data }) => {
+                    window.location.href = "/reports";
                 });
         },
     },
