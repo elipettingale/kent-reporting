@@ -1,11 +1,15 @@
 <template>
-    <div class="k-select" :class="{ 'has-prefix': prefix }">
-        <select class="k-select__select">
+    <div class="k-select">
+        <select
+            class="k-select__select"
+            :value="modelValue"
+            @input="updateValue"
+        >
             <option></option>
             <option
                 v-for="option in options"
                 :key="option"
-                value="option"
+                :value="option"
                 v-text="option"
             ></option>
         </select>
@@ -15,6 +19,11 @@
 <script>
 export default {
     name: "KSelect",
-    props: ["options"],
+    props: ["modelValue", "options"],
+    methods: {
+        updateValue(event) {
+            this.$emit("update:modelValue", event.target.value);
+        },
+    },
 };
 </script>

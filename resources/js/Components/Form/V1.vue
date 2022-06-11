@@ -23,30 +23,31 @@
             <k-form-section v-if="section === 1">
                 <div>
                     <k-label value="Group Entities" />
-                    <k-textarea />
+                    <k-textarea v-model="form.group_entities" />
                 </div>
                 <div class="mt-4">
                     <k-label value="Related Parties" />
-                    <k-textarea />
+                    <k-textarea v-model="form.related_parties" />
                 </div>
                 <div class="mt-4">
                     <k-label value="Ground Status" />
-                    <k-input />
+                    <k-input v-model="form.ground_status" />
                 </div>
                 <div class="mt-4">
                     <k-label value="Local Authority" />
-                    <k-input />
+                    <k-input v-model="form.local_authority" />
                 </div>
                 <div class="mt-4">
                     <k-label value="Turnover Band" />
                     <k-select
                         class="mt-1 w-full"
                         :options="['£1000-£1999', '£2000-£3000']"
+                        v-model="form.turnover_band"
                     />
                 </div>
                 <div class="mt-4">
                     <k-label value="Details of Related Parties" />
-                    <k-textarea />
+                    <k-textarea v-model="form.related_party_details" />
                 </div>
                 <div class="mt-4">
                     <k-label value="Accounts Upload" />
@@ -54,7 +55,7 @@
                 </div>
                 <div class="mt-4">
                     <k-label value="Howden's Risk Assesment Data" />
-                    <k-textarea />
+                    <k-textarea v-model="form.howden_risk_assesment" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -362,13 +363,36 @@ export default {
         KTable,
         KTableRow,
     },
+    mounted() {
+        this.throttled_save = _.throttle(this.save, 5000, { leading: false });
+    },
     data: function () {
         return {
             section: 1,
             other_club_running_costs: 0,
             other_staffing_costs: 0,
             other_club_income_generated_revenue: 0,
+            form: {
+                group_entities: null,
+                related_parties: null,
+                ground_status: null,
+                local_authority: null,
+                turnover_band: null,
+            },
         };
+    },
+    watch: {
+        form: {
+            handler(value) {
+                this.throttled_save(value);
+            },
+            deep: true,
+        },
+    },
+    methods: {
+        save(data) {
+            console.log(data);
+        },
     },
 };
 </script>
