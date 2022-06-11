@@ -87,16 +87,17 @@
                 <h2 class="text-lg font-bold mt-4 mb-2">
                     Current Financial Position
                 </h2>
+
                 <k-table>
                     <tbody>
-                        <tr>
-                            <td>Current Balance</td>
-                            <td>
-                                <k-input class="w-full" type="number" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Club Reserves</td>
+                        <tr
+                            v-for="item in [
+                                'Current bank balance',
+                                'Club reserves',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
                             <td>
                                 <k-input class="w-full" type="number" />
                             </td>
