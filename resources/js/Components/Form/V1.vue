@@ -91,15 +91,21 @@
                 <k-table>
                     <tbody>
                         <tr
-                            v-for="item in [
-                                'Current bank balance',
-                                'Club reserves',
-                            ]"
+                            v-for="(item, key) in {
+                                current_bank_balance: 'Current bank balance',
+                                club_reserves: 'Club reserves',
+                            }"
                             :key="item"
                         >
                             <td>{{ item }}</td>
                             <td>
-                                <k-input class="w-full" type="number" />
+                                <k-input
+                                    class="w-full"
+                                    type="number"
+                                    v-model="
+                                        form.current_financial_position[key]
+                                    "
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -127,40 +133,47 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="item in [
-                                'Rent/Lease (Building)',
-                                'Rates',
-                                'Water',
-                                'Gas & Electricity',
-                                'Kit',
-                                'Travel',
-                                'Pitch Maintenance',
-                                'Bar Purchases',
-                                'Food Purchases',
-                                'International Tickets',
-                                'Interest',
-                                'Grant Repayments',
-                                'Broadband/phone/TV',
-                                'Buildings Insurance',
-                                'Contents Insurance',
-                                'Insurance Other',
-                                'Equipment Rental',
-                                'Loan Repayments',
-                                'Cleaning Contract',
-                                'Security/alarm',
-                                'Sanitary',
-                                'Laundry',
-                                'Building maintenance',
-                                'VAT',
-                            ]"
+                            v-for="(item, key) in {
+                                rent_lease: 'Rent/Lease (Building)',
+                                rates: 'Rates',
+                                water: 'Water',
+                                gas_electric: 'Gas & Electricity',
+                                kit: 'Kit',
+                                travel: 'Travel',
+                                pitch_maintenance: 'Pitch Maintenance',
+                                bar_purchases: 'Bar Purchases',
+                                food_purchases: 'Food Purchases',
+                                international_tickets: 'International Tickets',
+                                interest: 'Interest',
+                                grant_repayments: 'Grant Repayments',
+                                broadband: 'Broadband/phone/TV',
+                                building_insurance: 'Buildings Insurance',
+                                contents_insurance: 'Contents Insurance',
+                                other_insurance: 'Insurance Other',
+                                equipment_rental: 'Equipment Rental',
+                                loan_repyments: 'Loan Repayments',
+                                cleaning_contract: 'Cleaning Contract',
+                                security_alarm: 'Security/alarm',
+                                sanitary: 'Sanitary',
+                                laundry: 'Laundry',
+                                building_maintenance: 'Building maintenance',
+                                vat: 'VAT',
+                            }"
                             :key="item"
                         >
                             <td>{{ item }}</td>
                             <td>
-                                <k-input class="w-full" type="number" />
+                                <k-input
+                                    class="w-full"
+                                    type="number"
+                                    v-model="form.club_running_costs[key].value"
+                                />
                             </td>
                             <td>
-                                <k-input class="w-full" />
+                                <k-input
+                                    class="w-full"
+                                    v-model="form.club_running_costs[key].note"
+                                />
                             </td>
                         </tr>
                         <tr
@@ -576,6 +589,108 @@ export default {
                 ground_status: null,
                 local_authority: null,
                 turnover_band: null,
+                current_financial_position: {
+                    current_bank_balance: null,
+                    club_reserves: null,
+                },
+                club_running_costs: {
+                    rent_lease: {
+                        value: null,
+                        note: null,
+                    },
+                    rates: {
+                        value: null,
+                        note: null,
+                    },
+                    water: {
+                        value: null,
+                        note: null,
+                    },
+                    gas_electric: {
+                        value: null,
+                        note: null,
+                    },
+                    kit: {
+                        value: null,
+                        note: null,
+                    },
+                    travel: {
+                        value: null,
+                        note: null,
+                    },
+                    pitch_maintenance: {
+                        value: null,
+                        note: null,
+                    },
+                    bar_purchases: {
+                        value: null,
+                        note: null,
+                    },
+                    food_purchases: {
+                        value: null,
+                        note: null,
+                    },
+                    international_tickets: {
+                        value: null,
+                        note: null,
+                    },
+                    interest: {
+                        value: null,
+                        note: null,
+                    },
+                    grant_repayments: {
+                        value: null,
+                        note: null,
+                    },
+                    broadband: {
+                        value: null,
+                        note: null,
+                    },
+                    building_insurance: {
+                        value: null,
+                        note: null,
+                    },
+                    contents_insurance: {
+                        value: null,
+                        note: null,
+                    },
+                    other_insurance: {
+                        value: null,
+                        note: null,
+                    },
+                    equipment_rental: {
+                        value: null,
+                        note: null,
+                    },
+                    loan_repyments: {
+                        value: null,
+                        note: null,
+                    },
+                    cleaning_contract: {
+                        value: null,
+                        note: null,
+                    },
+                    security_alarm: {
+                        value: null,
+                        note: null,
+                    },
+                    sanitary: {
+                        value: null,
+                        note: null,
+                    },
+                    laundry: {
+                        value: null,
+                        note: null,
+                    },
+                    building_maintenance: {
+                        value: null,
+                        note: null,
+                    },
+                    vat: {
+                        value: null,
+                        note: null,
+                    },
+                },
             },
         };
     },
@@ -591,6 +706,8 @@ export default {
     watch: {
         form: {
             handler(value) {
+                console.log(value);
+
                 if (!this.is_locked) {
                     this.is_saved = false;
                     this.debounced_save(value);
