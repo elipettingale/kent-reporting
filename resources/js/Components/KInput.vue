@@ -6,6 +6,7 @@
             class="k-input__input"
             :value="modelValue"
             @input="updateValue"
+            :disabled="disabled"
         />
     </div>
 </template>
@@ -13,7 +14,7 @@
 <script>
 export default {
     name: "KInput",
-    props: ["modelValue", "type", "prefix"],
+    props: ["modelValue", "type", "prefix", "disabled"],
     methods: {
         updateValue(event) {
             this.$emit("update:modelValue", event.target.value);

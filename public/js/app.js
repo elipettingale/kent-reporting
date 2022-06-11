@@ -24544,14 +24544,19 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get(window.location.href + "/data").then(function (_ref) {
       var data = _ref.data;
+      console.log(data.status);
 
-      if (data) {
-        _this.form = data;
+      if (data.status !== "complete") {
+        _this.is_locked = false;
+      }
+
+      if (data.data) {
+        _this.form = data.data;
       }
     });
   },
   mounted: function mounted() {
-    this.debounced_save = _.debounce(this.save, 5000);
+    this.debounced_save = _.debounce(this.save, 1000);
   },
   data: function data() {
     return {
@@ -24560,6 +24565,7 @@ __webpack_require__.r(__webpack_exports__);
       other_staffing_costs: 0,
       other_club_income_generated_revenue: 0,
       is_saved: true,
+      is_locked: true,
       form: {
         group_entities: null,
         related_parties: null,
@@ -24581,8 +24587,10 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     form: {
       handler: function handler(value) {
-        this.is_saved = false;
-        this.debounced_save(value);
+        if (!this.is_locked) {
+          this.is_saved = false;
+          this.debounced_save(value);
+        }
       },
       deep: true
     }
@@ -24703,7 +24711,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KInput",
-  props: ["modelValue", "type", "prefix"],
+  props: ["modelValue", "type", "prefix", "disabled"],
   methods: {
     updateValue: function updateValue(event) {
       this.$emit("update:modelValue", event.target.value);
@@ -24802,7 +24810,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KTextarea",
-  props: ["modelValue", "rows"],
+  props: ["modelValue", "rows", "disabled"],
   methods: {
     updateValue: function updateValue(event) {
       this.$emit("update:modelValue", event.target.value);
@@ -25097,37 +25105,41 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         modelValue: _ctx.form.group_entities,
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return _ctx.form.group_entities = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Related Parties"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_textarea, {
         modelValue: _ctx.form.related_parties,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return _ctx.form.related_parties = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Ground Status"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
         modelValue: _ctx.form.ground_status,
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return _ctx.form.ground_status = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Local Authority"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
         modelValue: _ctx.form.local_authority,
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return _ctx.form.local_authority = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Turnover Band"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_select, {
         "class": "mt-1 w-full",
@@ -25135,19 +25147,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         modelValue: _ctx.form.turnover_band,
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return _ctx.form.turnover_band = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Details of Related Parties"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_textarea, {
         modelValue: _ctx.form.related_party_details,
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return _ctx.form.related_party_details = $event;
-        })
+        }),
+        disabled: _ctx.is_locked
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
+      , ["modelValue", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Accounts Upload"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_upload)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_label, {
         value: "Howden's Risk Assesment Data"
@@ -25534,7 +25548,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = ["textContent"];
-var _hoisted_2 = ["type", "value"];
+var _hoisted_2 = ["type", "value", "disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$type;
 
@@ -25554,7 +25568,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.modelValue,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
-    })
+    }),
+    disabled: $props.disabled
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_2)], 2
@@ -25649,7 +25664,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "k-table overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+  "class": "k-table"
 };
 var _hoisted_2 = {
   "class": "min-w-full divide-y divide-gray-300"
@@ -25703,7 +25718,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "k-textarea"
 };
-var _hoisted_2 = ["rows", "value"];
+var _hoisted_2 = ["rows", "value", "disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$rows;
 
@@ -25713,7 +25728,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.modelValue,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
-    })
+    }),
+    disabled: $props.disabled
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_2)]);

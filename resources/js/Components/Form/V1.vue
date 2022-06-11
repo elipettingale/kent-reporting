@@ -28,19 +28,31 @@
             <k-form-section v-if="section === 1">
                 <div>
                     <k-label value="Group Entities" />
-                    <k-textarea v-model="form.group_entities" />
+                    <k-textarea
+                        v-model="form.group_entities"
+                        :disabled="is_locked"
+                    />
                 </div>
                 <div class="mt-4">
                     <k-label value="Related Parties" />
-                    <k-textarea v-model="form.related_parties" />
+                    <k-textarea
+                        v-model="form.related_parties"
+                        :disabled="is_locked"
+                    />
                 </div>
                 <div class="mt-4">
                     <k-label value="Ground Status" />
-                    <k-input v-model="form.ground_status" />
+                    <k-input
+                        v-model="form.ground_status"
+                        :disabled="is_locked"
+                    />
                 </div>
                 <div class="mt-4">
                     <k-label value="Local Authority" />
-                    <k-input v-model="form.local_authority" />
+                    <k-input
+                        v-model="form.local_authority"
+                        :disabled="is_locked"
+                    />
                 </div>
                 <div class="mt-4">
                     <k-label value="Turnover Band" />
@@ -48,11 +60,15 @@
                         class="mt-1 w-full"
                         :options="['£1000-£1999', '£2000-£3000']"
                         v-model="form.turnover_band"
+                        :disabled="is_locked"
                     />
                 </div>
                 <div class="mt-4">
                     <k-label value="Details of Related Parties" />
-                    <k-textarea v-model="form.related_party_details" />
+                    <k-textarea
+                        v-model="form.related_party_details"
+                        :disabled="is_locked"
+                    />
                 </div>
                 <div class="mt-4">
                     <k-label value="Accounts Upload" />
@@ -370,13 +386,18 @@ export default {
     },
     created() {
         axios.get(window.location.href + "/data").then(({ data }) => {
-            if (data) {
-                this.form = data;
+            console.log(data.status);
+            if (data.status !== "complete") {
+                this.is_locked = false;
+            }
+
+            if (data.data) {
+                this.form = data.data;
             }
         });
     },
     mounted() {
-        this.debounced_save = _.debounce(this.save, 5000);
+        this.debounced_save = _.debounce(this.save, 1000);
     },
     data: function () {
         return {
@@ -385,6 +406,7 @@ export default {
             other_staffing_costs: 0,
             other_club_income_generated_revenue: 0,
             is_saved: true,
+            is_locked: true,
             form: {
                 group_entities: null,
                 related_parties: null,
@@ -406,8 +428,10 @@ export default {
     watch: {
         form: {
             handler(value) {
-                this.is_saved = false;
-                this.debounced_save(value);
+                if (!this.is_locked) {
+                    this.is_saved = false;
+                    this.debounced_save(value);
+                }
             },
             deep: true,
         },

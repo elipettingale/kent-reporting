@@ -21,6 +21,14 @@ class ReportController extends Controller
         ]);
     }
 
+    public function getData(Report $report)
+    {
+        return [
+            'status' => $report->status(),
+            'data' => $report->data
+        ];
+    }
+
     public function show(Report $report)
     {
         return view('user.report', [
@@ -30,13 +38,15 @@ class ReportController extends Controller
 
     public function update(Report $report, Request $request)
     {
+        // todo: authorize (only owner, and can't be completed) 
+
         $report->data = $request->get('data');
 
         if ($request->has('status')) {
             if ($request->get('status') === Status::COMPLETE) {
                 $report->submitted_at = now();
             } else {
-                $report->submitted_at = null;
+                $report->submitted_at = now();
             }
         }
 

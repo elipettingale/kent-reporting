@@ -5,6 +5,7 @@
             :rows="rows ?? 4"
             :value="modelValue"
             @input="updateValue"
+            :disabled="disabled"
         ></textarea>
     </div>
 </template>
@@ -12,7 +13,7 @@
 <script>
 export default {
     name: "KTextarea",
-    props: ["modelValue", "rows"],
+    props: ["modelValue", "rows", "disabled"],
     methods: {
         updateValue(event) {
             this.$emit("update:modelValue", event.target.value);

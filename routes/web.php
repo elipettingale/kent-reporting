@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ReportController as UserReportController;
-use App\Http\Controllers\User\ReportDataController as UserReportDataController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
 use App\Http\Controllers\DashboardController;
 
@@ -31,8 +30,8 @@ Route::group([
 
     Route::get('reports', [UserReportController::class, 'index'])->name('user.report.index');
     Route::get('reports/{report}', [UserReportController::class, 'show'])->name('user.report.show');
+    Route::get('reports/{report}/data', [UserReportController::class, 'getData'])->name('user.report.getData');
     Route::patch('reports/{report}', [UserReportController::class, 'update'])->name('user.report.update');
-    Route::get('reports/{report}/data', [UserReportDataController::class, 'get'])->name('user.report.data.get');
 
     Route::get('account', [UserAccountController::class, 'show'])->name('user.account.show');
     Route::post('account', [UserAccountController::class, 'update'])->name('user.account.update');
