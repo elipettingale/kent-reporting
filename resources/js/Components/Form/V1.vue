@@ -10,6 +10,12 @@
             >
                 Section {{ index }}
             </k-form-nav-item>
+            <k-form-nav-item
+                :class="{ 'is-active': section === 6 }"
+                @click="section = 6"
+            >
+                Confirmation
+            </k-form-nav-item>
         </div>
     </div>
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -306,6 +312,24 @@
 
                 <div class="flex items-center justify-end mt-4">
                     <k-button @click="section = 6">Next</k-button>
+                </div>
+            </k-form-section>
+
+            <k-form-section v-if="section === 6">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+                <p class="mt-6">
+                    Please check your details then when you are happy please
+                    click the submit button below.
+                </p>
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="submit">Complete and Submit</k-button>
                 </div>
             </k-form-section>
         </div>
