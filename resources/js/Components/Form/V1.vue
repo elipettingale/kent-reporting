@@ -1,21 +1,26 @@
 <template>
     <div class="mb-4">
         <div class="flex">
-            <k-form-nav-item
-                v-for="index in 5"
-                :key="index"
-                class="mr-4"
-                :class="{ 'is-active': section === index }"
-                @click="section = index"
-            >
-                Section {{ index }}
-            </k-form-nav-item>
-            <k-form-nav-item
-                :class="{ 'is-active': section === 6 }"
-                @click="section = 6"
-            >
-                Confirmation
-            </k-form-nav-item>
+            <div class="flex">
+                <k-form-nav-item
+                    v-for="index in 5"
+                    :key="index"
+                    class="mr-4"
+                    :class="{ 'is-active': section === index }"
+                    @click="section = index"
+                >
+                    Section {{ index }}
+                </k-form-nav-item>
+                <k-form-nav-item
+                    :class="{ 'is-active': section === 6 }"
+                    @click="section = 6"
+                >
+                    Confirmation
+                </k-form-nav-item>
+            </div>
+            <div class="flex flex-1 justify-end text-right items-center">
+                <p v-text="save_status"></p>
+            </div>
         </div>
     </div>
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -364,7 +369,7 @@ export default {
         KTableRow,
     },
     mounted() {
-        this.throttled_save = _.throttle(this.save, 5000, { leading: false });
+        this.debounced_save = _.debounce(this.save, 1000);
     },
     data: function () {
         return {
@@ -372,6 +377,7 @@ export default {
             other_club_running_costs: 0,
             other_staffing_costs: 0,
             other_club_income_generated_revenue: 0,
+            is_saved: true,
             form: {
                 group_entities: null,
                 related_parties: null,
@@ -381,10 +387,20 @@ export default {
             },
         };
     },
+    computed: {
+        save_status() {
+            if (this.is_saved) {
+                return "Saved";
+            }
+
+            return "...Saving";
+        },
+    },
     watch: {
         form: {
             handler(value) {
-                this.throttled_save(value);
+                this.is_saved = false;
+                this.debounced_save(value);
             },
             deep: true,
         },
@@ -392,6 +408,7 @@ export default {
     methods: {
         save(data) {
             console.log(data);
+            this.is_saved = true;
         },
     },
 };
