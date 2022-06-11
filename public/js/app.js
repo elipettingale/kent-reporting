@@ -24572,7 +24572,109 @@ __webpack_require__.r(__webpack_exports__);
         related_parties: null,
         ground_status: null,
         local_authority: null,
-        turnover_band: null
+        turnover_band: null,
+        current_financial_position: {
+          current_bank_balance: null,
+          club_reserves: null
+        },
+        club_running_costs: {
+          rent_lease: {
+            value: null,
+            note: null
+          },
+          rates: {
+            value: null,
+            note: null
+          },
+          water: {
+            value: null,
+            note: null
+          },
+          gas_electric: {
+            value: null,
+            note: null
+          },
+          kit: {
+            value: null,
+            note: null
+          },
+          travel: {
+            value: null,
+            note: null
+          },
+          pitch_maintenance: {
+            value: null,
+            note: null
+          },
+          bar_purchases: {
+            value: null,
+            note: null
+          },
+          food_purchases: {
+            value: null,
+            note: null
+          },
+          international_tickets: {
+            value: null,
+            note: null
+          },
+          interest: {
+            value: null,
+            note: null
+          },
+          grant_repayments: {
+            value: null,
+            note: null
+          },
+          broadband: {
+            value: null,
+            note: null
+          },
+          building_insurance: {
+            value: null,
+            note: null
+          },
+          contents_insurance: {
+            value: null,
+            note: null
+          },
+          other_insurance: {
+            value: null,
+            note: null
+          },
+          equipment_rental: {
+            value: null,
+            note: null
+          },
+          loan_repyments: {
+            value: null,
+            note: null
+          },
+          cleaning_contract: {
+            value: null,
+            note: null
+          },
+          security_alarm: {
+            value: null,
+            note: null
+          },
+          sanitary: {
+            value: null,
+            note: null
+          },
+          laundry: {
+            value: null,
+            note: null
+          },
+          building_maintenance: {
+            value: null,
+            note: null
+          },
+          vat: {
+            value: null,
+            note: null
+          }
+        }
       }
     };
   },
@@ -24588,6 +24690,8 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     form: {
       handler: function handler(value) {
+        console.log(value);
+
         if (!this.is_locked) {
           this.is_saved = false;
           this.debounced_save(value);
@@ -25257,15 +25361,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_table, null, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(['Current bank balance', 'Club reserves'], function (item) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)({
+            current_bank_balance: 'Current bank balance',
+            club_reserves: 'Club reserves'
+          }, function (item, key) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
               key: item
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item), 1
             /* TEXT */
             ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
               "class": "w-full",
-              type: "number"
-            })])]);
+              type: "number",
+              modelValue: _ctx.form.current_financial_position[key],
+              "onUpdate:modelValue": function onUpdateModelValue($event) {
+                return _ctx.form.current_financial_position[key] = $event;
+              }
+            }, null, 8
+            /* PROPS */
+            , ["modelValue", "onUpdate:modelValue"])])]);
           }), 64
           /* STABLE_FRAGMENT */
           ))])];
@@ -25295,17 +25408,54 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_table, null, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(['Rent/Lease (Building)', 'Rates', 'Water', 'Gas & Electricity', 'Kit', 'Travel', 'Pitch Maintenance', 'Bar Purchases', 'Food Purchases', 'International Tickets', 'Interest', 'Grant Repayments', 'Broadband/phone/TV', 'Buildings Insurance', 'Contents Insurance', 'Insurance Other', 'Equipment Rental', 'Loan Repayments', 'Cleaning Contract', 'Security/alarm', 'Sanitary', 'Laundry', 'Building maintenance', 'VAT'], function (item) {
+          return [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)({
+            rent_lease: 'Rent/Lease (Building)',
+            rates: 'Rates',
+            water: 'Water',
+            gas_electric: 'Gas & Electricity',
+            kit: 'Kit',
+            travel: 'Travel',
+            pitch_maintenance: 'Pitch Maintenance',
+            bar_purchases: 'Bar Purchases',
+            food_purchases: 'Food Purchases',
+            international_tickets: 'International Tickets',
+            interest: 'Interest',
+            grant_repayments: 'Grant Repayments',
+            broadband: 'Broadband/phone/TV',
+            building_insurance: 'Buildings Insurance',
+            contents_insurance: 'Contents Insurance',
+            other_insurance: 'Insurance Other',
+            equipment_rental: 'Equipment Rental',
+            loan_repyments: 'Loan Repayments',
+            cleaning_contract: 'Cleaning Contract',
+            security_alarm: 'Security/alarm',
+            sanitary: 'Sanitary',
+            laundry: 'Laundry',
+            building_maintenance: 'Building maintenance',
+            vat: 'VAT'
+          }, function (item, key) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
               key: item
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item), 1
             /* TEXT */
             ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
               "class": "w-full",
-              type: "number"
-            })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
-              "class": "w-full"
-            })])]);
+              type: "number",
+              modelValue: _ctx.form.club_running_costs[key].value,
+              "onUpdate:modelValue": function onUpdateModelValue($event) {
+                return _ctx.form.club_running_costs[key].value = $event;
+              }
+            }, null, 8
+            /* PROPS */
+            , ["modelValue", "onUpdate:modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_input, {
+              "class": "w-full",
+              modelValue: _ctx.form.club_running_costs[key].note,
+              "onUpdate:modelValue": function onUpdateModelValue($event) {
+                return _ctx.form.club_running_costs[key].note = $event;
+              }
+            }, null, 8
+            /* PROPS */
+            , ["modelValue", "onUpdate:modelValue"])])]);
           }), 128
           /* KEYED_FRAGMENT */
           )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.other_club_running_costs, function (item) {
