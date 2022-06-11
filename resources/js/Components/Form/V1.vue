@@ -3,7 +3,7 @@
         <div class="flex">
             <div class="flex">
                 <k-form-nav-item
-                    v-for="index in 5"
+                    v-for="index in 6"
                     :key="index"
                     class="mr-4"
                     :class="{ 'is-active': section === index }"
@@ -12,8 +12,8 @@
                     Section {{ index }}
                 </k-form-nav-item>
                 <k-form-nav-item
-                    :class="{ 'is-active': section === 6 }"
-                    @click="section = 6"
+                    :class="{ 'is-active': section === 99 }"
+                    @click="section = 99"
                 >
                     Confirmation
                 </k-form-nav-item>
@@ -100,26 +100,19 @@
                                 <k-input class="w-full" type="number" />
                             </td>
                         </tr>
-
                         <tr>
                             <td>Club Reserves</td>
                             <td>
                                 <k-input class="w-full" type="number" />
                             </td>
                         </tr>
-
-                        <tr class="font-bold">
-                            <td>Total</td>
-                            <td>
-                                <k-input
-                                    class="w-full"
-                                    type="number"
-                                    prefix="£"
-                                />
-                            </td>
-                        </tr>
                     </tbody>
                 </k-table>
+
+                <div class="w-full flex justify-between font-bold">
+                    <p>Total</p>
+                    <p>£0.00</p>
+                </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <k-button @click="section = 3">Next</k-button>
@@ -338,6 +331,185 @@
             </k-form-section>
 
             <k-form-section v-if="section === 6">
+                <h2 class="text-lg font-bold mt-4 mb-2">Balance Sheet</h2>
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Accounting Value (£)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'Freehold Property',
+                                'Plant & Equipment',
+                                'Other Fixed Assets',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </k-table>
+
+                <div class="w-full flex justify-between font-bold">
+                    <p>Total Fixed Assets</p>
+                    <p>£0.00</p>
+                </div>
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Accounting Value (£)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'Rugby Stock',
+                                'Clubhouse Stock',
+                                'Investments',
+                                'Debtors',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </k-table>
+
+                <div class="w-full flex justify-between font-bold">
+                    <p>Total Current Assets</p>
+                    <p>£0.00</p>
+                </div>
+
+                <div class="w-full flex justify-between font-bold">
+                    <p>Total Assets</p>
+                    <p>£0.00</p>
+                </div>
+
+                <hr />
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th>Liability</th>
+                            <th>Due within 12 months</th>
+                            <th>Due after 12 months</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'HMRC',
+                                'Rugby Creditors',
+                                'GRFU Loans',
+                                'RFU/RFF Loans',
+                                'Banks Loans',
+                                'Accruals',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr v-for="item in other_liabilities" :key="item">
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <k-button @click="other_liabilities++">
+                                    Add Additional Liability
+                                </k-button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </k-table>
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th>Off balance sheet liabilities</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'Related party guarantees',
+                                'Cross holdings',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                        </tr>
+                        <tr
+                            v-for="item in other_off_balance_liabilities"
+                            :key="item"
+                        >
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <k-button
+                                    @click="other_off_balance_liabilities++"
+                                >
+                                    Add Additional Off Balance Sheet Liability
+                                </k-button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </k-table>
+
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="section = 99">Next</k-button>
+                </div>
+            </k-form-section>
+
+            <k-form-section v-if="section === 99">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -386,7 +558,6 @@ export default {
     },
     created() {
         axios.get(window.location.href + "/data").then(({ data }) => {
-            console.log(data.status);
             if (data.status !== "complete") {
                 this.is_locked = false;
             }
@@ -405,6 +576,8 @@ export default {
             other_club_running_costs: 0,
             other_staffing_costs: 0,
             other_club_income_generated_revenue: 0,
+            other_liabilities: 0,
+            other_off_balance_liabilities: 0,
             is_saved: true,
             is_locked: true,
             form: {
