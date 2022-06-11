@@ -24539,6 +24539,17 @@ __webpack_require__.r(__webpack_exports__);
     KTable: _KTable_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     KTableRow: _KTableRow_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   },
+  created: function created() {
+    var _this = this;
+
+    axios.get(window.location.href + "/data").then(function (_ref) {
+      var data = _ref.data;
+
+      if (data) {
+        _this.form = data;
+      }
+    });
+  },
   mounted: function mounted() {
     this.debounced_save = _.debounce(this.save, 1000);
   },
@@ -24578,8 +24589,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     save: function save(data) {
-      console.log(data);
-      this.is_saved = true;
+      var _this2 = this;
+
+      axios.put(window.location.href, {
+        data: data
+      }).then(function (response) {
+        console.log(response);
+        _this2.is_saved = true;
+      });
     }
   }
 });

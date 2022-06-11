@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -24,5 +25,15 @@ class ReportController extends Controller
         return view('user.report', [
             'report' => $report
         ]);
+    }
+
+    public function update(Report $report, Request $request)
+    {
+        $report->data = $request->get('data');
+        $report->save();
+
+        return [
+            'success' => true
+        ];
     }
 }

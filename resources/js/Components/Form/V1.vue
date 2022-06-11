@@ -368,6 +368,13 @@ export default {
         KTable,
         KTableRow,
     },
+    created() {
+        axios.get(window.location.href + "/data").then(({ data }) => {
+            if (data) {
+                this.form = data;
+            }
+        });
+    },
     mounted() {
         this.debounced_save = _.debounce(this.save, 1000);
     },
@@ -407,8 +414,14 @@ export default {
     },
     methods: {
         save(data) {
-            console.log(data);
-            this.is_saved = true;
+            axios
+                .put(window.location.href, {
+                    data: data,
+                })
+                .then((response) => {
+                    console.log(response);
+                    this.is_saved = true;
+                });
         },
     },
 };
