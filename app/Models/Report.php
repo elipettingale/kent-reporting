@@ -12,8 +12,16 @@ class Report extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    protected $fillable = [
+        'user_id',
+        'financial_year',
+        'form_version',
+        'due_at'
+    ];
+
     protected $casts = [
         'data' => 'array',
+        'due_at' => 'datetime',
         'submitted_at' => 'datetime',
     ];
 

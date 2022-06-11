@@ -13,6 +13,18 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            <!-- Club -->
+            <div class="mt-4">
+                <x-label for="club" :value="__('Club')" />
+
+                <x-select id="club" class="block mt-1 w-full" type="text" name="club" required>
+                    <option selected></option>
+                    @foreach(config('clubs') as $club)
+                        <option value="{{ $club }}" @selected(old('club') == $club)>{{ $club }}</option>
+                    @endforeach
+                </x-select>
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />

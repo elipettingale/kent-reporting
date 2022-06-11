@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->integer('financial_year');
             $table->integer('form_version');
-            $table->json('data');
+            $table->json('data')->nullable();
             $table->dateTime('due_at');
             $table->dateTime('submitted_at')->nullable();
             $table->timestamps();

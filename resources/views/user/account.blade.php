@@ -17,6 +17,11 @@
                             <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required />
                         </div>
 
+                        <div class="mt-4">
+                            <x-label for="email" value="Email" />
+                            <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $user->email)" required />
+                        </div>
+
                         <div class="flex items-center justify-end mt-4">
                             <x-button>Save</x-button>
                         </div>

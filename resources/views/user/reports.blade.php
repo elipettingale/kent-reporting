@@ -11,6 +11,7 @@
                 <x-slot name="thead">
                     <x-th>Financial Year</x-th>
                     <x-th>Status</x-th>
+                    <x-th>Due</x-th>
                     <x-th>Submitted</x-th>
                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                         <span class="sr-only">Actions</span>
@@ -23,6 +24,7 @@
                             <x-td>
                                 <x-status status="{{ $report->status() }}" />
                             </x-td>
+                            <x-td>{{ $report->due_at?->format('d/m/Y') }}</x-td>
                             <x-td>{{ $report->submitted_at?->format('d/m/Y') }}</x-td>
                             <x-td class="text-right">
                                 <x-button href="{{ route('user.report.show', $report) }}">

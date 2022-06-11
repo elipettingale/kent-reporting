@@ -20,6 +20,8 @@ class AccountController extends Controller
         $user->fill($request->all());
         $user->save();
 
+        // todo: if email was changed, un-verify account or send verification email with additional column for changing email (like wordpress)
+
         return redirect()->back();
     }
 }

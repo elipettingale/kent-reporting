@@ -2,7 +2,7 @@
     <div class="mb-4">
         <div class="flex">
             <k-form-nav-item
-                v-for="index in 4"
+                v-for="index in 5"
                 :key="index"
                 class="mr-4"
                 :class="{ 'is-active': section === index }"
@@ -92,6 +92,10 @@
                         </tr>
                     </tbody>
                 </k-table>
+
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="section = 3">Next</k-button>
+                </div>
             </k-form-section>
 
             <k-form-section v-if="section === 3">
@@ -160,13 +164,17 @@
                             <td></td>
                             <td class="text-center">
                                 <k-button @click="other_club_running_costs++">
-                                    Add Additional Club Running Cost
+                                    Add Additional Category
                                 </k-button>
                             </td>
                             <td></td>
                         </tr>
                     </tbody>
                 </k-table>
+
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="section = 4">Next</k-button>
+                </div>
             </k-form-section>
 
             <k-form-section v-if="section === 4">
@@ -214,13 +222,91 @@
                             <td></td>
                             <td class="text-center">
                                 <k-button @click="other_staffing_costs++">
-                                    Add Additional Staffing Cost
+                                    Add Additional Category
                                 </k-button>
                             </td>
                             <td></td>
                         </tr>
                     </tbody>
                 </k-table>
+
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="section = 5">Next</k-button>
+                </div>
+            </k-form-section>
+
+            <k-form-section v-if="section === 5">
+                <h2 class="text-lg font-bold mt-4 mb-2">
+                    Club Income Generated Revenue
+                </h2>
+
+                <k-table>
+                    <thead>
+                        <tr>
+                            <th>Activity</th>
+                            <th>£</th>
+                            <th>Brief description of activity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in [
+                                'Player membership',
+                                'Other membership',
+                                'Tickets & Programmes',
+                                'Kit sales',
+                                'Bar sales',
+                                'Food sales',
+                                'Social & Fund raising',
+                                'Hire of facilities',
+                                'Sponsorship & Advertising',
+                                'Ticket sales',
+                                'Grants',
+                                'Other grants',
+                            ]"
+                            :key="item"
+                        >
+                            <td>{{ item }}</td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr
+                            v-for="item in other_club_income_generated_revenue"
+                            :key="item"
+                        >
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" type="number" />
+                            </td>
+                            <td>
+                                <k-input class="w-full" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <k-button
+                                    @click="
+                                        other_club_income_generated_revenue++
+                                    "
+                                >
+                                    Add Additional Category
+                                </k-button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </k-table>
+
+                <div class="flex items-center justify-end mt-4">
+                    <k-button @click="section = 6">Next</k-button>
+                </div>
             </k-form-section>
         </div>
     </div>
@@ -257,6 +343,7 @@ export default {
             section: 1,
             other_club_running_costs: 0,
             other_staffing_costs: 0,
+            other_club_income_generated_revenue: 0,
         };
     },
 };
