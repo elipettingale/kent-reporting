@@ -1,12 +1,12 @@
 <template>
     <p :class="classList">
-        <slot></slot>
+        {{ text }}
     </p>
 </template>
 
 <script>
 export default {
     name: "KHeader",
-    props: ["classList"],
+    props: ["text", "classList"],
 };
 </script>

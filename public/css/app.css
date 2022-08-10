@@ -1279,6 +1279,12 @@ select {
   margin-bottom: 0.75rem;
 }
 
+.k-field__error {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--red-500);
+}
+
 .k-input {
   margin-top: 0.25rem;
   width: 100%;

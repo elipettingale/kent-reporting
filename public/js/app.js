@@ -24558,7 +24558,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KHeader",
-  props: ["classList"]
+  props: ["text", "classList"]
 });
 
 /***/ }),
@@ -24584,7 +24584,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateValue: function updateValue(event) {
-      this.$emit("update:modelValue", event.target.value);
+      this.$emit("update:modelValue", {
+        value: event.target.value,
+        error: null
+      });
     }
   }
 });
@@ -24630,7 +24633,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateValue: function updateValue(event) {
-      this.$emit("update:modelValue", event.target.value);
+      this.$emit("update:modelValue", {
+        value: event.target.value,
+        error: null
+      });
     }
   }
 });
@@ -24687,13 +24693,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KTextarea",
-  props: ["label", "key", "modelValue", "rows", "disabled"],
+  props: ["label", "key", "modelValue", "rows", "error", "disabled"],
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
     updateValue: function updateValue(event) {
-      this.$emit("update:modelValue", event.target.value);
+      this.$emit("update:modelValue", {
+        value: event.target.value,
+        error: null
+      });
     }
   }
 });
@@ -24779,7 +24788,10 @@ __webpack_require__.r(__webpack_exports__);
     this.blueprint.sections.forEach(function (section) {
       section.items.forEach(function (item) {
         if (item.key) {
-          form_data["".concat(section.key, "_").concat(item.key)] = null;
+          form_data["".concat(section.key, "_").concat(item.key)] = {
+            value: null,
+            error: null
+          };
         }
       });
     });
@@ -24796,9 +24808,6 @@ __webpack_require__.r(__webpack_exports__);
     //     }
     // });
     // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
-    // todo: validation
-    // should I have it submit to check validation?
-    // or should I have a js validator and put the rules in the json? (prob this one)
   },
   mounted: function mounted() {
     this.debounced_save = _.debounce(this.save, 1000);
@@ -24825,8 +24834,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     form_data: {
-      handler: function handler(value) {
-        console.log(value); // if (!this.is_locked) {
+      handler: function handler(value) {// console.log(value);
+        // if (!this.is_locked) {
         //     this.is_saved = false;
         //     this.debounced_save(value);
         // }
@@ -24836,6 +24845,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     goToNextSection: function goToNextSection() {
+      // todo: validate current section, show warning if they want to continue anyway
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
         this.current_section_index++;
       } else {
@@ -24949,8 +24959,8 @@ __webpack_require__.r(__webpack_exports__);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.classList)
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")], 2
-  /* CLASS */
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.text), 3
+  /* TEXT, CLASS */
   );
 }
 
@@ -24974,6 +24984,10 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = ["textContent"];
 var _hoisted_3 = ["type", "value", "disabled"];
+var _hoisted_4 = {
+  key: 0,
+  "class": "k-field__error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$type;
 
@@ -24997,7 +25011,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , _hoisted_2)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: (_$props$type = $props.type) !== null && _$props$type !== void 0 ? _$props$type : 'text',
     "class": "k-input__input",
-    value: $props.modelValue,
+    value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
     }),
@@ -25006,7 +25020,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_3)], 2
   /* CLASS */
-  )]);
+  ), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -25062,6 +25078,10 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = ["value", "textContent"];
+var _hoisted_6 = {
+  key: 0,
+  "class": "k-field__error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-label");
 
@@ -25072,7 +25092,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "k-select__select",
-    value: $props.modelValue,
+    value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
     })
@@ -25088,7 +25108,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3)])]);
+  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -25165,6 +25187,10 @@ var _hoisted_2 = {
   "class": "k-textarea"
 };
 var _hoisted_3 = ["id", "rows", "value", "disabled"];
+var _hoisted_4 = {
+  key: 0,
+  "class": "k-field__error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$rows;
 
@@ -25179,14 +25205,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: $props.key,
     "class": "rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full",
     rows: (_$props$rows = $props.rows) !== null && _$props$rows !== void 0 ? _$props$rows : 4,
-    value: $props.modelValue,
+    value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
     }),
     disabled: $props.disabled
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3)])]);
+  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -25279,7 +25307,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_k_form_section = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-section");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: color red if has errors "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_nav_item, {
       key: index,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mr-4", {
@@ -25326,13 +25354,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.current_section.items, function (item, index) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-          key: index
-        }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(item.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.current_section.items, function (item) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(item.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
           label: item.name,
           key: "".concat($options.current_section.key, "_").concat(item.key),
-          disabled: _ctx.is_locked || item.disabled === true
+          disabled: _ctx.is_locked || item.disabled === true,
+          validationRules: item.validationRules
         }, item.props, {
           modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(item.key)],
           "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -25340,12 +25367,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }
         }), {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [item.slot ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+            return [item.children ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
               key: 0
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.slot), 1
-            /* TEXT */
-            )], 64
-            /* STABLE_FRAGMENT */
+            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(item.children, function (child) {
+              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(child.component), {
+                key: "".concat($options.current_section.key, "_").concat(item.key, "_").concat(child.key)
+              });
+            }), 128
+            /* KEYED_FRAGMENT */
             )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
           }),
           _: 2
@@ -25353,7 +25382,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
         }, 1040
         /* FULL_PROPS, DYNAMIC_SLOTS */
-        , ["label", "disabled", "modelValue", "onUpdate:modelValue"]))]);
+        , ["label", "disabled", "validationRules", "modelValue", "onUpdate:modelValue"]);
       }), 128
       /* KEYED_FRAGMENT */
       )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
@@ -25376,7 +25405,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_11];
+      return [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
     }),
     _: 1
     /* STABLE */
@@ -44540,7 +44569,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","items":[{"component":"KHeader","slot":"General Details","props":{"classList":"mb-3 text-lg"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","items":[{"component":"KHeader","slot":"Current Financial Position","props":{"classList":"mb-3 text-lg"}}]},{"name":"Running Costs","key":"running_costs","items":[]},{"name":"Income","key":"income","items":[]},{"name":"Balance Sheet","key":"balance_sheet","items":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","items":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","validationRules":["required"],"props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea","validationRules":["required"]},{"name":"Ground Status","key":"ground_status","component":"KInput","validationRules":["required"]},{"name":"Local Authority","key":"local_authority","component":"KInput","validationRules":["required"]},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea","validationRules":["required"]},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload","validationRules":["required"]},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","items":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","children":[]}]},{"name":"Running Costs","key":"running_costs","items":[]},{"name":"Income","key":"income","items":[]},{"name":"Balance Sheet","key":"balance_sheet","items":[]}]}');
 
 /***/ })
 

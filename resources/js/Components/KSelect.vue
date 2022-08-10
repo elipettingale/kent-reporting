@@ -4,7 +4,7 @@
         <div class="k-select">
             <select
                 class="k-select__select"
-                :value="modelValue"
+                :value="modelValue.value"
                 @input="updateValue"
             >
                 <option></option>
@@ -16,6 +16,9 @@
                 ></option>
             </select>
         </div>
+        <p v-if="modelValue.error" class="k-field__error">
+            {{ modelValue.error }}
+        </p>
     </div>
 </template>
 
@@ -30,7 +33,10 @@ export default {
     },
     methods: {
         updateValue(event) {
-            this.$emit("update:modelValue", event.target.value);
+            this.$emit("update:modelValue", {
+                value: event.target.value,
+                error: null,
+            });
         },
     },
 };

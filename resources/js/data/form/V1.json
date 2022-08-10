@@ -7,15 +7,18 @@
             "items": [
                 {
                     "component": "KHeader",
-                    "slot": "General Details",
                     "props": {
-                        "classList": "mb-3 text-lg"
+                        "classList": "mb-3 text-lg",
+                        "text": "General Details"
                     }
                 },
                 {
                     "name": "Group Entities",
                     "key": "group_entities",
                     "component": "KTextarea",
+                    "validationRules": [
+                        "required"
+                    ],
                     "props": {
                         "rows": 6
                     }
@@ -23,17 +26,26 @@
                 {
                     "name": "Related Parties",
                     "key": "related_parties",
-                    "component": "KTextarea"
+                    "component": "KTextarea",
+                    "validationRules": [
+                        "required"
+                    ]
                 },
                 {
                     "name": "Ground Status",
                     "key": "ground_status",
-                    "component": "KInput"
+                    "component": "KInput",
+                    "validationRules": [
+                        "required"
+                    ]
                 },
                 {
                     "name": "Local Authority",
                     "key": "local_authority",
-                    "component": "KInput"
+                    "component": "KInput",
+                    "validationRules": [
+                        "required"
+                    ]
                 },
                 {
                     "name": "Turnover Band",
@@ -49,12 +61,18 @@
                 {
                     "name": "Details of Related Parties",
                     "key": "details_of_related_parties",
-                    "component": "KTextarea"
+                    "component": "KTextarea",
+                    "validationRules": [
+                        "required"
+                    ]
                 },
                 {
                     "name": "Accounts Upload",
                     "key": "accounts_upload",
-                    "component": "KUpload"
+                    "component": "KUpload",
+                    "validationRules": [
+                        "required"
+                    ]
                 },
                 {
                     "name": "Howden's Risk Assesment Data",
@@ -70,10 +88,14 @@
             "items": [
                 {
                     "component": "KHeader",
-                    "slot": "Current Financial Position",
                     "props": {
-                        "classList": "mb-3 text-lg"
+                        "classList": "mb-3 text-lg",
+                        "text": "Current Financial Position"
                     }
+                },
+                {
+                    "component": "KTable",
+                    "children": []
                 }
             ]
         },

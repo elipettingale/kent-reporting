@@ -6,11 +6,14 @@
             <input
                 :type="type ?? 'text'"
                 class="k-input__input"
-                :value="modelValue"
+                :value="modelValue.value"
                 @input="updateValue"
                 :disabled="disabled"
             />
         </div>
+        <p v-if="modelValue.error" class="k-field__error">
+            {{ modelValue.error }}
+        </p>
     </div>
 </template>
 
@@ -25,7 +28,10 @@ export default {
     },
     methods: {
         updateValue(event) {
-            this.$emit("update:modelValue", event.target.value);
+            this.$emit("update:modelValue", {
+                value: event.target.value,
+                error: null,
+            });
         },
     },
 };

@@ -6,11 +6,14 @@
                 :id="key"
                 class="rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full"
                 :rows="rows ?? 4"
-                :value="modelValue"
+                :value="modelValue.value"
                 @input="updateValue"
                 :disabled="disabled"
             ></textarea>
         </div>
+        <p v-if="modelValue.error" class="k-field__error">
+            {{ modelValue.error }}
+        </p>
     </div>
 </template>
 
@@ -19,17 +22,17 @@ import KLabel from "./KLabel.vue";
 
 export default {
     name: "KTextarea",
-    props: ["label", "key", "modelValue", "rows", "disabled"],
+    props: ["label", "key", "modelValue", "rows", "error", "disabled"],
     components: {
         KLabel,
     },
     methods: {
         updateValue(event) {
-            this.$emit("update:modelValue", event.target.value);
+            this.$emit("update:modelValue", {
+                value: event.target.value,
+                error: null,
+            });
         },
     },
 };
 </script>
-
-// todo: pass in validation rules as a prop, then automatically populate error
-message

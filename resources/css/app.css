@@ -7,6 +7,10 @@
     @apply mb-3;
 }
 
+.k-field__error {
+    @apply text-red-500 text-sm;
+}
+
 .k-input {
     @apply mt-1 w-full;
 }
