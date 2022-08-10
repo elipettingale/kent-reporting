@@ -3,8 +3,8 @@
         <k-label :value="label" :name="key" />
         <div class="k-textarea">
             <textarea
+                :id="key"
                 class="rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full"
-                :name="key"
                 :rows="rows ?? 4"
                 :value="modelValue"
                 @input="updateValue"
@@ -30,3 +30,6 @@ export default {
     },
 };
 </script>
+
+// todo: pass in validation rules as a prop, then automatically populate error
+message

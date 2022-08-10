@@ -39,7 +39,11 @@
                             :is="item.component"
                             :label="item.name"
                             :key="`${current_section.key}_${item.key}`"
+                            :disabled="is_locked || item.disabled === true"
                             v-bind="item.props"
+                            v-model="
+                                form_data[`${current_section.key}_${item.key}`]
+                            "
                         >
                             <template v-if="item.slot">{{
                                 item.slot
@@ -48,7 +52,7 @@
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <k-button @click="next_section">Next</k-button>
+                        <k-button @click="goToNextSection">Next</k-button>
                     </div>
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
@@ -92,6 +96,19 @@ export default {
         this.blueprint = require(`../data/form/V${this.version}.json`);
         console.log(this.blueprint);
 
+        let form_data = {};
+
+        this.blueprint.sections.forEach((section) => {
+            section.items.forEach((item) => {
+                if (item.key) {
+                    form_data[`${section.key}_${item.key}`] = null;
+                }
+            });
+        });
+
+        this.form_data = form_data;
+        this.is_locked = false;
+
         // todo: build form data from this.blueprint
         // basically if it has a key, then save it's value
         // else do nothing here, it will be handled elsewhere
@@ -105,6 +122,12 @@ export default {
         //         this.form = data.data;
         //     }
         // });
+
+        // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
+
+        // todo: validation
+        // should I have it submit to check validation?
+        // or should I have a js validator and put the rules in the json? (prob this one)
     },
     mounted() {
         this.debounced_save = _.debounce(this.save, 1000);
@@ -114,7 +137,7 @@ export default {
             is_saved: true,
             is_locked: true,
             current_section_index: 0,
-            form: {},
+            form_data: {},
         };
     },
     computed: {
@@ -131,20 +154,20 @@ export default {
         },
     },
     watch: {
-        form: {
+        form_data: {
             handler(value) {
                 console.log(value);
 
-                if (!this.is_locked) {
-                    this.is_saved = false;
-                    this.debounced_save(value);
-                }
+                // if (!this.is_locked) {
+                //     this.is_saved = false;
+                //     this.debounced_save(value);
+                // }
             },
             deep: true,
         },
     },
     methods: {
-        next_section() {
+        goToNextSection() {
             if (
                 this.current_section_index + 1 <
                 this.blueprint.sections.length

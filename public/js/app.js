@@ -24774,7 +24774,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.blueprint = __webpack_require__("./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$")("./V".concat(this.version, ".json"));
-    console.log(this.blueprint); // todo: build form data from this.blueprint
+    console.log(this.blueprint);
+    var form_data = {};
+    this.blueprint.sections.forEach(function (section) {
+      section.items.forEach(function (item) {
+        if (item.key) {
+          form_data["".concat(section.key, "_").concat(item.key)] = null;
+        }
+      });
+    });
+    this.form_data = form_data;
+    this.is_locked = false; // todo: build form data from this.blueprint
     // basically if it has a key, then save it's value
     // else do nothing here, it will be handled elsewhere
     // axios.get(window.location.href + "/data").then(({ data }) => {
@@ -24785,6 +24795,10 @@ __webpack_require__.r(__webpack_exports__);
     //         this.form = data.data;
     //     }
     // });
+    // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
+    // todo: validation
+    // should I have it submit to check validation?
+    // or should I have a js validator and put the rules in the json? (prob this one)
   },
   mounted: function mounted() {
     this.debounced_save = _.debounce(this.save, 1000);
@@ -24794,7 +24808,7 @@ __webpack_require__.r(__webpack_exports__);
       is_saved: true,
       is_locked: true,
       current_section_index: 0,
-      form: {}
+      form_data: {}
     };
   },
   computed: {
@@ -24810,20 +24824,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    form: {
+    form_data: {
       handler: function handler(value) {
-        console.log(value);
-
-        if (!this.is_locked) {
-          this.is_saved = false;
-          this.debounced_save(value);
-        }
+        console.log(value); // if (!this.is_locked) {
+        //     this.is_saved = false;
+        //     this.debounced_save(value);
+        // }
       },
       deep: true
     }
   },
   methods: {
-    next_section: function next_section() {
+    goToNextSection: function goToNextSection() {
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
         this.current_section_index++;
       } else {
@@ -25152,7 +25164,7 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "k-textarea"
 };
-var _hoisted_3 = ["name", "rows", "value", "disabled"];
+var _hoisted_3 = ["id", "rows", "value", "disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$rows;
 
@@ -25164,8 +25176,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    id: $props.key,
     "class": "rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full",
-    name: $props.key,
     rows: (_$props$rows = $props.rows) !== null && _$props$rows !== void 0 ? _$props$rows : 4,
     value: $props.modelValue,
     onInput: _cache[0] || (_cache[0] = function () {
@@ -25319,8 +25331,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: index
         }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(item.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
           label: item.name,
-          key: "".concat($options.current_section.key, "_").concat(item.key)
-        }, item.props), {
+          key: "".concat($options.current_section.key, "_").concat(item.key),
+          disabled: _ctx.is_locked || item.disabled === true
+        }, item.props, {
+          modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(item.key)],
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return _ctx.form_data["".concat($options.current_section.key, "_").concat(item.key)] = $event;
+          }
+        }), {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [item.slot ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
               key: 0
@@ -25335,11 +25353,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
         }, 1040
         /* FULL_PROPS, DYNAMIC_SLOTS */
-        , ["label"]))]);
+        , ["label", "disabled", "modelValue", "onUpdate:modelValue"]))]);
       }), 128
       /* KEYED_FRAGMENT */
       )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
-        onClick: $options.next_section
+        onClick: $options.goToNextSection
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_10];
@@ -44522,7 +44540,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","items":[{"component":"KHeader","slot":"This is a header not a field","props":{"classList":"mb-3 text-lg"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea"}]},{"name":"Current Financial Position","key":"current_financial_position","items":[]},{"name":"Running Costs","key":"running_costs","items":[]},{"name":"Income","key":"income","items":[]},{"name":"Balance Sheet","key":"balance_sheet","items":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","items":[{"component":"KHeader","slot":"General Details","props":{"classList":"mb-3 text-lg"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","items":[{"component":"KHeader","slot":"Current Financial Position","props":{"classList":"mb-3 text-lg"}}]},{"name":"Running Costs","key":"running_costs","items":[]},{"name":"Income","key":"income","items":[]},{"name":"Balance Sheet","key":"balance_sheet","items":[]}]}');
 
 /***/ })
 

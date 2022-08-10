@@ -7,7 +7,7 @@
             "items": [
                 {
                     "component": "KHeader",
-                    "slot": "This is a header not a field",
+                    "slot": "General Details",
                     "props": {
                         "classList": "mb-3 text-lg"
                     }
@@ -59,14 +59,23 @@
                 {
                     "name": "Howden's Risk Assesment Data",
                     "key": "howdens_risk_assesment_data",
-                    "component": "KTextarea"
+                    "component": "KTextarea",
+                    "disabled": true
                 }
             ]
         },
         {
             "name": "Current Financial Position",
             "key": "current_financial_position",
-            "items": []
+            "items": [
+                {
+                    "component": "KHeader",
+                    "slot": "Current Financial Position",
+                    "props": {
+                        "classList": "mb-3 text-lg"
+                    }
+                }
+            ]
         },
         {
             "name": "Running Costs",
