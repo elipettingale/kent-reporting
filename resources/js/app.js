@@ -1,7 +1,7 @@
 require("./bootstrap");
 
 import { createApp } from "vue";
-import KForm from "./Components/KForm";
+import KForm from "./Layouts/KForm";
 
 let report = createApp({
     components: {

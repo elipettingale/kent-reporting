@@ -1,0 +1,87 @@
+{
+    "version": 1,
+    "sections": [
+        {
+            "name": "General Details",
+            "key": "general_details",
+            "items": [
+                {
+                    "component": "KHeader",
+                    "slot": "This is a header not a field",
+                    "props": {
+                        "size": 1
+                    }
+                },
+                {
+                    "name": "Group Entities",
+                    "key": "group_entities",
+                    "component": "KTextarea",
+                    "props": {
+                        "rows": 6
+                    }
+                },
+                {
+                    "name": "Related Parties",
+                    "key": "related_parties",
+                    "component": "KTextarea"
+                },
+                {
+                    "name": "Ground Status",
+                    "key": "ground_status",
+                    "component": "KInput"
+                },
+                {
+                    "name": "Local Authority",
+                    "key": "local_authority",
+                    "component": "KInput"
+                },
+                {
+                    "name": "Turnover Band",
+                    "key": "turnover_band",
+                    "component": "KSelect",
+                    "props": {
+                        "options": [
+                            "£1000-£1999",
+                            "£2000-£2999"
+                        ]
+                    }
+                },
+                {
+                    "name": "Details of Related Parties",
+                    "key": "details_of_related_parties",
+                    "component": "KTextarea"
+                },
+                {
+                    "name": "Accounts Upload",
+                    "key": "accounts_upload",
+                    "component": "KUpload"
+                },
+                {
+                    "name": "Howden's Risk Assesment Data",
+                    "key": "howdens_risk_assesment_data",
+                    "component": "KTextarea"
+                }
+            ]
+        },
+        {
+            "name": "Current Financial Position",
+            "key": "current_financial_position",
+            "items": []
+        },
+        {
+            "name": "Running Costs",
+            "key": "running_costs",
+            "items": []
+        },
+        {
+            "name": "Income",
+            "key": "income",
+            "items": []
+        },
+        {
+            "name": "Balance Sheet",
+            "key": "balance_sheet",
+            "items": []
+        }
+    ]
+}
