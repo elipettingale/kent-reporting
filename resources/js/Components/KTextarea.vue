@@ -1,14 +1,16 @@
 <template>
-    <div class="k-textarea">
+    <div class="k-field">
         <k-label :value="label" :name="key" />
-        <textarea
-            class="rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full"
-            :name="key"
-            :rows="rows ?? 4"
-            :value="modelValue"
-            @input="updateValue"
-            :disabled="disabled"
-        ></textarea>
+        <div class="k-textarea">
+            <textarea
+                class="rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full"
+                :name="key"
+                :rows="rows ?? 4"
+                :value="modelValue"
+                @input="updateValue"
+                :disabled="disabled"
+            ></textarea>
+        </div>
     </div>
 </template>
 

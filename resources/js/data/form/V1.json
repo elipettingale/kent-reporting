@@ -9,7 +9,7 @@
                     "component": "KHeader",
                     "slot": "This is a header not a field",
                     "props": {
-                        "size": 1
+                        "classList": "mb-3 text-lg"
                     }
                 },
                 {

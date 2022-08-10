@@ -46,8 +46,14 @@
                             }}</template>
                         </component>
                     </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <k-button @click="next_section">Next</k-button>
+                    </div>
                 </k-form-section>
-                <!-- CURRENT SECTION -->
+                <k-form-section v-if="current_section_index === 99">
+                    Confirmation
+                </k-form-section>
             </div>
         </div>
     </div>
@@ -138,6 +144,16 @@ export default {
         },
     },
     methods: {
+        next_section() {
+            if (
+                this.current_section_index + 1 <
+                this.blueprint.sections.length
+            ) {
+                this.current_section_index++;
+            } else {
+                this.current_section_index = 99;
+            }
+        },
         save(data) {
             axios
                 .patch(window.location.href, {

@@ -1,5 +1,5 @@
 <template>
-    <p :class="`k-header k-header-${size}`">
+    <p :class="classList">
         <slot></slot>
     </p>
 </template>
@@ -7,6 +7,6 @@
 <script>
 export default {
     name: "KHeader",
-    props: ["size"],
+    props: ["classList"],
 };
 </script>

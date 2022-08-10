@@ -3,6 +3,10 @@
 @tailwind utilities;
 @import "variables.css";
 
+.k-field {
+    @apply mb-3;
+}
+
 .k-input {
     @apply mt-1 w-full;
 }
