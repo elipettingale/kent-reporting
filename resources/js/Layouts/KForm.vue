@@ -3,6 +3,7 @@
         <div class="mb-4">
             <div class="flex">
                 <div class="flex">
+                    <!-- todo: color red if has errors -->
                     <k-form-nav-item
                         v-for="(section, index) in blueprint.sections"
                         :key="index"
@@ -31,25 +32,26 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 <k-form-section v-if="current_section">
-                    <div
+                    <component
                         v-for="(item, index) in current_section.items"
-                        :key="index"
+                        :is="item.component"
+                        :label="item.name"
+                        :key="`${current_section.key}_${item.key}`"
+                        :disabled="is_locked || item.disabled === true"
+                        :validationRules="item.validationRules"
+                        v-bind="item.props"
+                        v-model="
+                            form_data[`${current_section.key}_${item.key}`]
+                        "
                     >
-                        <component
-                            :is="item.component"
-                            :label="item.name"
-                            :key="`${current_section.key}_${item.key}`"
-                            :disabled="is_locked || item.disabled === true"
-                            v-bind="item.props"
-                            v-model="
-                                form_data[`${current_section.key}_${item.key}`]
-                            "
-                        >
-                            <template v-if="item.slot">{{
-                                item.slot
-                            }}</template>
-                        </component>
-                    </div>
+                        <template v-if="item.children">
+                            <component
+                                v-for="(child, index) in item.children"
+                                :is="child.component"
+                                :key="`${current_section.key}_${item.key}_${child.key}`"
+                            />
+                        </template>
+                    </component>
 
                     <div class="flex items-center justify-end mt-4">
                         <k-button @click="goToNextSection">Next</k-button>
@@ -57,6 +59,8 @@
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
                     Confirmation
+                    <!-- todo: message -->
+                    <!-- todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section -->
                 </k-form-section>
             </div>
         </div>
@@ -101,7 +105,10 @@ export default {
         this.blueprint.sections.forEach((section) => {
             section.items.forEach((item) => {
                 if (item.key) {
-                    form_data[`${section.key}_${item.key}`] = null;
+                    form_data[`${section.key}_${item.key}`] = {
+                        value: null,
+                        error: null,
+                    };
                 }
             });
         });
@@ -124,10 +131,6 @@ export default {
         // });
 
         // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
-
-        // todo: validation
-        // should I have it submit to check validation?
-        // or should I have a js validator and put the rules in the json? (prob this one)
     },
     mounted() {
         this.debounced_save = _.debounce(this.save, 1000);
@@ -156,8 +159,7 @@ export default {
     watch: {
         form_data: {
             handler(value) {
-                console.log(value);
-
+                // console.log(value);
                 // if (!this.is_locked) {
                 //     this.is_saved = false;
                 //     this.debounced_save(value);
@@ -168,6 +170,8 @@ export default {
     },
     methods: {
         goToNextSection() {
+            // todo: validate current section, show warning if they want to continue anyway
+
             if (
                 this.current_section_index + 1 <
                 this.blueprint.sections.length
