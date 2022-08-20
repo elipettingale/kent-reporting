@@ -78,32 +78,23 @@
                 {
                     "component": "KTable",
                     "key": "current_financial_position",
+                    "rowFields": [
+                        {
+                            "key": "value",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        }
+                    ],
                     "rows": [
                         {
                             "name": "Current Bank Balance",
-                            "key": "current_bank_balance",
-                            "fields": [
-                                {
-                                    "key": "value",
-                                    "component": "KInput",
-                                    "props": {
-                                        "type": "number"
-                                    }
-                                }
-                            ]
+                            "key": "current_bank_balance"
                         },
                         {
                             "name": "Club Reserves",
-                            "key": "club_reserves",
-                            "fields": [
-                                {
-                                    "key": "value",
-                                    "component": "KInput",
-                                    "props": {
-                                        "type": "number"
-                                    }
-                                }
-                            ]
+                            "key": "club_reserves"
                         }
                     ]
                 },
@@ -119,7 +110,110 @@
         {
             "name": "Running Costs",
             "key": "running_costs",
-            "fields": []
+            "fields": [
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-lg",
+                        "text": "Club Running Costs"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "club_running_costs",
+                    "headings": [
+                        "Monthly £",
+                        "Notes"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "monthly",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "note",
+                            "component": "KInput"
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Rent/Lease (Building)",
+                            "key": "rent_lease_building"
+                        },
+                        {
+                            "name": "Rates",
+                            "key": "rates"
+                        },
+                        {
+                            "name": "Water",
+                            "key": "water"
+                        },
+                        {
+                            "name": "Gas & Electricity",
+                            "key": "gas_and_electricity"
+                        },
+                        {
+                            "name": "Kit",
+                            "key": "kit"
+                        },
+                        {
+                            "name": "Travel",
+                            "key": "travel"
+                        },
+                        {
+                            "name": "Pitch Maintenance",
+                            "key": "pitch_maintenance"
+                        },
+                        {
+                            "name": "Bar Purchases",
+                            "key": "bar_purchases"
+                        },
+                        {
+                            "name": "Food Purchases",
+                            "key": "food_purchases"
+                        },
+                        {
+                            "name": "International Tickets",
+                            "key": "international_tickets"
+                        },
+                        {
+                            "name": "Interest",
+                            "key": "interest"
+                        },
+                        {
+                            "name": "Grant Repayments",
+                            "key": "grant_repayments"
+                        },
+                        {
+                            "name": "Broadband/Phone/TV",
+                            "key": "broadband_phone_tv"
+                        },
+                        {
+                            "name": "Buildings Insurance",
+                            "key": "buildings_insurance"
+                        },
+                        {
+                            "name": "Contents Insurance",
+                            "key": "contents_insurance"
+                        },
+                        {
+                            "name": "Insurance Other",
+                            "key": "insurance_other"
+                        },
+                        {
+                            "name": "Equipment Rental",
+                            "key": "equipment_rental"
+                        },
+                        {
+                            "name": "Loan Repayments",
+                            "key": "loan_repayments"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "name": "Income",

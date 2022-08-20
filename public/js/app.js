@@ -24809,8 +24809,9 @@ __webpack_require__.r(__webpack_exports__);
       section.fields.forEach(function (field) {
         if (field.component === "KTable") {
           field.rows.forEach(function (row) {
-            row.fields.forEach(function (subfield) {
-              form_data["".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)] = {
+            field.rowFields.forEach(function (rowField) {
+              console.log("".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key));
+              form_data["".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)] = {
                 value: null,
                 error: null
               };
@@ -24860,8 +24861,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     form_data: {
-      handler: function handler(value) {// console.log(value);
-        // if (!this.is_locked) {
+      handler: function handler(value) {
+        console.log(value); // if (!this.is_locked) {
         //     this.is_saved = false;
         //     this.debounced_save(value);
         // }
@@ -25366,12 +25367,20 @@ var _hoisted_8 = {
   "class": "p-6 bg-white border-b border-gray-200"
 };
 var _hoisted_9 = {
+  key: 0
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
   "class": "flex items-center justify-end mt-4"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
@@ -25440,26 +25449,33 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: 0
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rows, function (row) {
+            return [field.headings ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("thead", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.headings, function (heading, index) {
+              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
+                key: index
+              }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(heading), 1
+              /* TEXT */
+              );
+            }), 128
+            /* KEYED_FRAGMENT */
+            ))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rows, function (row) {
               return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
                 key: row.key
               }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
               /* TEXT */
-              ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(row.fields, function (subfield) {
+              ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rowFields, function (rowField) {
                 return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
-                  key: subfield.key
-                }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(subfield.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
-                  label: subfield.name,
-                  key: "".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key),
-                  validationRules: subfield.validationRules
-                }, subfield.props, {
-                  modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)],
+                  key: "".concat(row.key, "_").concat(rowField.key)
+                }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+                  key: "".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key),
+                  validationRules: rowField.validationRules
+                }, rowField.props, {
+                  modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)],
                   "onUpdate:modelValue": function onUpdateModelValue($event) {
-                    return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)] = $event;
+                    return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)] = $event;
                   }
                 }), null, 16
                 /* FULL_PROPS */
-                , ["label", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
+                , ["validationRules", "modelValue", "onUpdate:modelValue"]))]);
               }), 128
               /* KEYED_FRAGMENT */
               ))]);
@@ -25493,11 +25509,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
         onClick: $options.goToNextSection
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_10];
+          return [_hoisted_12];
         }),
         _: 1
         /* STABLE */
@@ -25513,7 +25529,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
+      return [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
     }),
     _: 1
     /* STABLE */
@@ -44737,7 +44753,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rows":[{"name":"Current Bank Balance","key":"current_bank_balance","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]},{"name":"Club Reserves","key":"club_reserves","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","headings":["Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput"}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Water","key":"water"},{"name":"Gas & Electricity","key":"gas_and_electricity"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar Purchases","key":"bar_purchases"},{"name":"Food Purchases","key":"food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest","key":"interest"},{"name":"Grant Repayments","key":"grant_repayments"},{"name":"Broadband/Phone/TV","key":"broadband_phone_tv"},{"name":"Buildings Insurance","key":"buildings_insurance"},{"name":"Contents Insurance","key":"contents_insurance"},{"name":"Insurance Other","key":"insurance_other"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"}]}]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
 
 /***/ })
 

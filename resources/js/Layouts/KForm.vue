@@ -38,6 +38,19 @@
                     >
                         <template v-if="field.component === 'KTable'">
                             <k-table>
+                                <thead v-if="field.headings">
+                                    <tr>
+                                        <th></th>
+                                        <th
+                                            v-for="(
+                                                heading, index
+                                            ) in field.headings"
+                                            :key="index"
+                                        >
+                                            {{ heading }}
+                                        </th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr
                                         v-for="row in field.rows"
@@ -45,20 +58,19 @@
                                     >
                                         <td>{{ row.name }}</td>
                                         <td
-                                            v-for="subfield in row.fields"
-                                            :key="subfield.key"
+                                            v-for="rowField in field.rowFields"
+                                            :key="`${row.key}_${rowField.key}`"
                                         >
                                             <component
-                                                :is="subfield.component"
-                                                :label="subfield.name"
-                                                :key="`${current_section.key}_${field.key}_${row.key}_${subfield.key}`"
+                                                :is="rowField.component"
+                                                :key="`${current_section.key}_${field.key}_${row.key}_${rowField.key}`"
                                                 :validationRules="
-                                                    subfield.validationRules
+                                                    rowField.validationRules
                                                 "
-                                                v-bind="subfield.props"
+                                                v-bind="rowField.props"
                                                 v-model="
                                                     form_data[
-                                                        `${current_section.key}_${field.key}_${row.key}_${subfield.key}`
+                                                        `${current_section.key}_${field.key}_${row.key}_${rowField.key}`
                                                     ]
                                                 "
                                             ></component>
@@ -146,9 +158,12 @@ export default {
             section.fields.forEach((field) => {
                 if (field.component === "KTable") {
                     field.rows.forEach((row) => {
-                        row.fields.forEach((subfield) => {
+                        field.rowFields.forEach((rowField) => {
+                            console.log(
+                                `${section.key}_${field.key}_${row.key}_${rowField.key}`
+                            );
                             form_data[
-                                `${section.key}_${field.key}_${row.key}_${subfield.key}`
+                                `${section.key}_${field.key}_${row.key}_${rowField.key}`
                             ] = {
                                 value: null,
                                 error: null,
@@ -206,7 +221,7 @@ export default {
     watch: {
         form_data: {
             handler(value) {
-                // console.log(value);
+                console.log(value);
                 // if (!this.is_locked) {
                 //     this.is_saved = false;
                 //     this.debounced_save(value);
