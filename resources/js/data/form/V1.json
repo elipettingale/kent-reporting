@@ -296,7 +296,88 @@
         {
             "name": "Income",
             "key": "income",
-            "fields": []
+            "fields": [
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-lg",
+                        "text": "Club Income Generated Revenue"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "club_income_generated_revenue",
+                    "canAddAdditional": true,
+                    "headings": [
+                        "Activity",
+                        "£",
+                        "Brief description of activity"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "income",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "description",
+                            "component": "KInput"
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Player Membership",
+                            "key": "player_membership"
+                        },
+                        {
+                            "name": "Other Membership",
+                            "key": "other_membership"
+                        },
+                        {
+                            "name": "Tickets & Programmes",
+                            "key": "tickets_and_programmes"
+                        },
+                        {
+                            "name": "Kit Sales",
+                            "key": "kit_sales"
+                        },
+                        {
+                            "name": "Bar Sales",
+                            "key": "bar_sales"
+                        },
+                        {
+                            "name": "Food Sales",
+                            "key": "food_sales"
+                        },
+                        {
+                            "name": "Social & Fund Raising",
+                            "key": "social_and_fund_raising"
+                        },
+                        {
+                            "name": "Hire of Facilities",
+                            "key": "hire_of_facilities"
+                        },
+                        {
+                            "name": "Sponsorship And Advertising",
+                            "key": "sponsorship_and_advertising"
+                        },
+                        {
+                            "name": "Ticket Sales",
+                            "key": "ticket_sales"
+                        },
+                        {
+                            "name": "Grants",
+                            "key": "grants"
+                        },
+                        {
+                            "name": "Other Grants",
+                            "key": "other_grants"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "name": "Balance Sheet",
