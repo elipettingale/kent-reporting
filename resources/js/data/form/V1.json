@@ -238,6 +238,58 @@
                             "key": "vat"
                         }
                     ]
+                },
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-lg",
+                        "text": "Staffing Costs"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "staffing_costs",
+                    "canAddAdditional": true,
+                    "headings": [
+                        "",
+                        "Monthly £",
+                        "Notes"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "monthly",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "note",
+                            "component": "KInput"
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Bar Staff",
+                            "key": "bar_staff"
+                        },
+                        {
+                            "name": "Admin Staff",
+                            "key": "admin_staff"
+                        },
+                        {
+                            "name": "Coach",
+                            "key": "coach"
+                        },
+                        {
+                            "name": "Medics",
+                            "key": "medics"
+                        },
+                        {
+                            "name": "Players",
+                            "key": "players"
+                        }
+                    ]
                 }
             ]
         },
