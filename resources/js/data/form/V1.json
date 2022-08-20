@@ -4,7 +4,7 @@
         {
             "name": "General Details",
             "key": "general_details",
-            "items": [
+            "fields": [
                 {
                     "component": "KHeader",
                     "props": {
@@ -16,9 +16,6 @@
                     "name": "Group Entities",
                     "key": "group_entities",
                     "component": "KTextarea",
-                    "validationRules": [
-                        "required"
-                    ],
                     "props": {
                         "rows": 6
                     }
@@ -26,26 +23,17 @@
                 {
                     "name": "Related Parties",
                     "key": "related_parties",
-                    "component": "KTextarea",
-                    "validationRules": [
-                        "required"
-                    ]
+                    "component": "KTextarea"
                 },
                 {
                     "name": "Ground Status",
                     "key": "ground_status",
-                    "component": "KInput",
-                    "validationRules": [
-                        "required"
-                    ]
+                    "component": "KInput"
                 },
                 {
                     "name": "Local Authority",
                     "key": "local_authority",
-                    "component": "KInput",
-                    "validationRules": [
-                        "required"
-                    ]
+                    "component": "KInput"
                 },
                 {
                     "name": "Turnover Band",
@@ -61,18 +49,12 @@
                 {
                     "name": "Details of Related Parties",
                     "key": "details_of_related_parties",
-                    "component": "KTextarea",
-                    "validationRules": [
-                        "required"
-                    ]
+                    "component": "KTextarea"
                 },
                 {
                     "name": "Accounts Upload",
                     "key": "accounts_upload",
-                    "component": "KUpload",
-                    "validationRules": [
-                        "required"
-                    ]
+                    "component": "KUpload"
                 },
                 {
                     "name": "Howden's Risk Assesment Data",
@@ -85,7 +67,7 @@
         {
             "name": "Current Financial Position",
             "key": "current_financial_position",
-            "items": [
+            "fields": [
                 {
                     "component": "KHeader",
                     "props": {
@@ -95,24 +77,58 @@
                 },
                 {
                     "component": "KTable",
-                    "children": []
+                    "rows": [
+                        {
+                            "name": "Current Bank Balance",
+                            "key": "current_bank_balance",
+                            "fields": [
+                                {
+                                    "key": "value",
+                                    "component": "KInput",
+                                    "props": {
+                                        "type": "number"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Club Reserves",
+                            "key": "club_reserves",
+                            "fields": [
+                                {
+                                    "key": "value",
+                                    "component": "KInput",
+                                    "props": {
+                                        "type": "number"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "component": "KTotal",
+                    "values": [
+                        "current_financial_position_current_financial_position_current_bank_balance_value",
+                        "current_financial_position_current_financial_position_club_reserves_value"
+                    ]
                 }
             ]
         },
         {
             "name": "Running Costs",
             "key": "running_costs",
-            "items": []
+            "fields": []
         },
         {
             "name": "Income",
             "key": "income",
-            "items": []
+            "fields": []
         },
         {
             "name": "Balance Sheet",
             "key": "balance_sheet",
-            "items": []
+            "fields": []
         }
     ]
 }

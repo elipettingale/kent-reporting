@@ -32,26 +32,58 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 <k-form-section v-if="current_section">
-                    <component
-                        v-for="(item, index) in current_section.items"
-                        :is="item.component"
-                        :label="item.name"
-                        :key="`${current_section.key}_${item.key}`"
-                        :disabled="is_locked || item.disabled === true"
-                        :validationRules="item.validationRules"
-                        v-bind="item.props"
-                        v-model="
-                            form_data[`${current_section.key}_${item.key}`]
-                        "
+                    <template
+                        v-for="(field, index) in current_section.fields"
+                        :key="index"
                     >
-                        <template v-if="item.children">
-                            <component
-                                v-for="(child, index) in item.children"
-                                :is="child.component"
-                                :key="`${current_section.key}_${item.key}_${child.key}`"
-                            />
+                        <template v-if="field.component === 'KTable'">
+                            <k-table>
+                                <tbody>
+                                    <tr
+                                        v-for="row in field.rows"
+                                        :key="row.key"
+                                    >
+                                        <td>{{ row.name }}</td>
+                                        <td
+                                            v-for="subfield in row.fields"
+                                            :key="subfield.key"
+                                        >
+                                            <component
+                                                :is="subfield.component"
+                                                :label="subfield.name"
+                                                :key="`${current_section.key}_${field.key}_${row.key}_${subfield.key}`"
+                                                :validationRules="
+                                                    subfield.validationRules
+                                                "
+                                                v-bind="subfield.props"
+                                                v-model="
+                                                    form_data[
+                                                        `${current_section.key}_${field.key}_${row.key}_${subfield.key}`
+                                                    ]
+                                                "
+                                            ></component>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </k-table>
                         </template>
-                    </component>
+
+                        <template v-else>
+                            <component
+                                :is="field.component"
+                                :label="field.name"
+                                :key="`${current_section.key}_${field.key}`"
+                                :disabled="is_locked || field.disabled === true"
+                                :validationRules="field.validationRules"
+                                v-bind="field.props"
+                                v-model="
+                                    form_data[
+                                        `${current_section.key}_${field.key}`
+                                    ]
+                                "
+                            ></component>
+                        </template>
+                    </template>
 
                     <div class="flex items-center justify-end mt-4">
                         <k-button @click="goToNextSection">Next</k-button>
@@ -103,22 +135,31 @@ export default {
         let form_data = {};
 
         this.blueprint.sections.forEach((section) => {
-            section.items.forEach((item) => {
-                if (item.key) {
-                    form_data[`${section.key}_${item.key}`] = {
+            section.fields.forEach((field) => {
+                if (field.key) {
+                    form_data[`${section.key}_${field.key}`] = {
                         value: null,
                         error: null,
                     };
+                } else if (field.component === "KTable") {
+                    field.rows.forEach((row) => {
+                        row.fields.forEach((subfield) => {
+                            form_data[
+                                `${section.key}_${field.key}_${row.key}_${subfield.key}`
+                            ] = {
+                                value: null,
+                                error: null,
+                            };
+                        });
+                    });
                 }
             });
         });
 
+        console.log(form_data);
+
         this.form_data = form_data;
         this.is_locked = false;
-
-        // todo: build form data from this.blueprint
-        // basically if it has a key, then save it's value
-        // else do nothing here, it will be handled elsewhere
 
         // axios.get(window.location.href + "/data").then(({ data }) => {
         //     if (data.status !== "complete") {

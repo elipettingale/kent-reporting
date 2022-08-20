@@ -50,3 +50,11 @@
 .k-form-nav-item.is-active {
     @apply bg-blue-300 text-white;
 }
+
+.k-textarea__textarea {
+    @apply rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full;
+}
+
+.k-textarea__textarea:disabled {
+    @apply bg-gray-100;
+}

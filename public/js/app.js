@@ -24786,20 +24786,27 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.blueprint);
     var form_data = {};
     this.blueprint.sections.forEach(function (section) {
-      section.items.forEach(function (item) {
-        if (item.key) {
-          form_data["".concat(section.key, "_").concat(item.key)] = {
+      section.fields.forEach(function (field) {
+        if (field.key) {
+          form_data["".concat(section.key, "_").concat(field.key)] = {
             value: null,
             error: null
           };
+        } else if (field.component === "KTable") {
+          field.rows.forEach(function (row) {
+            row.fields.forEach(function (subfield) {
+              form_data["".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)] = {
+                value: null,
+                error: null
+              };
+            });
+          });
         }
       });
     });
+    console.log(form_data);
     this.form_data = form_data;
-    this.is_locked = false; // todo: build form data from this.blueprint
-    // basically if it has a key, then save it's value
-    // else do nothing here, it will be handled elsewhere
-    // axios.get(window.location.href + "/data").then(({ data }) => {
+    this.is_locked = false; // axios.get(window.location.href + "/data").then(({ data }) => {
     //     if (data.status !== "complete") {
     //         this.is_locked = false;
     //     }
@@ -25203,7 +25210,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: $props.key,
-    "class": "rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full",
+    "class": "k-textarea__textarea",
     rows: (_$props$rows = $props.rows) !== null && _$props$rows !== void 0 ? _$props$rows : 4,
     value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
@@ -25269,6 +25276,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 var _hoisted_1 = {
   "class": "mb-4"
@@ -25302,6 +25311,8 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
+
+  var _component_k_table = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-table");
 
   var _component_k_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-button");
 
@@ -25354,35 +25365,60 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.current_section.items, function (item) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(item.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
-          label: item.name,
-          key: "".concat($options.current_section.key, "_").concat(item.key),
-          disabled: _ctx.is_locked || item.disabled === true,
-          validationRules: item.validationRules
-        }, item.props, {
-          modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(item.key)],
-          "onUpdate:modelValue": function onUpdateModelValue($event) {
-            return _ctx.form_data["".concat($options.current_section.key, "_").concat(item.key)] = $event;
-          }
-        }), {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.current_section.fields, function (field, index) {
+        var _mergeProps2;
+
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+          key: index
+        }, [field.component === 'KTable' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_table, {
+          key: 0
+        }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [item.children ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-              key: 0
-            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(item.children, function (child) {
-              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(child.component), {
-                key: "".concat($options.current_section.key, "_").concat(item.key, "_").concat(child.key)
-              });
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rows, function (row) {
+              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+                key: row.key
+              }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(row.name), 1
+              /* TEXT */
+              ), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(row.fields, function (subfield) {
+                return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
+                  key: subfield.key
+                }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(subfield.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+                  label: subfield.name,
+                  key: "".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key),
+                  validationRules: subfield.validationRules
+                }, subfield.props, {
+                  modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)],
+                  "onUpdate:modelValue": function onUpdateModelValue($event) {
+                    return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)] = $event;
+                  }
+                }), null, 16
+                /* FULL_PROPS */
+                , ["label", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
+              }), 128
+              /* KEYED_FRAGMENT */
+              ))]);
             }), 128
             /* KEYED_FRAGMENT */
-            )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+            ))])];
           }),
           _: 2
           /* DYNAMIC */
 
-        }, 1040
-        /* FULL_PROPS, DYNAMIC_SLOTS */
-        , ["label", "disabled", "validationRules", "modelValue", "onUpdate:modelValue"]);
+        }, 1024
+        /* DYNAMIC_SLOTS */
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(field.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)((_mergeProps2 = {
+          key: 1,
+          label: field.name
+        }, _defineProperty(_mergeProps2, "key", "".concat($options.current_section.key, "_").concat(field.key)), _defineProperty(_mergeProps2, "disabled", _ctx.is_locked || field.disabled === true), _defineProperty(_mergeProps2, "validationRules", field.validationRules), _mergeProps2), field.props, {
+          modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key)],
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key)] = $event;
+          }
+        }), null, 16
+        /* FULL_PROPS */
+        , ["label", "disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))], 64
+        /* STABLE_FRAGMENT */
+        );
       }), 128
       /* KEYED_FRAGMENT */
       )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
@@ -44569,7 +44605,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","items":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","validationRules":["required"],"props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea","validationRules":["required"]},{"name":"Ground Status","key":"ground_status","component":"KInput","validationRules":["required"]},{"name":"Local Authority","key":"local_authority","component":"KInput","validationRules":["required"]},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea","validationRules":["required"]},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload","validationRules":["required"]},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","items":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","children":[]}]},{"name":"Running Costs","key":"running_costs","items":[]},{"name":"Income","key":"income","items":[]},{"name":"Balance Sheet","key":"balance_sheet","items":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","rows":[{"name":"Current Bank Balance","key":"current_bank_balance","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]},{"name":"Club Reserves","key":"club_reserves","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]}]},{"component":"KTotal","values":["current_financial_position_current_financial_position_current_bank_balance_value","current_financial_position_current_financial_position_club_reserves_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
 
 /***/ })
 
