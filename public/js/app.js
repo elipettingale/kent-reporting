@@ -24709,6 +24709,24 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "KTotal",
+  props: ["label", "value", "prefix"]
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KUpload.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KUpload.vue?vue&type=script&lang=js ***!
@@ -24754,6 +24772,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_KTable_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/KTable.vue */ "./resources/js/Components/KTable.vue");
 /* harmony import */ var _Components_KTableRow_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/KTableRow.vue */ "./resources/js/Components/KTableRow.vue");
 /* harmony import */ var _Components_KHeader_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Components/KHeader.vue */ "./resources/js/Components/KHeader.vue");
+/* harmony import */ var _Components_KTotal_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Components/KTotal.vue */ "./resources/js/Components/KTotal.vue");
+
 
 
 
@@ -24779,20 +24799,15 @@ __webpack_require__.r(__webpack_exports__);
     KFormNavItem: _Components_KFormNavItem_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     KTable: _Components_KTable_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     KTableRow: _Components_KTableRow_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    KHeader: _Components_KHeader_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    KHeader: _Components_KHeader_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    KTotal: _Components_KTotal_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   created: function created() {
     this.blueprint = __webpack_require__("./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$")("./V".concat(this.version, ".json"));
-    console.log(this.blueprint);
     var form_data = {};
     this.blueprint.sections.forEach(function (section) {
       section.fields.forEach(function (field) {
-        if (field.key) {
-          form_data["".concat(section.key, "_").concat(field.key)] = {
-            value: null,
-            error: null
-          };
-        } else if (field.component === "KTable") {
+        if (field.component === "KTable") {
           field.rows.forEach(function (row) {
             row.fields.forEach(function (subfield) {
               form_data["".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(subfield.key)] = {
@@ -24801,10 +24816,14 @@ __webpack_require__.r(__webpack_exports__);
               };
             });
           });
+        } else if (field.key) {
+          form_data["".concat(section.key, "_").concat(field.key)] = {
+            value: null,
+            error: null
+          };
         }
       });
     });
-    console.log(form_data);
     this.form_data = form_data;
     this.is_locked = false; // axios.get(window.location.href + "/data").then(({ data }) => {
     //     if (data.status !== "complete") {
@@ -24851,6 +24870,23 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getTotal: function getTotal(matches) {
+      var _this = this;
+
+      var total = 0;
+      matches.forEach(function (match) {
+        var keys = Object.keys(_this.form_data).filter(function (key) {
+          return new RegExp(match).test(key);
+        });
+        keys.forEach(function (key) {
+          total += parseFloat(_this.form_data[key].value || 0);
+        });
+      });
+      return new Intl.NumberFormat("en-UK", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(total);
+    },
     goToNextSection: function goToNextSection() {
       // todo: validate current section, show warning if they want to continue anyway
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
@@ -24860,13 +24896,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save(data) {
-      var _this = this;
+      var _this2 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref) {
         var data = _ref.data;
-        _this.is_saved = true;
+        _this2.is_saved = true;
       });
     },
     submit: function submit() {
@@ -25226,6 +25262,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24":
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24 ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "k-total"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _$props$label, _$props$prefix;
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_$props$label = $props.label) !== null && _$props$label !== void 0 ? _$props$label : "Total"), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((_$props$prefix = $props.prefix) !== null && _$props$prefix !== void 0 ? _$props$prefix : "£") + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.value), 1
+  /* TEXT */
+  )]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KUpload.vue?vue&type=template&id=aa9ce45e":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KUpload.vue?vue&type=template&id=aa9ce45e ***!
@@ -25313,6 +25377,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
 
   var _component_k_table = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-table");
+
+  var _component_k_total = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-total");
 
   var _component_k_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-button");
 
@@ -25406,8 +25472,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
         }, 1024
         /* DYNAMIC_SLOTS */
-        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(field.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)((_mergeProps2 = {
-          key: 1,
+        )) : field.component === 'KTotal' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_total, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+          key: 1
+        }, field.props, {
+          value: $options.getTotal(field.values)
+        }), null, 16
+        /* FULL_PROPS */
+        , ["value"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(field.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)((_mergeProps2 = {
+          key: 2,
           label: field.name
         }, _defineProperty(_mergeProps2, "key", "".concat($options.current_section.key, "_").concat(field.key)), _defineProperty(_mergeProps2, "disabled", _ctx.is_locked || field.disabled === true), _defineProperty(_mergeProps2, "validationRules", field.validationRules), _mergeProps2), field.props, {
           modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key)],
@@ -43225,6 +43297,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Components/KTotal.vue":
+/*!********************************************!*\
+  !*** ./resources/js/Components/KTotal.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _KTotal_vue_vue_type_template_id_571cff24__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KTotal.vue?vue&type=template&id=571cff24 */ "./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24");
+/* harmony import */ var _KTotal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./KTotal.vue?vue&type=script&lang=js */ "./resources/js/Components/KTotal.vue?vue&type=script&lang=js");
+/* harmony import */ var _var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_var_www_html_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_KTotal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_KTotal_vue_vue_type_template_id_571cff24__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Components/KTotal.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Components/KUpload.vue":
 /*!*********************************************!*\
   !*** ./resources/js/Components/KUpload.vue ***!
@@ -43441,6 +43541,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/KTotal.vue?vue&type=script&lang=js":
+/*!********************************************************************!*\
+  !*** ./resources/js/Components/KTotal.vue?vue&type=script&lang=js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTotal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTotal_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./KTotal.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Components/KUpload.vue?vue&type=script&lang=js":
 /*!*********************************************************************!*\
   !*** ./resources/js/Components/KUpload.vue?vue&type=script&lang=js ***!
@@ -43629,6 +43745,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTextarea_vue_vue_type_template_id_1e1d36ec__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTextarea_vue_vue_type_template_id_1e1d36ec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./KTextarea.vue?vue&type=template&id=1e1d36ec */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTextarea.vue?vue&type=template&id=1e1d36ec");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24":
+/*!**************************************************************************!*\
+  !*** ./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24 ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTotal_vue_vue_type_template_id_571cff24__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_KTotal_vue_vue_type_template_id_571cff24__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./KTotal.vue?vue&type=template&id=571cff24 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/KTotal.vue?vue&type=template&id=571cff24");
 
 
 /***/ }),
@@ -44605,7 +44737,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","rows":[{"name":"Current Bank Balance","key":"current_bank_balance","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]},{"name":"Club Reserves","key":"club_reserves","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]}]},{"component":"KTotal","values":["current_financial_position_current_financial_position_current_bank_balance_value","current_financial_position_current_financial_position_club_reserves_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rows":[{"name":"Current Bank Balance","key":"current_bank_balance","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]},{"name":"Club Reserves","key":"club_reserves","fields":[{"key":"value","component":"KInput","props":{"type":"number"}}]}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
 
 /***/ })
 

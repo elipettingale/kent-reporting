@@ -77,6 +77,7 @@
                 },
                 {
                     "component": "KTable",
+                    "key": "current_financial_position",
                     "rows": [
                         {
                             "name": "Current Bank Balance",
@@ -108,9 +109,9 @@
                 },
                 {
                     "component": "KTotal",
+                    "props": {},
                     "values": [
-                        "current_financial_position_current_financial_position_current_bank_balance_value",
-                        "current_financial_position_current_financial_position_club_reserves_value"
+                        "current_financial_position_current_financial_position_.*_value"
                     ]
                 }
             ]

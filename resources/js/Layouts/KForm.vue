@@ -68,6 +68,13 @@
                             </k-table>
                         </template>
 
+                        <template v-else-if="field.component === 'KTotal'">
+                            <k-total
+                                v-bind="field.props"
+                                :value="getTotal(field.values)"
+                            />
+                        </template>
+
                         <template v-else>
                             <component
                                 :is="field.component"
@@ -111,6 +118,7 @@ import KFormNavItem from "../Components/KFormNavItem.vue";
 import KTable from "../Components/KTable.vue";
 import KTableRow from "../Components/KTableRow.vue";
 import KHeader from "../Components/KHeader.vue";
+import KTotal from "../Components/KTotal.vue";
 
 export default {
     name: "KForm",
@@ -127,21 +135,16 @@ export default {
         KTable,
         KTableRow,
         KHeader,
+        KTotal,
     },
     created() {
         this.blueprint = require(`../data/form/V${this.version}.json`);
-        console.log(this.blueprint);
 
         let form_data = {};
 
         this.blueprint.sections.forEach((section) => {
             section.fields.forEach((field) => {
-                if (field.key) {
-                    form_data[`${section.key}_${field.key}`] = {
-                        value: null,
-                        error: null,
-                    };
-                } else if (field.component === "KTable") {
+                if (field.component === "KTable") {
                     field.rows.forEach((row) => {
                         row.fields.forEach((subfield) => {
                             form_data[
@@ -152,11 +155,14 @@ export default {
                             };
                         });
                     });
+                } else if (field.key) {
+                    form_data[`${section.key}_${field.key}`] = {
+                        value: null,
+                        error: null,
+                    };
                 }
             });
         });
-
-        console.log(form_data);
 
         this.form_data = form_data;
         this.is_locked = false;
@@ -210,6 +216,25 @@ export default {
         },
     },
     methods: {
+        getTotal(matches) {
+            let total = 0;
+
+            matches.forEach((match) => {
+                let keys = Object.keys(this.form_data).filter((key) => {
+                    return new RegExp(match).test(key);
+                });
+
+                keys.forEach((key) => {
+                    total += parseFloat(this.form_data[key].value || 0);
+                });
+            });
+
+            return new Intl.NumberFormat("en-UK", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }).format(total);
+        },
+
         goToNextSection() {
             // todo: validate current section, show warning if they want to continue anyway
 
