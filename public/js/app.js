@@ -24810,13 +24810,13 @@ __webpack_require__.r(__webpack_exports__);
         if (field.component === "KTable") {
           field.rows.forEach(function (row) {
             field.rowFields.forEach(function (rowField) {
-              console.log("".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key));
               form_data["".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)] = {
                 value: null,
                 error: null
               };
             });
           });
+          form_data["".concat(section.key, "_").concat(field.key, "_total_additional_rows")] = 0;
         } else if (field.key) {
           form_data["".concat(section.key, "_").concat(field.key)] = {
             value: null,
@@ -24825,6 +24825,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     });
+    console.log(form_data);
     this.form_data = form_data;
     this.is_locked = false; // axios.get(window.location.href + "/data").then(({ data }) => {
     //     if (data.status !== "complete") {
@@ -24888,6 +24889,23 @@ __webpack_require__.r(__webpack_exports__);
         maximumFractionDigits: 2
       }).format(total);
     },
+    addAdditionalRow: function addAdditionalRow(section, table) {
+      var _this2 = this;
+
+      var prefix = "".concat(section.key, "_").concat(table.key);
+      var index = this.form_data["".concat(prefix, "_total_additional_rows")] + 1;
+      this.form_data["".concat(prefix, "_additional_").concat(index, "_label")] = {
+        value: null,
+        error: null
+      };
+      table.rowFields.forEach(function (field) {
+        _this2.form_data["".concat(prefix, "_additional_").concat(index, "_").concat(field.key)] = {
+          value: null,
+          error: null
+        };
+      });
+      this.form_data["".concat(prefix, "_total_additional_rows")] = index;
+    },
     goToNextSection: function goToNextSection() {
       // todo: validate current section, show warning if they want to continue anyway
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
@@ -24897,13 +24915,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save(data) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref) {
         var data = _ref.data;
-        _this2.is_saved = true;
+        _this3.is_saved = true;
       });
     },
     submit: function submit() {
@@ -25369,27 +25387,31 @@ var _hoisted_8 = {
 var _hoisted_9 = {
   key: 0
 };
+var _hoisted_10 = {
+  key: 0
+};
+var _hoisted_11 = ["colspan"];
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, null, -1
-/* HOISTED */
-);
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Add Additional Category ");
 
-var _hoisted_11 = {
+var _hoisted_13 = {
   "class": "flex items-center justify-end mt-4"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
 
+  var _component_k_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-input");
+
+  var _component_k_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-button");
+
   var _component_k_table = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-table");
 
   var _component_k_total = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-total");
-
-  var _component_k_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-button");
 
   var _component_k_form_section = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-section");
 
@@ -25449,7 +25471,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: 0
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [field.headings ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("thead", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.headings, function (heading, index) {
+            return [field.headings ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("thead", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.headings, function (heading, index) {
               return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
                 key: index
               }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(heading), 1
@@ -25481,7 +25503,54 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               ))]);
             }), 128
             /* KEYED_FRAGMENT */
-            ))])];
+            )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_total_additional_rows")], function (index) {
+              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+                key: index
+              }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_input, {
+                key: "".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label"),
+                modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label")],
+                "onUpdate:modelValue": function onUpdateModelValue($event) {
+                  return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label")] = $event;
+                }
+              }, null, 8
+              /* PROPS */
+              , ["modelValue", "onUpdate:modelValue"]))]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rowFields, function (rowField, fieldIndex) {
+                return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
+                  key: fieldIndex
+                }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+                  key: "".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key),
+                  validationRules: rowField.validationRules
+                }, rowField.props, {
+                  modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key)],
+                  "onUpdate:modelValue": function onUpdateModelValue($event) {
+                    return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key)] = $event;
+                  }
+                }), null, 16
+                /* FULL_PROPS */
+                , ["validationRules", "modelValue", "onUpdate:modelValue"]))]);
+              }), 128
+              /* KEYED_FRAGMENT */
+              ))]);
+            }), 128
+            /* KEYED_FRAGMENT */
+            )), field.canAddAdditional ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+              colspan: field.rowFields.length + 1
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+              onClick: function onClick($event) {
+                return $options.addAdditionalRow($options.current_section, field);
+              }
+            }, {
+              "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+                return [_hoisted_12];
+              }),
+              _: 2
+              /* DYNAMIC */
+
+            }, 1032
+            /* PROPS, DYNAMIC_SLOTS */
+            , ["onClick"])], 8
+            /* PROPS */
+            , _hoisted_11)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
           }),
           _: 2
           /* DYNAMIC */
@@ -25509,11 +25578,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
         onClick: $options.goToNextSection
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_12];
+          return [_hoisted_14];
         }),
         _: 1
         /* STABLE */
@@ -25529,7 +25598,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
+      return [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
     }),
     _: 1
     /* STABLE */
@@ -44753,7 +44822,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","headings":["Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput"}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Water","key":"water"},{"name":"Gas & Electricity","key":"gas_and_electricity"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar Purchases","key":"bar_purchases"},{"name":"Food Purchases","key":"food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest","key":"interest"},{"name":"Grant Repayments","key":"grant_repayments"},{"name":"Broadband/Phone/TV","key":"broadband_phone_tv"},{"name":"Buildings Insurance","key":"buildings_insurance"},{"name":"Contents Insurance","key":"contents_insurance"},{"name":"Insurance Other","key":"insurance_other"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"}]}]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Turnover Band","key":"turnover_band","component":"KSelect","props":{"options":["£1000-£1999","£2000-£2999"]}},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput"}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Water","key":"water"},{"name":"Gas & Electricity","key":"gas_and_electricity"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar Purchases","key":"bar_purchases"},{"name":"Food Purchases","key":"food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest","key":"interest"},{"name":"Grant Repayments","key":"grant_repayments"},{"name":"Broadband/Phone/TV","key":"broadband_phone_tv"},{"name":"Buildings Insurance","key":"buildings_insurance"},{"name":"Contents Insurance","key":"contents_insurance"},{"name":"Insurance Other","key":"insurance_other"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"},{"name":"Cleaning Contract","key":"cleaning_contract"},{"name":"Security/Alarm","key":"security_alarm"},{"name":"Sanitary","key":"sanitary"},{"name":"Laundry","key":"laundry"},{"name":"Building Maintenance","key":"building_maintenance"},{"name":"VAT","key":"vat"}]}]},{"name":"Income","key":"income","fields":[]},{"name":"Balance Sheet","key":"balance_sheet","fields":[]}]}');
 
 /***/ })
 

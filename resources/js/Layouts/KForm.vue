@@ -40,7 +40,6 @@
                             <k-table>
                                 <thead v-if="field.headings">
                                     <tr>
-                                        <th></th>
                                         <th
                                             v-for="(
                                                 heading, index
@@ -74,6 +73,61 @@
                                                     ]
                                                 "
                                             ></component>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        v-for="index in form_data[
+                                            `${current_section.key}_${field.key}_total_additional_rows`
+                                        ]"
+                                        :key="index"
+                                    >
+                                        <td>
+                                            <k-input
+                                                :key="`${current_section.key}_${field.key}_additional_${index}_label`"
+                                                v-model="
+                                                    form_data[
+                                                        `${current_section.key}_${field.key}_additional_${index}_label`
+                                                    ]
+                                                "
+                                            />
+                                        </td>
+                                        <td
+                                            v-for="(
+                                                rowField, fieldIndex
+                                            ) in field.rowFields"
+                                            :key="fieldIndex"
+                                        >
+                                            <component
+                                                :is="rowField.component"
+                                                :key="`${current_section.key}_${field.key}_additional_${index}_${rowField.key}`"
+                                                :validationRules="
+                                                    rowField.validationRules
+                                                "
+                                                v-bind="rowField.props"
+                                                v-model="
+                                                    form_data[
+                                                        `${current_section.key}_${field.key}_additional_${index}_${rowField.key}`
+                                                    ]
+                                                "
+                                            ></component>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="field.canAddAdditional">
+                                        <td
+                                            :colspan="
+                                                field.rowFields.length + 1
+                                            "
+                                        >
+                                            <k-button
+                                                @click="
+                                                    addAdditionalRow(
+                                                        current_section,
+                                                        field
+                                                    )
+                                                "
+                                            >
+                                                Add Additional Category
+                                            </k-button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -159,9 +213,6 @@ export default {
                 if (field.component === "KTable") {
                     field.rows.forEach((row) => {
                         field.rowFields.forEach((rowField) => {
-                            console.log(
-                                `${section.key}_${field.key}_${row.key}_${rowField.key}`
-                            );
                             form_data[
                                 `${section.key}_${field.key}_${row.key}_${rowField.key}`
                             ] = {
@@ -170,6 +221,10 @@ export default {
                             };
                         });
                     });
+
+                    form_data[
+                        `${section.key}_${field.key}_total_additional_rows`
+                    ] = 0;
                 } else if (field.key) {
                     form_data[`${section.key}_${field.key}`] = {
                         value: null,
@@ -178,6 +233,8 @@ export default {
                 }
             });
         });
+
+        console.log(form_data);
 
         this.form_data = form_data;
         this.is_locked = false;
@@ -250,6 +307,25 @@ export default {
             }).format(total);
         },
 
+        addAdditionalRow(section, table) {
+            let prefix = `${section.key}_${table.key}`;
+            let index = this.form_data[`${prefix}_total_additional_rows`] + 1;
+
+            this.form_data[`${prefix}_additional_${index}_label`] = {
+                value: null,
+                error: null,
+            };
+
+            table.rowFields.forEach((field) => {
+                this.form_data[`${prefix}_additional_${index}_${field.key}`] = {
+                    value: null,
+                    error: null,
+                };
+            });
+
+            this.form_data[`${prefix}_total_additional_rows`] = index;
+        },
+
         goToNextSection() {
             // todo: validate current section, show warning if they want to continue anyway
 
@@ -262,6 +338,7 @@ export default {
                 this.current_section_index = 99;
             }
         },
+
         save(data) {
             axios
                 .patch(window.location.href, {

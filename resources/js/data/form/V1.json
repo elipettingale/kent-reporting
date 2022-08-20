@@ -121,7 +121,9 @@
                 {
                     "component": "KTable",
                     "key": "club_running_costs",
+                    "canAddAdditional": true,
                     "headings": [
+                        "",
                         "Monthly £",
                         "Notes"
                     ],
@@ -210,6 +212,30 @@
                         {
                             "name": "Loan Repayments",
                             "key": "loan_repayments"
+                        },
+                        {
+                            "name": "Cleaning Contract",
+                            "key": "cleaning_contract"
+                        },
+                        {
+                            "name": "Security/Alarm",
+                            "key": "security_alarm"
+                        },
+                        {
+                            "name": "Sanitary",
+                            "key": "sanitary"
+                        },
+                        {
+                            "name": "Laundry",
+                            "key": "laundry"
+                        },
+                        {
+                            "name": "Building Maintenance",
+                            "key": "building_maintenance"
+                        },
+                        {
+                            "name": "VAT",
+                            "key": "vat"
                         }
                     ]
                 }
