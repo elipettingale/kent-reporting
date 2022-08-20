@@ -382,7 +382,223 @@
         {
             "name": "Balance Sheet",
             "key": "balance_sheet",
-            "fields": []
+            "fields": [
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-lg",
+                        "text": "Balance Sheet"
+                    }
+                },
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-md",
+                        "text": "Fixed Assets"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "fixed_assets",
+                    "headings": [
+                        "Asset",
+                        "Accounting Value (£)",
+                        "Notes"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "accounting_value",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "notes",
+                            "component": "KInput"
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Freehold Property",
+                            "key": "freehold_property"
+                        },
+                        {
+                            "name": "Plant & Equipment",
+                            "key": "plant_and_equipment"
+                        },
+                        {
+                            "name": "Other Fixed Assets",
+                            "key": "other_fixed_assets"
+                        }
+                    ]
+                },
+                {
+                    "component": "KTotal",
+                    "props": {
+                        "label": "Total Fixed Assets"
+                    },
+                    "values": [
+                        "balance_sheet_fixed_assets_.*_accounting_value"
+                    ]
+                },
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-md",
+                        "text": "Current Assets"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "current_assets",
+                    "headings": [
+                        "Asset",
+                        "Accounting Value (£)",
+                        "Notes"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "accounting_value",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "notes",
+                            "component": "KInput"
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Rugby Stock",
+                            "key": "rugby_stock"
+                        },
+                        {
+                            "name": "Clubhouse Stock",
+                            "key": "clubhouse_stock"
+                        },
+                        {
+                            "name": "Investments",
+                            "key": "investments"
+                        },
+                        {
+                            "name": "Debtors",
+                            "key": "debtors"
+                        }
+                    ]
+                },
+                {
+                    "component": "KTotal",
+                    "props": {
+                        "label": "Total Current Assets"
+                    },
+                    "values": [
+                        "balance_sheet_current_assets_.*_accounting_value"
+                    ]
+                },
+                {
+                    "component": "KTotal",
+                    "props": {
+                        "label": "Total Assets"
+                    },
+                    "values": [
+                        "balance_sheet_fixed_assets_.*_accounting_value",
+                        "balance_sheet_current_assets_.*_accounting_value"
+                    ]
+                },
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-md",
+                        "text": "Liabilities"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "liabilities",
+                    "canAddAdditional": true,
+                    "headings": [
+                        "Liability",
+                        "Due Within 12 Months",
+                        "Due After 12 Months"
+                    ],
+                    "rowFields": [
+                        {
+                            "key": "due_within_12_months",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "key": "due_after_12_months",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "HMRC",
+                            "key": "hmrc"
+                        },
+                        {
+                            "name": "Rugby Creditors",
+                            "key": "rugby_creditors"
+                        },
+                        {
+                            "name": "GRFU Loans",
+                            "key": "grfu_loans"
+                        },
+                        {
+                            "name": "RFU/RFF Loans",
+                            "key": "rfu_rff_loans"
+                        },
+                        {
+                            "name": "Bank Loans",
+                            "key": "bank_loans"
+                        },
+                        {
+                            "name": "Accruals",
+                            "key": "accruals"
+                        }
+                    ]
+                },
+                {
+                    "component": "KHeader",
+                    "props": {
+                        "classList": "mb-3 text-md",
+                        "text": "Off Balance Sheet Liabilities"
+                    }
+                },
+                {
+                    "component": "KTable",
+                    "key": "off_balance_sheet_liabilities",
+                    "canAddAdditional": true,
+                    "rowFields": [
+                        {
+                            "key": "value",
+                            "component": "KInput",
+                            "props": {
+                                "type": "number"
+                            }
+                        }
+                    ],
+                    "rows": [
+                        {
+                            "name": "Related Party Guarantees",
+                            "key": "releated_party_guarantees"
+                        },
+                        {
+                            "name": "Cross Holdings",
+                            "key": "cross_holdings"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
