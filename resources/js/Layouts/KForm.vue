@@ -31,7 +31,7 @@
         </div>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <k-form-section v-if="current_section">
+                <k-form-section v-if="current_section && form_data">
                     <template
                         v-for="(field, index) in current_section.fields"
                         :key="index"
@@ -63,6 +63,10 @@
                                             <component
                                                 :is="rowField.component"
                                                 :key="`${current_section.key}_${field.key}_${row.key}_${rowField.key}`"
+                                                :disabled="
+                                                    is_locked ||
+                                                    field.disabled === true
+                                                "
                                                 :validationRules="
                                                     rowField.validationRules
                                                 "
@@ -84,6 +88,10 @@
                                         <td>
                                             <k-input
                                                 :key="`${current_section.key}_${field.key}_additional_${index}_label`"
+                                                :disabled="
+                                                    is_locked ||
+                                                    field.disabled === true
+                                                "
                                                 v-model="
                                                     form_data[
                                                         `${current_section.key}_${field.key}_additional_${index}_label`
@@ -100,6 +108,10 @@
                                             <component
                                                 :is="rowField.component"
                                                 :key="`${current_section.key}_${field.key}_additional_${index}_${rowField.key}`"
+                                                :disabled="
+                                                    is_locked ||
+                                                    field.disabled === true
+                                                "
                                                 :validationRules="
                                                     rowField.validationRules
                                                 "
@@ -119,6 +131,10 @@
                                             "
                                         >
                                             <k-button
+                                                :disabled="
+                                                    is_locked ||
+                                                    field.disabled === true
+                                                "
                                                 @click="
                                                     addAdditionalRow(
                                                         current_section,
@@ -204,6 +220,7 @@ export default {
         KTotal,
     },
     created() {
+        this.debounced_save = _.debounce(this.save, 1000);
         this.blueprint = require(`../data/form/V${this.version}.json`);
 
         let form_data = {};
@@ -234,32 +251,27 @@ export default {
             });
         });
 
-        console.log(form_data);
+        axios.get(window.location.href + "/data").then(({ data }) => {
+            if (data.data) {
+                form_data = {
+                    ...form_data,
+                    ...data.data,
+                };
+            }
 
-        this.form_data = form_data;
-        this.is_locked = false;
+            if (data.status !== "complete") {
+                this.is_locked = false;
+            }
 
-        // axios.get(window.location.href + "/data").then(({ data }) => {
-        //     if (data.status !== "complete") {
-        //         this.is_locked = false;
-        //     }
-
-        //     if (data.data) {
-        //         this.form = data.data;
-        //     }
-        // });
-
-        // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
-    },
-    mounted() {
-        this.debounced_save = _.debounce(this.save, 1000);
+            this.form_data = form_data;
+        });
     },
     data: function () {
         return {
             is_saved: true,
             is_locked: true,
             current_section_index: 0,
-            form_data: {},
+            form_data: null,
         };
     },
     computed: {
@@ -278,11 +290,11 @@ export default {
     watch: {
         form_data: {
             handler(value) {
-                console.log(value);
-                // if (!this.is_locked) {
-                //     this.is_saved = false;
-                //     this.debounced_save(value);
-                // }
+                if (!this.is_locked) {
+                    console.log("SAVE");
+                    this.is_saved = false;
+                    this.debounced_save(value);
+                }
             },
             deep: true,
         },

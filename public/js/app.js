@@ -24627,7 +24627,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KSelect",
-  props: ["label", "key", "modelValue", "options"],
+  props: ["label", "key", "modelValue", "options", "disabled"],
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -24742,7 +24742,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KUpload",
-  props: ["label", "key"],
+  props: ["label", "key", "disabled"],
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -24773,6 +24773,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_KTableRow_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/KTableRow.vue */ "./resources/js/Components/KTableRow.vue");
 /* harmony import */ var _Components_KHeader_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Components/KHeader.vue */ "./resources/js/Components/KHeader.vue");
 /* harmony import */ var _Components_KTotal_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Components/KTotal.vue */ "./resources/js/Components/KTotal.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -24803,6 +24809,9 @@ __webpack_require__.r(__webpack_exports__);
     KTotal: _Components_KTotal_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   created: function created() {
+    var _this = this;
+
+    this.debounced_save = _.debounce(this.save, 1000);
     this.blueprint = __webpack_require__("./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$")("./V".concat(this.version, ".json"));
     var form_data = {};
     this.blueprint.sections.forEach(function (section) {
@@ -24825,27 +24834,26 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     });
-    console.log(form_data);
-    this.form_data = form_data;
-    this.is_locked = false; // axios.get(window.location.href + "/data").then(({ data }) => {
-    //     if (data.status !== "complete") {
-    //         this.is_locked = false;
-    //     }
-    //     if (data.data) {
-    //         this.form = data.data;
-    //     }
-    // });
-    // todo: instead of overwriting full data from save, save just the values and patch them into the above data structure
-  },
-  mounted: function mounted() {
-    this.debounced_save = _.debounce(this.save, 1000);
+    axios.get(window.location.href + "/data").then(function (_ref) {
+      var data = _ref.data;
+
+      if (data.data) {
+        form_data = _objectSpread(_objectSpread({}, form_data), data.data);
+      }
+
+      if (data.status !== "complete") {
+        _this.is_locked = false;
+      }
+
+      _this.form_data = form_data;
+    });
   },
   data: function data() {
     return {
       is_saved: true,
       is_locked: true,
       current_section_index: 0,
-      form_data: {}
+      form_data: null
     };
   },
   computed: {
@@ -24863,25 +24871,26 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     form_data: {
       handler: function handler(value) {
-        console.log(value); // if (!this.is_locked) {
-        //     this.is_saved = false;
-        //     this.debounced_save(value);
-        // }
+        if (!this.is_locked) {
+          console.log("SAVE");
+          this.is_saved = false;
+          this.debounced_save(value);
+        }
       },
       deep: true
     }
   },
   methods: {
     getTotal: function getTotal(matches) {
-      var _this = this;
+      var _this2 = this;
 
       var total = 0;
       matches.forEach(function (match) {
-        var keys = Object.keys(_this.form_data).filter(function (key) {
+        var keys = Object.keys(_this2.form_data).filter(function (key) {
           return new RegExp(match).test(key);
         });
         keys.forEach(function (key) {
-          total += parseFloat(_this.form_data[key].value || 0);
+          total += parseFloat(_this2.form_data[key].value || 0);
         });
       });
       return new Intl.NumberFormat("en-UK", {
@@ -24890,7 +24899,7 @@ __webpack_require__.r(__webpack_exports__);
       }).format(total);
     },
     addAdditionalRow: function addAdditionalRow(section, table) {
-      var _this2 = this;
+      var _this3 = this;
 
       var prefix = "".concat(section.key, "_").concat(table.key);
       var index = this.form_data["".concat(prefix, "_total_additional_rows")] + 1;
@@ -24899,7 +24908,7 @@ __webpack_require__.r(__webpack_exports__);
         error: null
       };
       table.rowFields.forEach(function (field) {
-        _this2.form_data["".concat(prefix, "_additional_").concat(index, "_").concat(field.key)] = {
+        _this3.form_data["".concat(prefix, "_additional_").concat(index, "_").concat(field.key)] = {
           value: null,
           error: null
         };
@@ -24915,13 +24924,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save(data) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.patch(window.location.href, {
         data: data
-      }).then(function (_ref) {
-        var data = _ref.data;
-        _this3.is_saved = true;
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this4.is_saved = true;
       });
     },
     submit: function submit() {
@@ -24929,8 +24938,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch(window.location.href, {
         data: this.form,
         status: "complete"
-      }).then(function (_ref2) {
-        var data = _ref2.data;
+      }).then(function (_ref3) {
+        var data = _ref3.data;
         window.location.href = "/reports";
       });
     }
@@ -25133,7 +25142,7 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "k-select"
 };
-var _hoisted_3 = ["value"];
+var _hoisted_3 = ["value", "disabled"];
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, null, -1
 /* HOISTED */
@@ -25157,7 +25166,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
-    })
+    }),
+    disabled: $props.disabled
   }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.options, function (option) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: option,
@@ -25325,15 +25335,10 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "k-field"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = {
   "class": "k-upload"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "file"
-})], -1
-/* HOISTED */
-);
-
+};
+var _hoisted_3 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-label");
 
@@ -25342,7 +25347,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.key
   }, null, 8
   /* PROPS */
-  , ["value", "name"]), _hoisted_2]);
+  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "file",
+    disabled: $props.disabled
+  }, null, 8
+  /* PROPS */
+  , _hoisted_3)])]);
 }
 
 /***/ }),
@@ -25458,7 +25468,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.save_status)
   }, null, 8
   /* PROPS */
-  , _hoisted_6)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$options.current_section ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_section, {
+  , _hoisted_6)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$options.current_section && _ctx.form_data ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_section, {
     key: 0
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25489,6 +25499,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   key: "".concat(row.key, "_").concat(rowField.key)
                 }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
                   key: "".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key),
+                  disabled: _ctx.is_locked || field.disabled === true,
                   validationRules: rowField.validationRules
                 }, rowField.props, {
                   modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)],
@@ -25497,7 +25508,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }
                 }), null, 16
                 /* FULL_PROPS */
-                , ["validationRules", "modelValue", "onUpdate:modelValue"]))]);
+                , ["disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
               }), 128
               /* KEYED_FRAGMENT */
               ))]);
@@ -25508,17 +25519,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 key: index
               }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_input, {
                 key: "".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label"),
+                disabled: _ctx.is_locked || field.disabled === true,
                 modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label")],
                 "onUpdate:modelValue": function onUpdateModelValue($event) {
                   return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_label")] = $event;
                 }
               }, null, 8
               /* PROPS */
-              , ["modelValue", "onUpdate:modelValue"]))]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rowFields, function (rowField, fieldIndex) {
+              , ["disabled", "modelValue", "onUpdate:modelValue"]))]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.rowFields, function (rowField, fieldIndex) {
                 return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
                   key: fieldIndex
                 }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
                   key: "".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key),
+                  disabled: _ctx.is_locked || field.disabled === true,
                   validationRules: rowField.validationRules
                 }, rowField.props, {
                   modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key)],
@@ -25527,7 +25540,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }
                 }), null, 16
                 /* FULL_PROPS */
-                , ["validationRules", "modelValue", "onUpdate:modelValue"]))]);
+                , ["disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
               }), 128
               /* KEYED_FRAGMENT */
               ))]);
@@ -25536,6 +25549,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             )), field.canAddAdditional ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
               colspan: field.rowFields.length + 1
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+              disabled: _ctx.is_locked || field.disabled === true,
               onClick: function onClick($event) {
                 return $options.addAdditionalRow($options.current_section, field);
               }
@@ -25548,7 +25562,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
             }, 1032
             /* PROPS, DYNAMIC_SLOTS */
-            , ["onClick"])], 8
+            , ["disabled", "onClick"])], 8
             /* PROPS */
             , _hoisted_11)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
           }),

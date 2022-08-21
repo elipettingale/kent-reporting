@@ -1407,6 +1407,17 @@ select {
 
 .k-textarea__textarea:disabled {
   background-color: var(--gray-100);
+    opacity: 1;
+}
+
+.k-input__input:disabled {
+  background-color: var(--gray-100);
+    opacity: 1;
+}
+
+.k-select__select:disabled {
+  background-color: var(--gray-100);
+    opacity: 1;
 }
 
 .hover\:border-gray-300:hover {

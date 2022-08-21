@@ -6,6 +6,7 @@
                 class="k-select__select"
                 :value="modelValue.value"
                 @input="updateValue"
+                :disabled="disabled"
             >
                 <option></option>
                 <option
@@ -27,7 +28,7 @@ import KLabel from "./KLabel.vue";
 
 export default {
     name: "KSelect",
-    props: ["label", "key", "modelValue", "options"],
+    props: ["label", "key", "modelValue", "options", "disabled"],
     components: {
         KLabel,
     },

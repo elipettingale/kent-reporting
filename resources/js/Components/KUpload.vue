@@ -2,7 +2,7 @@
     <div class="k-field">
         <k-label :value="label" :name="key" />
         <div class="k-upload">
-            <input type="file" />
+            <input type="file" :disabled="disabled" />
         </div>
     </div>
 </template>
@@ -12,7 +12,7 @@ import KLabel from "./KLabel.vue";
 
 export default {
     name: "KUpload",
-    props: ["label", "key"],
+    props: ["label", "key", "disabled"],
     components: {
         KLabel,
     },
