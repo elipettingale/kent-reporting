@@ -24916,21 +24916,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form_data["".concat(prefix, "_total_additional_rows")] = index;
     },
     goToNextSection: function goToNextSection() {
+      var _this4 = this;
+
       // todo: validate current section, show warning if they want to continue anyway
-      if (this.current_section_index + 1 < this.blueprint.sections.length) {
-        this.current_section_index++;
-      } else {
-        this.current_section_index = 99;
-      }
+      // get blueprint for this section (this.current_section), loop througth fields, determine key and look in form_data, if null then set the error in that same place
+      this.current_section.fields.forEach(function (field) {
+        if (field.component === "KTable") {
+          field.rows.forEach(function (row) {
+            field.rowFields.forEach(function (rowField) {
+              var data = _this4.form_data["".concat(_this4.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)];
+
+              if (Array.isArray(rowField.validation)) {// todo: loop through and apply custom rules
+              } else {
+                // default basic required validation
+                if (data["value"] === null) {
+                  data["error"] = "This field is required";
+                }
+              }
+            });
+          });
+        } else if (field.key && !field.disabled) {
+          var data = _this4.form_data["".concat(_this4.current_section.key, "_").concat(field.key)];
+
+          if (data["value"] === null) {
+            data["error"] = "This field is required";
+          }
+        }
+      }); // todo: if validation failed sweet alert are you sure, then go to next section
+      // else just go to next section
+      // if (
+      //     this.current_section_index + 1 <
+      //     this.blueprint.sections.length
+      // ) {
+      //     this.current_section_index++;
+      // } else {
+      //     this.current_section_index = 99;
+      // }
+      // window.scrollTo(0, 0);
     },
     save: function save(data) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref2) {
         var data = _ref2.data;
-        _this4.is_saved = true;
+        _this5.is_saved = true;
       });
     },
     submit: function submit() {
@@ -25499,8 +25530,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   key: "".concat(row.key, "_").concat(rowField.key)
                 }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
                   key: "".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key),
-                  disabled: _ctx.is_locked || field.disabled === true,
-                  validationRules: rowField.validationRules
+                  disabled: _ctx.is_locked || field.disabled === true
                 }, rowField.props, {
                   modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)],
                   "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -25508,7 +25538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }
                 }), null, 16
                 /* FULL_PROPS */
-                , ["disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
+                , ["disabled", "modelValue", "onUpdate:modelValue"]))]);
               }), 128
               /* KEYED_FRAGMENT */
               ))]);
@@ -25531,8 +25561,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   key: fieldIndex
                 }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(rowField.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
                   key: "".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key),
-                  disabled: _ctx.is_locked || field.disabled === true,
-                  validationRules: rowField.validationRules
+                  disabled: _ctx.is_locked || field.disabled === true
                 }, rowField.props, {
                   modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key, "_additional_").concat(index, "_").concat(rowField.key)],
                   "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -25540,7 +25569,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }
                 }), null, 16
                 /* FULL_PROPS */
-                , ["disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))]);
+                , ["disabled", "modelValue", "onUpdate:modelValue"]))]);
               }), 128
               /* KEYED_FRAGMENT */
               ))]);
@@ -25580,14 +25609,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         , ["value"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)(field.component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)((_mergeProps2 = {
           key: 2,
           label: field.name
-        }, _defineProperty(_mergeProps2, "key", "".concat($options.current_section.key, "_").concat(field.key)), _defineProperty(_mergeProps2, "disabled", _ctx.is_locked || field.disabled === true), _defineProperty(_mergeProps2, "validationRules", field.validationRules), _mergeProps2), field.props, {
+        }, _defineProperty(_mergeProps2, "key", "".concat($options.current_section.key, "_").concat(field.key)), _defineProperty(_mergeProps2, "disabled", _ctx.is_locked || field.disabled === true), _mergeProps2), field.props, {
           modelValue: _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key)],
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return _ctx.form_data["".concat($options.current_section.key, "_").concat(field.key)] = $event;
           }
         }), null, 16
         /* FULL_PROPS */
-        , ["label", "disabled", "validationRules", "modelValue", "onUpdate:modelValue"]))], 64
+        , ["label", "disabled", "modelValue", "onUpdate:modelValue"]))], 64
         /* STABLE_FRAGMENT */
         );
       }), 128
@@ -44836,7 +44865,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput"}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Utilities","key":"utilities"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar/Food Purchases","key":"bar_food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest/Grant Repayments","key":"interest_grant_repayments"},{"name":"Broadband, Phone & TV","key":"broadband_phone_tv"},{"name":"Insurance","key":"insurance"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"},{"name":"Cleaning Contract & Laundry","key":"cleaning_contract_laundry"},{"name":"Security & Alarms","key":"security_alarm"},{"name":"Building Maintenance","key":"building_maintenance"},{"name":"VAT","key":"vat"}]},{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Staffing Costs"}},{"component":"KTable","key":"staffing_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput"}],"rows":[{"name":"Bar Staff","key":"bar_staff"},{"name":"Admin Staff","key":"admin_staff"},{"name":"Coach","key":"coach"},{"name":"Medics","key":"medics"},{"name":"Players","key":"players"}]}]},{"name":"Income","key":"income","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Income Generated Revenue"}},{"component":"KTable","key":"club_income_generated_revenue","canAddAdditional":true,"headings":["Activity","£","Brief description of activity"],"rowFields":[{"key":"income","component":"KInput","props":{"type":"number"}},{"key":"description","component":"KInput"}],"rows":[{"name":"Player Membership","key":"player_membership"},{"name":"Other Membership","key":"other_membership"},{"name":"Tickets & Programmes","key":"tickets_and_programmes"},{"name":"Kit Sales","key":"kit_sales"},{"name":"Bar/Food Sales","key":"bar_food_sales"},{"name":"Social & Fund Raising","key":"social_and_fund_raising"},{"name":"Hire of Facilities","key":"hire_of_facilities"},{"name":"Sponsorship & Advertising","key":"sponsorship_and_advertising"},{"name":"Ticket Sales","key":"ticket_sales"},{"name":"Grants","key":"grants"},{"name":"Other Grants","key":"other_grants"}]}]},{"name":"Balance Sheet","key":"balance_sheet","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Balance Sheet"}},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Fixed Assets"}},{"component":"KTable","key":"fixed_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput"}],"rows":[{"name":"Freehold Property","key":"freehold_property"},{"name":"Plant & Equipment","key":"plant_and_equipment"},{"name":"Other Fixed Assets","key":"other_fixed_assets"}]},{"component":"KTotal","props":{"label":"Total Fixed Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Current Assets"}},{"component":"KTable","key":"current_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput"}],"rows":[{"name":"Rugby Stock","key":"rugby_stock"},{"name":"Clubhouse Stock","key":"clubhouse_stock"},{"name":"Investments","key":"investments"},{"name":"Debtors","key":"debtors"}]},{"component":"KTotal","props":{"label":"Total Current Assets"},"values":["balance_sheet_current_assets_.*_accounting_value"]},{"component":"KTotal","props":{"label":"Total Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value","balance_sheet_current_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Liabilities"}},{"component":"KTable","key":"liabilities","canAddAdditional":true,"headings":["Liability","Due Within 12 Months","Due After 12 Months"],"rowFields":[{"key":"due_within_12_months","component":"KInput","props":{"type":"number"}},{"key":"due_after_12_months","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"HMRC","key":"hmrc"},{"name":"Rugby Creditors","key":"rugby_creditors"},{"name":"GRFU Loans","key":"grfu_loans"},{"name":"RFU/RFF Loans","key":"rfu_rff_loans"},{"name":"Bank Loans","key":"bank_loans"},{"name":"Accruals","key":"accruals"}]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Off Balance Sheet Liabilities"}},{"component":"KTable","key":"off_balance_sheet_liabilities","canAddAdditional":true,"rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Related Party Guarantees","key":"releated_party_guarantees"},{"name":"Cross Holdings","key":"cross_holdings"}]}]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","validation":[]}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Utilities","key":"utilities"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar/Food Purchases","key":"bar_food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest/Grant Repayments","key":"interest_grant_repayments"},{"name":"Broadband, Phone & TV","key":"broadband_phone_tv"},{"name":"Insurance","key":"insurance"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"},{"name":"Cleaning Contract & Laundry","key":"cleaning_contract_laundry"},{"name":"Security & Alarms","key":"security_alarm"},{"name":"Building Maintenance","key":"building_maintenance"},{"name":"VAT","key":"vat"}]},{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Staffing Costs"}},{"component":"KTable","key":"staffing_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","validation":[]}],"rows":[{"name":"Bar Staff","key":"bar_staff"},{"name":"Admin Staff","key":"admin_staff"},{"name":"Coach","key":"coach"},{"name":"Medics","key":"medics"},{"name":"Players","key":"players"}]}]},{"name":"Income","key":"income","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Income Generated Revenue"}},{"component":"KTable","key":"club_income_generated_revenue","canAddAdditional":true,"headings":["Activity","£","Brief description of activity"],"rowFields":[{"key":"income","component":"KInput","props":{"type":"number"}},{"key":"description","component":"KInput","validation":[]}],"rows":[{"name":"Player Membership","key":"player_membership"},{"name":"Other Membership","key":"other_membership"},{"name":"Tickets & Programmes","key":"tickets_and_programmes"},{"name":"Kit Sales","key":"kit_sales"},{"name":"Bar/Food Sales","key":"bar_food_sales"},{"name":"Social & Fund Raising","key":"social_and_fund_raising"},{"name":"Hire of Facilities","key":"hire_of_facilities"},{"name":"Sponsorship & Advertising","key":"sponsorship_and_advertising"},{"name":"Ticket Sales","key":"ticket_sales"},{"name":"Grants","key":"grants"},{"name":"Other Grants","key":"other_grants"}]}]},{"name":"Balance Sheet","key":"balance_sheet","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Balance Sheet"}},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Fixed Assets"}},{"component":"KTable","key":"fixed_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","validation":[]}],"rows":[{"name":"Freehold Property","key":"freehold_property"},{"name":"Plant & Equipment","key":"plant_and_equipment"},{"name":"Other Fixed Assets","key":"other_fixed_assets"}]},{"component":"KTotal","props":{"label":"Total Fixed Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Current Assets"}},{"component":"KTable","key":"current_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","validation":[]}],"rows":[{"name":"Rugby Stock","key":"rugby_stock"},{"name":"Clubhouse Stock","key":"clubhouse_stock"},{"name":"Investments","key":"investments"},{"name":"Debtors","key":"debtors"}]},{"component":"KTotal","props":{"label":"Total Current Assets"},"values":["balance_sheet_current_assets_.*_accounting_value"]},{"component":"KTotal","props":{"label":"Total Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value","balance_sheet_current_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Liabilities"}},{"component":"KTable","key":"liabilities","canAddAdditional":true,"headings":["Liability","Due Within 12 Months","Due After 12 Months"],"rowFields":[{"key":"due_within_12_months","component":"KInput","props":{"type":"number"}},{"key":"due_after_12_months","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"HMRC","key":"hmrc"},{"name":"Rugby Creditors","key":"rugby_creditors"},{"name":"GRFU Loans","key":"grfu_loans"},{"name":"RFU/RFF Loans","key":"rfu_rff_loans"},{"name":"Bank Loans","key":"bank_loans"},{"name":"Accruals","key":"accruals"}]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Off Balance Sheet Liabilities"}},{"component":"KTable","key":"off_balance_sheet_liabilities","canAddAdditional":true,"rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Related Party Guarantees","key":"releated_party_guarantees"},{"name":"Cross Holdings","key":"cross_holdings"}]}]}]}');
 
 /***/ })
 

@@ -67,9 +67,6 @@
                                                     is_locked ||
                                                     field.disabled === true
                                                 "
-                                                :validationRules="
-                                                    rowField.validationRules
-                                                "
                                                 v-bind="rowField.props"
                                                 v-model="
                                                     form_data[
@@ -111,9 +108,6 @@
                                                 :disabled="
                                                     is_locked ||
                                                     field.disabled === true
-                                                "
-                                                :validationRules="
-                                                    rowField.validationRules
                                                 "
                                                 v-bind="rowField.props"
                                                 v-model="
@@ -163,7 +157,6 @@
                                 :label="field.name"
                                 :key="`${current_section.key}_${field.key}`"
                                 :disabled="is_locked || field.disabled === true"
-                                :validationRules="field.validationRules"
                                 v-bind="field.props"
                                 v-model="
                                     form_data[
@@ -341,14 +334,52 @@ export default {
         goToNextSection() {
             // todo: validate current section, show warning if they want to continue anyway
 
-            if (
-                this.current_section_index + 1 <
-                this.blueprint.sections.length
-            ) {
-                this.current_section_index++;
-            } else {
-                this.current_section_index = 99;
-            }
+            // get blueprint for this section (this.current_section), loop througth fields, determine key and look in form_data, if null then set the error in that same place
+
+            this.current_section.fields.forEach((field) => {
+                if (field.component === "KTable") {
+                    field.rows.forEach((row) => {
+                        field.rowFields.forEach((rowField) => {
+                            let data =
+                                this.form_data[
+                                    `${this.current_section.key}_${field.key}_${row.key}_${rowField.key}`
+                                ];
+
+                            if (Array.isArray(rowField.validation)) {
+                                // todo: loop through and apply custom rules
+                            } else {
+                                // default basic required validation
+                                if (data["value"] === null) {
+                                    data["error"] = "This field is required";
+                                }
+                            }
+                        });
+                    });
+                } else if (field.key && !field.disabled) {
+                    let data =
+                        this.form_data[
+                            `${this.current_section.key}_${field.key}`
+                        ];
+
+                    if (data["value"] === null) {
+                        data["error"] = "This field is required";
+                    }
+                }
+            });
+
+            // todo: if validation failed sweet alert are you sure, then go to next section
+            // else just go to next section
+
+            // if (
+            //     this.current_section_index + 1 <
+            //     this.blueprint.sections.length
+            // ) {
+            //     this.current_section_index++;
+            // } else {
+            //     this.current_section_index = 99;
+            // }
+
+            // window.scrollTo(0, 0);
         },
 
         save(data) {

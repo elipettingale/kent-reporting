@@ -126,7 +126,8 @@
                         },
                         {
                             "key": "note",
-                            "component": "KInput"
+                            "component": "KInput",
+                            "validation": []
                         }
                     ],
                     "rows": [
@@ -226,7 +227,8 @@
                         },
                         {
                             "key": "note",
-                            "component": "KInput"
+                            "component": "KInput",
+                            "validation": []
                         }
                     ],
                     "rows": [
@@ -284,7 +286,8 @@
                         },
                         {
                             "key": "description",
-                            "component": "KInput"
+                            "component": "KInput",
+                            "validation": []
                         }
                     ],
                     "rows": [
@@ -372,7 +375,8 @@
                         },
                         {
                             "key": "notes",
-                            "component": "KInput"
+                            "component": "KInput",
+                            "validation": []
                         }
                     ],
                     "rows": [
@@ -424,7 +428,8 @@
                         },
                         {
                             "key": "notes",
-                            "component": "KInput"
+                            "component": "KInput",
+                            "validation": []
                         }
                     ],
                     "rows": [
