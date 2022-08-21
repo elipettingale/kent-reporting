@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="form_data">
         <div class="mb-4">
             <div class="flex">
                 <div class="flex">
@@ -10,6 +10,7 @@
                         class="mr-4"
                         :class="{
                             'is-active': current_section_index === index,
+                            'has-errors': getTotalErrorsForSection(section) > 0,
                         }"
                         @click="current_section_index = index"
                     >
@@ -31,7 +32,7 @@
         </div>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <k-form-section v-if="current_section && form_data">
+                <k-form-section v-if="current_section">
                     <template
                         v-for="(field, index) in current_section.fields"
                         :key="index"
@@ -196,6 +197,7 @@ import KTable from "../Components/KTable.vue";
 import KTableRow from "../Components/KTableRow.vue";
 import KHeader from "../Components/KHeader.vue";
 import KTotal from "../Components/KTotal.vue";
+import { forEachField } from "../includes/helpers.js";
 
 export default {
     name: "KForm",
@@ -333,47 +335,40 @@ export default {
             this.form_data[`${prefix}_total_additional_rows`] = index;
         },
 
-        validateAndGoToNextSection() {
+        validateSection(section) {
             let sectionIsValid = true;
 
-            this.current_section.fields.forEach((field) => {
-                if (field.component === "KTable") {
-                    field.rows.forEach((row) => {
-                        field.rowFields.forEach((rowField) => {
-                            let data =
-                                this.form_data[
-                                    `${this.current_section.key}_${field.key}_${row.key}_${rowField.key}`
-                                ];
-
-                            if (Array.isArray(rowField.validation)) {
-                                // todo: loop through and apply custom rules
-                            } else {
-                                if (data["value"] === null) {
-                                    data["error"] = "This field is required";
-                                    sectionIsValid = false;
-                                }
-                            }
-                        });
-                    });
-                } else if (field.key && !field.disabled) {
-                    let data =
-                        this.form_data[
-                            `${this.current_section.key}_${field.key}`
-                        ];
-
-                    if (Array.isArray(rowField.validation)) {
-                        // todo: loop through and apply custom rules
-                    } else {
-                        if (data["value"] === null) {
-                            data["error"] = "This field is required";
-                            sectionIsValid = false;
-                        }
+            forEachField(section, (key, field) => {
+                if (Array.isArray(field.validation)) {
+                    // todo: loop through and apply custom rules
+                } else {
+                    if (
+                        this.form_data[key]["value"] === null ||
+                        this.form_data[key]["value"] === ""
+                    ) {
+                        this.form_data[key]["error"] = "This field is required";
+                        sectionIsValid = false;
                     }
                 }
             });
 
-            // todo: if validation failed sweet alert are you sure, then go to next section
-            // else just go to next section
+            return sectionIsValid;
+        },
+
+        getTotalErrorsForSection(section) {
+            let totalErrors = 0;
+
+            forEachField(section, (key, field) => {
+                if (this.form_data[key]["error"] !== null) {
+                    totalErrors++;
+                }
+            });
+
+            return totalErrors;
+        },
+
+        validateAndGoToNextSection() {
+            let sectionIsValid = this.validateSection(this.current_section);
 
             if (sectionIsValid) {
                 this.goToNextSection();

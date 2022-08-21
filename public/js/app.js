@@ -24773,11 +24773,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_KTableRow_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/KTableRow.vue */ "./resources/js/Components/KTableRow.vue");
 /* harmony import */ var _Components_KHeader_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Components/KHeader.vue */ "./resources/js/Components/KHeader.vue");
 /* harmony import */ var _Components_KTotal_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Components/KTotal.vue */ "./resources/js/Components/KTotal.vue");
+/* harmony import */ var _includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../includes/helpers.js */ "./resources/js/includes/helpers.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -24915,38 +24917,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.form_data["".concat(prefix, "_total_additional_rows")] = index;
     },
-    validateAndGoToNextSection: function validateAndGoToNextSection() {
+    validateSection: function validateSection(section) {
       var _this4 = this;
 
       var sectionIsValid = true;
-      this.current_section.fields.forEach(function (field) {
-        if (field.component === "KTable") {
-          field.rows.forEach(function (row) {
-            field.rowFields.forEach(function (rowField) {
-              var data = _this4.form_data["".concat(_this4.current_section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key)];
-
-              if (Array.isArray(rowField.validation)) {// todo: loop through and apply custom rules
-              } else {
-                if (data["value"] === null) {
-                  data["error"] = "This field is required";
-                  sectionIsValid = false;
-                }
-              }
-            });
-          });
-        } else if (field.key && !field.disabled) {
-          var data = _this4.form_data["".concat(_this4.current_section.key, "_").concat(field.key)];
-
-          if (Array.isArray(rowField.validation)) {// todo: loop through and apply custom rules
-          } else {
-            if (data["value"] === null) {
-              data["error"] = "This field is required";
-              sectionIsValid = false;
-            }
+      (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
+        if (Array.isArray(field.validation)) {// todo: loop through and apply custom rules
+        } else {
+          if (_this4.form_data[key]["value"] === null || _this4.form_data[key]["value"] === "") {
+            _this4.form_data[key]["error"] = "This field is required";
+            sectionIsValid = false;
           }
         }
-      }); // todo: if validation failed sweet alert are you sure, then go to next section
-      // else just go to next section
+      });
+      return sectionIsValid;
+    },
+    getTotalErrorsForSection: function getTotalErrorsForSection(section) {
+      var _this5 = this;
+
+      var totalErrors = 0;
+      (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
+        if (_this5.form_data[key]["error"] !== null) {
+          totalErrors++;
+        }
+      });
+      return totalErrors;
+    },
+    validateAndGoToNextSection: function validateAndGoToNextSection() {
+      var sectionIsValid = this.validateSection(this.current_section);
 
       if (sectionIsValid) {
         this.goToNextSection();
@@ -24963,13 +24961,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.scrollTo(0, 0);
     },
     save: function save(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref2) {
         var data = _ref2.data;
-        _this5.is_saved = true;
+        _this6.is_saved = true;
       });
     },
     submit: function submit() {
@@ -25412,44 +25410,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var _hoisted_1 = {
-  "class": "mb-4"
+  key: 0
 };
 var _hoisted_2 = {
-  "class": "flex"
+  "class": "mb-4"
 };
 var _hoisted_3 = {
   "class": "flex"
 };
+var _hoisted_4 = {
+  "class": "flex"
+};
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
 
-var _hoisted_5 = {
+var _hoisted_6 = {
   "class": "flex flex-1 justify-end text-right items-center"
 };
-var _hoisted_6 = ["textContent"];
-var _hoisted_7 = {
+var _hoisted_7 = ["textContent"];
+var _hoisted_8 = {
   "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
 };
-var _hoisted_8 = {
-  "class": "p-6 bg-white border-b border-gray-200"
-};
 var _hoisted_9 = {
-  key: 0
+  "class": "p-6 bg-white border-b border-gray-200"
 };
 var _hoisted_10 = {
   key: 0
 };
-var _hoisted_11 = ["colspan"];
+var _hoisted_11 = {
+  key: 0
+};
+var _hoisted_12 = ["colspan"];
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Add Additional Category ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Add Additional Category ");
 
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "flex items-center justify-end mt-4"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
@@ -25464,11 +25465,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_k_form_section = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-section");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: color red if has errors "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
+  return _ctx.form_data ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: color red if has errors "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_nav_item, {
       key: index,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mr-4", {
-        'is-active': _ctx.current_section_index === index
+        'is-active': _ctx.current_section_index === index,
+        'has-errors': $options.getTotalErrorsForSection(section) > 0
       }]),
       onClick: function onClick($event) {
         return _ctx.current_section_index = index;
@@ -25496,18 +25498,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_4];
+      return [_hoisted_5];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  , ["class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.save_status)
   }, null, 8
   /* PROPS */
-  , _hoisted_6)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$options.current_section && _ctx.form_data ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_section, {
+  , _hoisted_7)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [$options.current_section ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_k_form_section, {
     key: 0
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25520,7 +25522,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: 0
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [field.headings ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("thead", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.headings, function (heading, index) {
+            return [field.headings ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("thead", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(field.headings, function (heading, index) {
               return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
                 key: index
               }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(heading), 1
@@ -25583,7 +25585,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               ))]);
             }), 128
             /* KEYED_FRAGMENT */
-            )), field.canAddAdditional ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+            )), field.canAddAdditional ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
               colspan: field.rowFields.length + 1
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
               disabled: _ctx.is_locked || field.disabled === true,
@@ -25592,7 +25594,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, {
               "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-                return [_hoisted_12];
+                return [_hoisted_13];
               }),
               _: 2
               /* DYNAMIC */
@@ -25601,7 +25603,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* PROPS, DYNAMIC_SLOTS */
             , ["disabled", "onClick"])], 8
             /* PROPS */
-            , _hoisted_11)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
+            , _hoisted_12)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
           }),
           _: 2
           /* DYNAMIC */
@@ -25629,11 +25631,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
         onClick: $options.validateAndGoToNextSection
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_14];
+          return [_hoisted_15];
         }),
         _: 1
         /* STABLE */
@@ -25649,12 +25651,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
+      return [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
     }),
     _: 1
     /* STABLE */
 
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -25709,6 +25711,33 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
+
+/***/ }),
+
+/***/ "./resources/js/includes/helpers.js":
+/*!******************************************!*\
+  !*** ./resources/js/includes/helpers.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "forEachField": () => (/* binding */ forEachField)
+/* harmony export */ });
+function forEachField(section, callback) {
+  section.fields.forEach(function (field) {
+    if (field.component === "KTable") {
+      field.rows.forEach(function (row) {
+        field.rowFields.forEach(function (rowField) {
+          callback("".concat(section.key, "_").concat(field.key, "_").concat(row.key, "_").concat(rowField.key), rowField);
+        });
+      });
+    } else if (field.key && !field.disabled) {
+      callback("".concat(section.key, "_").concat(field.key), field);
+    }
+  });
+}
 
 /***/ }),
 
