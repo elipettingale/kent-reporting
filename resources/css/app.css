@@ -48,11 +48,11 @@
 }
 
 .k-form-nav-item.has-errors {
-    @apply bg-red-300 text-white;
+    @apply bg-red-200;
 }
 
 .k-form-nav-item.is-complete {
-    @apply bg-green-300 text-white;
+    @apply bg-green-200;
 }
 
 .k-form-nav-item.is-active {

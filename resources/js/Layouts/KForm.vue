@@ -188,30 +188,25 @@
                         <p class="k-confirmation__section__name">
                             {{ section.name }}
                         </p>
-                        <p
-                            class="k-confirmation__section__errors"
-                            v-if="sections[section.key].errorCount > 0"
-                        >
-                            {{ sections[section.key].errorCount }} errors
-                        </p>
-                        <p
-                            class="k-confirmation__section__complete"
-                            v-if="sections[section.key].errorCount === 0"
-                        >
-                            Complete
+                        <p class="k-confirmation__section__counts">
+                            {{
+                                sections[section.key].totalRequiredFields -
+                                sections[section.key].errorCount
+                            }}/{{ sections[section.key].totalRequiredFields }}
                         </p>
                     </div>
 
                     <p class="my-6">
                         Please ensure you have checked the information you have
-                        entered. <br />
-                        You will NOT be able to change them once you have
-                        submitted your accounts.
+                        entered and have filled out as many fields as you can.
+                        <br />
+                        You will NOT be able to edit this form once you have
+                        submitted your it.
                     </p>
 
                     <div class="flex items-center justify-end mt-4">
-                        <k-button @click="submitAccounts"
-                            >Confirm & Submit Accounts</k-button
+                        <k-button @click="submit"
+                            >Confirm & Submit Form</k-button
                         >
                     </div>
                 </k-form-section>
@@ -259,10 +254,7 @@ export default {
         let form_data = {};
 
         this.blueprint.sections.forEach((section) => {
-            this.sections[section.key] = {
-                isComplete: false,
-                errorCount: 0,
-            };
+            let totalRequiredFields = 0;
 
             section.fields.forEach((field) => {
                 if (field.component === "KTable") {
@@ -274,6 +266,13 @@ export default {
                                 value: null,
                                 error: null,
                             };
+
+                            if (
+                                rowField.required !== false &&
+                                !rowField.disabled
+                            ) {
+                                totalRequiredFields++;
+                            }
                         });
                     });
 
@@ -285,8 +284,18 @@ export default {
                         value: null,
                         error: null,
                     };
+
+                    if (field.required !== false && !field.disabled) {
+                        totalRequiredFields++;
+                    }
                 }
             });
+
+            this.sections[section.key] = {
+                isComplete: false,
+                errorCount: 0,
+                totalRequiredFields: totalRequiredFields,
+            };
         });
 
         axios.get(window.location.href + "/data").then(({ data }) => {
@@ -382,14 +391,13 @@ export default {
             let errorCount = 0;
 
             forEachField(section, (key, field) => {
-                if (Array.isArray(field.validation)) {
-                    // todo: loop through and apply custom rules
-                } else {
+                if (field.required !== false) {
                     if (
                         this.form_data[key]["value"] === null ||
                         this.form_data[key]["value"] === ""
                     ) {
-                        this.form_data[key]["error"] = "This field is required";
+                        this.form_data[key]["error"] =
+                            "Please fill in this field";
                         sectionIsValid = false;
                         errorCount++;
                     }
@@ -428,7 +436,10 @@ export default {
         },
 
         goToSection(index) {
-            this.validateSection(this.current_section);
+            if (this.current_section) {
+                this.validateSection(this.current_section);
+            }
+
             this.current_section_index = index;
         },
 
@@ -450,7 +461,7 @@ export default {
                 });
         },
 
-        submitAccounts() {
+        submit() {
             this.debounced_save.cancel();
 
             axios
