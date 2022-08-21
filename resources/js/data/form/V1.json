@@ -36,17 +36,6 @@
                     "component": "KInput"
                 },
                 {
-                    "name": "Turnover Band",
-                    "key": "turnover_band",
-                    "component": "KSelect",
-                    "props": {
-                        "options": [
-                            "£1000-£1999",
-                            "£2000-£2999"
-                        ]
-                    }
-                },
-                {
                     "name": "Details of Related Parties",
                     "key": "details_of_related_parties",
                     "component": "KTextarea"
@@ -150,12 +139,8 @@
                             "key": "rates"
                         },
                         {
-                            "name": "Water",
-                            "key": "water"
-                        },
-                        {
-                            "name": "Gas & Electricity",
-                            "key": "gas_and_electricity"
+                            "name": "Utilities",
+                            "key": "utilities"
                         },
                         {
                             "name": "Kit",
@@ -170,40 +155,24 @@
                             "key": "pitch_maintenance"
                         },
                         {
-                            "name": "Bar Purchases",
-                            "key": "bar_purchases"
-                        },
-                        {
-                            "name": "Food Purchases",
-                            "key": "food_purchases"
+                            "name": "Bar/Food Purchases",
+                            "key": "bar_food_purchases"
                         },
                         {
                             "name": "International Tickets",
                             "key": "international_tickets"
                         },
                         {
-                            "name": "Interest",
-                            "key": "interest"
+                            "name": "Interest/Grant Repayments",
+                            "key": "interest_grant_repayments"
                         },
                         {
-                            "name": "Grant Repayments",
-                            "key": "grant_repayments"
-                        },
-                        {
-                            "name": "Broadband/Phone/TV",
+                            "name": "Broadband / Phone / TV",
                             "key": "broadband_phone_tv"
                         },
                         {
-                            "name": "Buildings Insurance",
-                            "key": "buildings_insurance"
-                        },
-                        {
-                            "name": "Contents Insurance",
-                            "key": "contents_insurance"
-                        },
-                        {
-                            "name": "Insurance Other",
-                            "key": "insurance_other"
+                            "name": "Insurance",
+                            "key": "insurance"
                         },
                         {
                             "name": "Equipment Rental",
@@ -214,20 +183,12 @@
                             "key": "loan_repayments"
                         },
                         {
-                            "name": "Cleaning Contract",
-                            "key": "cleaning_contract"
+                            "name": "Cleaning Contract / Laundry",
+                            "key": "cleaning_contract_laundry"
                         },
                         {
-                            "name": "Security/Alarm",
+                            "name": "Security / Alarm",
                             "key": "security_alarm"
-                        },
-                        {
-                            "name": "Sanitary",
-                            "key": "sanitary"
-                        },
-                        {
-                            "name": "Laundry",
-                            "key": "laundry"
                         },
                         {
                             "name": "Building Maintenance",
@@ -344,12 +305,8 @@
                             "key": "kit_sales"
                         },
                         {
-                            "name": "Bar Sales",
-                            "key": "bar_sales"
-                        },
-                        {
-                            "name": "Food Sales",
-                            "key": "food_sales"
+                            "name": "Bar/Food Sales",
+                            "key": "bar_food_sales"
                         },
                         {
                             "name": "Social & Fund Raising",
@@ -360,7 +317,7 @@
                             "key": "hire_of_facilities"
                         },
                         {
-                            "name": "Sponsorship And Advertising",
+                            "name": "Sponsorship & Advertising",
                             "key": "sponsorship_and_advertising"
                         },
                         {
