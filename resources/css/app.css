@@ -47,6 +47,14 @@
     @apply bg-white border-2 border-gray-200 sm:rounded-lg px-6 py-4;
 }
 
+.k-form-nav-item.has-errors {
+    @apply bg-red-300 text-white;
+}
+
+.k-form-nav-item.is-complete {
+    @apply bg-green-300 text-white;
+}
+
 .k-form-nav-item.is-active {
     @apply bg-blue-300 text-white;
 }
@@ -68,4 +76,12 @@
 .k-select__select:disabled {
     @apply bg-gray-100;
     opacity: 1;
+}
+
+.k-confirmation__section {
+    @apply flex justify-between text-green-500;
+}
+
+.k-confirmation__section.has-errors {
+    @apply text-red-500;
 }

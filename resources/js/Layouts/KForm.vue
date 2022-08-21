@@ -10,6 +10,7 @@
                         class="mr-4"
                         :class="{
                             'is-active': current_section_index === index,
+                            'is-complete': sectionIsValid(section),
                             'has-errors': getTotalErrorsForSection(section) > 0,
                         }"
                         @click="current_section_index = index"
@@ -20,7 +21,7 @@
                         :class="{
                             'is-active': current_section_index === 99,
                         }"
-                        @click="current_section_index = 99"
+                        @click="goToConfirmation"
                     >
                         Confirmation
                     </k-form-nav-item>
@@ -175,9 +176,44 @@
                     </div>
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
-                    Confirmation
-                    <!-- todo: message -->
-                    <!-- todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section -->
+                    <p class="text-lg mb-3">Confirmation</p>
+                    <div
+                        v-for="(section, index) in blueprint.sections"
+                        :key="index"
+                        class="k-confirmation__section"
+                        :class="{
+                            'has-errors': getTotalErrorsForSection(section) > 0,
+                        }"
+                    >
+                        <p class="k-confirmation__section__name">
+                            {{ section.name }}
+                        </p>
+                        <p
+                            class="k-confirmation__section__errors"
+                            v-if="getTotalErrorsForSection(section) > 0"
+                        >
+                            {{ getTotalErrorsForSection(section) }} errors
+                        </p>
+                        <p
+                            class="k-confirmation__section__complete"
+                            v-if="getTotalErrorsForSection(section) === 0"
+                        >
+                            Complete
+                        </p>
+                    </div>
+
+                    <p class="my-6">
+                        Please ensure you have checked the information you have
+                        entered. <br />
+                        You will NOT be able to change them once you have
+                        submitted your accounts.
+                    </p>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <k-button @click="submitAccounts"
+                            >Confirm & Submit Accounts</k-button
+                        >
+                    </div>
                 </k-form-section>
             </div>
         </div>
@@ -355,6 +391,25 @@ export default {
             return sectionIsValid;
         },
 
+        sectionIsValid(section) {
+            let sectionIsValid = true;
+
+            forEachField(section, (key, field) => {
+                if (Array.isArray(field.validation)) {
+                    // todo: loop through and apply custom rules
+                } else {
+                    if (
+                        this.form_data[key]["value"] === null ||
+                        this.form_data[key]["value"] === ""
+                    ) {
+                        sectionIsValid = false;
+                    }
+                }
+            });
+
+            return sectionIsValid;
+        },
+
         getTotalErrorsForSection(section) {
             let totalErrors = 0;
 
@@ -384,10 +439,18 @@ export default {
             ) {
                 this.current_section_index++;
             } else {
-                this.current_section_index = 99;
+                this.goToConfirmation();
             }
 
             window.scrollTo(0, 0);
+        },
+
+        goToConfirmation() {
+            this.blueprint.sections.forEach((section) => {
+                this.validateSection(section);
+            });
+
+            this.current_section_index = 99;
         },
 
         save(data) {
@@ -400,7 +463,7 @@ export default {
                 });
         },
 
-        submit() {
+        submitAccounts() {
             this.debounced_save.cancel();
 
             axios

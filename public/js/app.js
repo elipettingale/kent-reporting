@@ -24742,7 +24742,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "KUpload",
-  props: ["label", "key", "disabled"],
+  props: ["label", "key", "modelValue", "disabled"],
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -24932,12 +24932,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       return sectionIsValid;
     },
-    getTotalErrorsForSection: function getTotalErrorsForSection(section) {
+    sectionIsValid: function sectionIsValid(section) {
       var _this5 = this;
+
+      var sectionIsValid = true;
+      (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
+        if (Array.isArray(field.validation)) {// todo: loop through and apply custom rules
+        } else {
+          if (_this5.form_data[key]["value"] === null || _this5.form_data[key]["value"] === "") {
+            sectionIsValid = false;
+          }
+        }
+      });
+      return sectionIsValid;
+    },
+    getTotalErrorsForSection: function getTotalErrorsForSection(section) {
+      var _this6 = this;
 
       var totalErrors = 0;
       (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
-        if (_this5.form_data[key]["error"] !== null) {
+        if (_this6.form_data[key]["error"] !== null) {
           totalErrors++;
         }
       });
@@ -24955,22 +24969,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
         this.current_section_index++;
       } else {
-        this.current_section_index = 99;
+        this.goToConfirmation();
       }
 
       window.scrollTo(0, 0);
     },
+    goToConfirmation: function goToConfirmation() {
+      var _this7 = this;
+
+      this.blueprint.sections.forEach(function (section) {
+        _this7.validateSection(section);
+      });
+      this.current_section_index = 99;
+    },
     save: function save(data) {
-      var _this6 = this;
+      var _this8 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref2) {
         var data = _ref2.data;
-        _this6.is_saved = true;
+        _this8.is_saved = true;
       });
     },
-    submit: function submit() {
+    submitAccounts: function submitAccounts() {
       this.debounced_save.cancel();
       axios.patch(window.location.href, {
         data: this.form,
@@ -25376,6 +25398,10 @@ var _hoisted_2 = {
   "class": "k-upload"
 };
 var _hoisted_3 = ["disabled"];
+var _hoisted_4 = {
+  key: 0,
+  "class": "k-field__error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-label");
 
@@ -25389,7 +25415,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: $props.disabled
   }, null, 8
   /* PROPS */
-  , _hoisted_3)])]);
+  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -25450,7 +25478,35 @@ var _hoisted_14 = {
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Next");
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-lg mb-3"
+}, "Confirmation", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "k-confirmation__section__name"
+};
+var _hoisted_18 = {
+  key: 0,
+  "class": "k-confirmation__section__errors"
+};
+var _hoisted_19 = {
+  key: 1,
+  "class": "k-confirmation__section__complete"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "my-6"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Please ensure you have checked the information you have entered. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" You will NOT be able to change them once you have submitted your accounts. ")], -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
+  "class": "flex items-center justify-end mt-4"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Confirm & Submit Accounts");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_form_nav_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-form-nav-item");
@@ -25470,6 +25526,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: index,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mr-4", {
         'is-active': _ctx.current_section_index === index,
+        'is-complete': $options.sectionIsValid(section),
         'has-errors': $options.getTotalErrorsForSection(section) > 0
       }]),
       onClick: function onClick($event) {
@@ -25493,9 +25550,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'is-active': _ctx.current_section_index === 99
     }),
-    onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.current_section_index = 99;
-    })
+    onClick: $options.goToConfirmation
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_5];
@@ -25505,7 +25560,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  , ["class", "onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.save_status)
   }, null, 8
   /* PROPS */
@@ -25651,7 +25706,33 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: message "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo: list of sections with number of validation errors (3 issues) etc. click to navigate to section ")];
+      return [_hoisted_16, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          key: index,
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-confirmation__section", {
+            'has-errors': $options.getTotalErrorsForSection(section) > 0
+          }])
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(section.name), 1
+        /* TEXT */
+        ), $options.getTotalErrorsForSection(section) > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getTotalErrorsForSection(section)) + " errors ", 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.getTotalErrorsForSection(section) === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_19, " Complete ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+        /* CLASS */
+        );
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
+        onClick: $options.submitAccounts
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_22];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["onClick"])])];
     }),
     _: 1
     /* STABLE */

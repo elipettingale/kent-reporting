@@ -22,6 +22,7 @@ module.exports = {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/Components/**/*.vue",
+        "./resources/js/Layouts/**/*.vue",
         "./resources/js/data/form/*.json",
     ],
 
