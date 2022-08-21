@@ -10,10 +10,10 @@
                         class="mr-4"
                         :class="{
                             'is-active': current_section_index === index,
-                            'is-complete': sectionIsValid(section),
-                            'has-errors': getTotalErrorsForSection(section) > 0,
+                            'is-complete': sections[section.key].isComplete,
+                            'has-errors': sections[section.key].errorCount > 0,
                         }"
-                        @click="current_section_index = index"
+                        @click="goToSection(index)"
                     >
                         {{ section.name }}
                     </k-form-nav-item>
@@ -182,7 +182,7 @@
                         :key="index"
                         class="k-confirmation__section"
                         :class="{
-                            'has-errors': getTotalErrorsForSection(section) > 0,
+                            'has-errors': sections[section.key].errorCount > 0,
                         }"
                     >
                         <p class="k-confirmation__section__name">
@@ -190,13 +190,13 @@
                         </p>
                         <p
                             class="k-confirmation__section__errors"
-                            v-if="getTotalErrorsForSection(section) > 0"
+                            v-if="sections[section.key].errorCount > 0"
                         >
-                            {{ getTotalErrorsForSection(section) }} errors
+                            {{ sections[section.key].errorCount }} errors
                         </p>
                         <p
                             class="k-confirmation__section__complete"
-                            v-if="getTotalErrorsForSection(section) === 0"
+                            v-if="sections[section.key].errorCount === 0"
                         >
                             Complete
                         </p>
@@ -259,6 +259,11 @@ export default {
         let form_data = {};
 
         this.blueprint.sections.forEach((section) => {
+            this.sections[section.key] = {
+                isComplete: false,
+                errorCount: 0,
+            };
+
             section.fields.forEach((field) => {
                 if (field.component === "KTable") {
                     field.rows.forEach((row) => {
@@ -305,6 +310,7 @@ export default {
             is_locked: true,
             current_section_index: 0,
             form_data: null,
+            sections: [],
         };
     },
     computed: {
@@ -373,6 +379,7 @@ export default {
 
         validateSection(section) {
             let sectionIsValid = true;
+            let errorCount = 0;
 
             forEachField(section, (key, field) => {
                 if (Array.isArray(field.validation)) {
@@ -384,42 +391,17 @@ export default {
                     ) {
                         this.form_data[key]["error"] = "This field is required";
                         sectionIsValid = false;
+                        errorCount++;
                     }
                 }
             });
 
-            return sectionIsValid;
-        },
-
-        sectionIsValid(section) {
-            let sectionIsValid = true;
-
-            forEachField(section, (key, field) => {
-                if (Array.isArray(field.validation)) {
-                    // todo: loop through and apply custom rules
-                } else {
-                    if (
-                        this.form_data[key]["value"] === null ||
-                        this.form_data[key]["value"] === ""
-                    ) {
-                        sectionIsValid = false;
-                    }
-                }
-            });
+            this.sections[section.key].errorCount = errorCount;
+            if (errorCount === 0) {
+                this.sections[section.key].isComplete = true;
+            }
 
             return sectionIsValid;
-        },
-
-        getTotalErrorsForSection(section) {
-            let totalErrors = 0;
-
-            forEachField(section, (key, field) => {
-                if (this.form_data[key]["error"] !== null) {
-                    totalErrors++;
-                }
-            });
-
-            return totalErrors;
         },
 
         validateAndGoToNextSection() {
@@ -443,6 +425,11 @@ export default {
             }
 
             window.scrollTo(0, 0);
+        },
+
+        goToSection(index) {
+            this.validateSection(this.current_section);
+            this.current_section_index = index;
         },
 
         goToConfirmation() {

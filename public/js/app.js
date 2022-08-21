@@ -24817,6 +24817,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.blueprint = __webpack_require__("./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$")("./V".concat(this.version, ".json"));
     var form_data = {};
     this.blueprint.sections.forEach(function (section) {
+      _this.sections[section.key] = {
+        isComplete: false,
+        errorCount: 0
+      };
       section.fields.forEach(function (field) {
         if (field.component === "KTable") {
           field.rows.forEach(function (row) {
@@ -24855,7 +24859,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       is_saved: true,
       is_locked: true,
       current_section_index: 0,
-      form_data: null
+      form_data: null,
+      sections: []
     };
   },
   computed: {
@@ -24921,41 +24926,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       var sectionIsValid = true;
+      var errorCount = 0;
       (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
         if (Array.isArray(field.validation)) {// todo: loop through and apply custom rules
         } else {
           if (_this4.form_data[key]["value"] === null || _this4.form_data[key]["value"] === "") {
             _this4.form_data[key]["error"] = "This field is required";
             sectionIsValid = false;
+            errorCount++;
           }
         }
       });
-      return sectionIsValid;
-    },
-    sectionIsValid: function sectionIsValid(section) {
-      var _this5 = this;
+      this.sections[section.key].errorCount = errorCount;
 
-      var sectionIsValid = true;
-      (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
-        if (Array.isArray(field.validation)) {// todo: loop through and apply custom rules
-        } else {
-          if (_this5.form_data[key]["value"] === null || _this5.form_data[key]["value"] === "") {
-            sectionIsValid = false;
-          }
-        }
-      });
-      return sectionIsValid;
-    },
-    getTotalErrorsForSection: function getTotalErrorsForSection(section) {
-      var _this6 = this;
+      if (errorCount === 0) {
+        this.sections[section.key].isComplete = true;
+      }
 
-      var totalErrors = 0;
-      (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
-        if (_this6.form_data[key]["error"] !== null) {
-          totalErrors++;
-        }
-      });
-      return totalErrors;
+      return sectionIsValid;
     },
     validateAndGoToNextSection: function validateAndGoToNextSection() {
       var sectionIsValid = this.validateSection(this.current_section);
@@ -24974,22 +24962,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       window.scrollTo(0, 0);
     },
+    goToSection: function goToSection(index) {
+      this.validateSection(this.current_section);
+      this.current_section_index = index;
+    },
     goToConfirmation: function goToConfirmation() {
-      var _this7 = this;
+      var _this5 = this;
 
       this.blueprint.sections.forEach(function (section) {
-        _this7.validateSection(section);
+        _this5.validateSection(section);
       });
       this.current_section_index = 99;
     },
     save: function save(data) {
-      var _this8 = this;
+      var _this6 = this;
 
       axios.patch(window.location.href, {
         data: data
       }).then(function (_ref2) {
         var data = _ref2.data;
-        _this8.is_saved = true;
+        _this6.is_saved = true;
       });
     },
     submitAccounts: function submitAccounts() {
@@ -25526,11 +25518,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: index,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mr-4", {
         'is-active': _ctx.current_section_index === index,
-        'is-complete': $options.sectionIsValid(section),
-        'has-errors': $options.getTotalErrorsForSection(section) > 0
+        'is-complete': _ctx.sections[section.key].isComplete,
+        'has-errors': _ctx.sections[section.key].errorCount > 0
       }]),
       onClick: function onClick($event) {
-        return _ctx.current_section_index = index;
+        return $options.goToSection(index);
       }
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25710,13 +25702,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           key: index,
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-confirmation__section", {
-            'has-errors': $options.getTotalErrorsForSection(section) > 0
+            'has-errors': _ctx.sections[section.key].errorCount > 0
           }])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(section.name), 1
         /* TEXT */
-        ), $options.getTotalErrorsForSection(section) > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getTotalErrorsForSection(section)) + " errors ", 1
+        ), _ctx.sections[section.key].errorCount > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.sections[section.key].errorCount) + " errors ", 1
         /* TEXT */
-        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.getTotalErrorsForSection(section) === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_19, " Complete ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.sections[section.key].errorCount === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_19, " Complete ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
         /* CLASS */
         );
       }), 128
