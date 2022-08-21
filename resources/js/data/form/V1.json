@@ -167,7 +167,7 @@
                             "key": "interest_grant_repayments"
                         },
                         {
-                            "name": "Broadband / Phone / TV",
+                            "name": "Broadband, Phone & TV",
                             "key": "broadband_phone_tv"
                         },
                         {
@@ -183,11 +183,11 @@
                             "key": "loan_repayments"
                         },
                         {
-                            "name": "Cleaning Contract / Laundry",
+                            "name": "Cleaning Contract & Laundry",
                             "key": "cleaning_contract_laundry"
                         },
                         {
-                            "name": "Security / Alarm",
+                            "name": "Security & Alarms",
                             "key": "security_alarm"
                         },
                         {
