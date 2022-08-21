@@ -24915,11 +24915,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       this.form_data["".concat(prefix, "_total_additional_rows")] = index;
     },
-    goToNextSection: function goToNextSection() {
+    validateAndGoToNextSection: function validateAndGoToNextSection() {
       var _this4 = this;
 
-      // todo: validate current section, show warning if they want to continue anyway
-      // get blueprint for this section (this.current_section), loop througth fields, determine key and look in form_data, if null then set the error in that same place
+      var sectionIsValid = true;
       this.current_section.fields.forEach(function (field) {
         if (field.component === "KTable") {
           field.rows.forEach(function (row) {
@@ -24928,9 +24927,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               if (Array.isArray(rowField.validation)) {// todo: loop through and apply custom rules
               } else {
-                // default basic required validation
                 if (data["value"] === null) {
                   data["error"] = "This field is required";
+                  sectionIsValid = false;
                 }
               }
             });
@@ -24938,21 +24937,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else if (field.key && !field.disabled) {
           var data = _this4.form_data["".concat(_this4.current_section.key, "_").concat(field.key)];
 
-          if (data["value"] === null) {
-            data["error"] = "This field is required";
+          if (Array.isArray(rowField.validation)) {// todo: loop through and apply custom rules
+          } else {
+            if (data["value"] === null) {
+              data["error"] = "This field is required";
+              sectionIsValid = false;
+            }
           }
         }
       }); // todo: if validation failed sweet alert are you sure, then go to next section
       // else just go to next section
-      // if (
-      //     this.current_section_index + 1 <
-      //     this.blueprint.sections.length
-      // ) {
-      //     this.current_section_index++;
-      // } else {
-      //     this.current_section_index = 99;
-      // }
-      // window.scrollTo(0, 0);
+
+      if (sectionIsValid) {
+        this.goToNextSection();
+      } else {// todo: alert: you have not filled out all required fields, are you sure you want to continue?
+      }
+    },
+    goToNextSection: function goToNextSection() {
+      if (this.current_section_index + 1 < this.blueprint.sections.length) {
+        this.current_section_index++;
+      } else {
+        this.current_section_index = 99;
+      }
+
+      window.scrollTo(0, 0);
     },
     save: function save(data) {
       var _this5 = this;
@@ -25622,7 +25630,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_button, {
-        onClick: $options.goToNextSection
+        onClick: $options.validateAndGoToNextSection
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_14];

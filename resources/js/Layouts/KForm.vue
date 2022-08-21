@@ -168,7 +168,9 @@
                     </template>
 
                     <div class="flex items-center justify-end mt-4">
-                        <k-button @click="goToNextSection">Next</k-button>
+                        <k-button @click="validateAndGoToNextSection"
+                            >Next</k-button
+                        >
                     </div>
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
@@ -331,10 +333,8 @@ export default {
             this.form_data[`${prefix}_total_additional_rows`] = index;
         },
 
-        goToNextSection() {
-            // todo: validate current section, show warning if they want to continue anyway
-
-            // get blueprint for this section (this.current_section), loop througth fields, determine key and look in form_data, if null then set the error in that same place
+        validateAndGoToNextSection() {
+            let sectionIsValid = true;
 
             this.current_section.fields.forEach((field) => {
                 if (field.component === "KTable") {
@@ -348,9 +348,9 @@ export default {
                             if (Array.isArray(rowField.validation)) {
                                 // todo: loop through and apply custom rules
                             } else {
-                                // default basic required validation
                                 if (data["value"] === null) {
                                     data["error"] = "This field is required";
+                                    sectionIsValid = false;
                                 }
                             }
                         });
@@ -361,8 +361,13 @@ export default {
                             `${this.current_section.key}_${field.key}`
                         ];
 
-                    if (data["value"] === null) {
-                        data["error"] = "This field is required";
+                    if (Array.isArray(rowField.validation)) {
+                        // todo: loop through and apply custom rules
+                    } else {
+                        if (data["value"] === null) {
+                            data["error"] = "This field is required";
+                            sectionIsValid = false;
+                        }
                     }
                 }
             });
@@ -370,16 +375,24 @@ export default {
             // todo: if validation failed sweet alert are you sure, then go to next section
             // else just go to next section
 
-            // if (
-            //     this.current_section_index + 1 <
-            //     this.blueprint.sections.length
-            // ) {
-            //     this.current_section_index++;
-            // } else {
-            //     this.current_section_index = 99;
-            // }
+            if (sectionIsValid) {
+                this.goToNextSection();
+            } else {
+                // todo: alert: you have not filled out all required fields, are you sure you want to continue?
+            }
+        },
 
-            // window.scrollTo(0, 0);
+        goToNextSection() {
+            if (
+                this.current_section_index + 1 <
+                this.blueprint.sections.length
+            ) {
+                this.current_section_index++;
+            } else {
+                this.current_section_index = 99;
+            }
+
+            window.scrollTo(0, 0);
         },
 
         save(data) {
