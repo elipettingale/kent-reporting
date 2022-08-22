@@ -39,14 +39,6 @@ html {
     @apply rounded-md shadow-sm border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full;
 }
 
-.k-table th {
-    @apply py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900;
-}
-
-.k-table td {
-    @apply whitespace-nowrap px-3 py-4 text-sm text-gray-500;
-}
-
 .k-form-nav-item {
     @apply bg-white border-2 border-gray-200 sm:rounded-lg px-6 py-4;
 }
@@ -90,6 +82,15 @@ html {
     @apply text-red-500;
 }
 
+.k-upload__upload {
+    @apply rounded-md shadow-sm border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50;
+    padding: 0.25rem;
+}
+
+.k-upload__files {
+    @apply my-1;
+}
+
 .k-upload__file {
     @apply flex items-center;
 }
@@ -103,4 +104,69 @@ html {
 
 .k-upload__file__remove svg {
     @apply fill-red-500;
+}
+
+.k-input.has-error input {
+    @apply border-red-500;
+}
+
+.k-textarea.has-error textarea {
+    @apply border-red-500;
+}
+
+.k-select.has-error select {
+    @apply border-red-500;
+}
+
+.k-upload.has-error input {
+    @apply border-red-500;
+}
+
+.k-table {
+    @apply mb-3;
+}
+
+.k-table table {
+    table-layout: fixed;
+}
+
+.k-table thead {
+    @apply border-blue-400 bg-blue-400 text-white;
+    border-width: 1px !important;
+}
+
+.k-table tbody {
+    @apply border-blue-400;
+    border-width: 1px !important;
+    padding: 0.5rem 0;
+}
+
+.k-table th {
+    @apply py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white;
+}
+
+.k-table td {
+    @apply whitespace-nowrap px-3 py-4 text-sm text-gray-500;
+    vertical-align: top;
+    padding: 0.5rem 0.75rem;
+}
+
+.k-table tr td:first-child {
+    width: 33.33%;
+}
+
+.k-table .k-field {
+    margin-bottom: 0;
+}
+
+.k-table tbody tr:first-child td {
+    padding-top: 1rem;
+}
+
+.k-table tbody tr:last-child td {
+    padding-bottom: 1rem;
+}
+
+.k-total {
+    @apply flex justify-between mb-3;
 }

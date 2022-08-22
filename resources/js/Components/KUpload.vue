@@ -1,7 +1,7 @@
 <template>
     <div class="k-field">
         <k-label :value="label" :name="key" />
-        <div class="k-upload">
+        <div class="k-upload" :class="{ 'has-error': modelValue.error }">
             <div class="k-upload__files">
                 <div
                     class="k-upload__file"
@@ -44,9 +44,6 @@
                 <p v-if="is_uploading">Uploading...</p>
             </div>
         </div>
-        <p v-if="modelValue.error" class="k-field__error">
-            {{ modelValue.error }}
-        </p>
     </div>
 </template>
 

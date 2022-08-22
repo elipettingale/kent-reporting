@@ -397,8 +397,7 @@ export default {
                         this.form_data[key]["value"] === null ||
                         this.form_data[key]["value"] === ""
                     ) {
-                        this.form_data[key]["error"] =
-                            "Please fill in this field";
+                        this.form_data[key]["error"] = true;
                         sectionIsValid = false;
                         errorCount++;
                     }

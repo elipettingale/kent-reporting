@@ -25006,7 +25006,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (field.required !== false) {
           if (_this4.form_data[key]["value"] === null || _this4.form_data[key]["value"] === "") {
-            _this4.form_data[key]["error"] = "Please fill in this field";
+            _this4.form_data[key]["error"] = true;
             sectionIsValid = false;
             errorCount++;
           }
@@ -25184,10 +25184,6 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = ["textContent"];
 var _hoisted_3 = ["type", "value", "disabled"];
-var _hoisted_4 = {
-  key: 0,
-  "class": "k-field__error"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$type;
 
@@ -25200,7 +25196,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-input", {
-      'has-prefix': $props.prefix
+      'has-prefix': $props.prefix,
+      'has-error': $props.modelValue.error
     }])
   }, [$props.prefix ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
@@ -25220,9 +25217,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_3)], 2
   /* CLASS */
-  ), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  )]);
 }
 
 /***/ }),
@@ -25268,20 +25263,13 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "k-field"
 };
-var _hoisted_2 = {
-  "class": "k-select"
-};
-var _hoisted_3 = ["value", "disabled"];
+var _hoisted_2 = ["value", "disabled"];
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, null, -1
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_5 = ["value", "textContent"];
-var _hoisted_6 = {
-  key: 0,
-  "class": "k-field__error"
-};
+var _hoisted_4 = ["value", "textContent"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-label");
 
@@ -25290,28 +25278,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.key
   }, null, 8
   /* PROPS */
-  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-select", {
+      'has-error': $props.modelValue.error
+    }])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "k-select__select",
     value: $props.modelValue.value,
     onInput: _cache[0] || (_cache[0] = function () {
       return $options.updateValue && $options.updateValue.apply($options, arguments);
     }),
     disabled: $props.disabled
-  }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.options, function (option) {
+  }, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.options, function (option) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: option,
       value: option,
       textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option)
     }, null, 8
     /* PROPS */
-    , _hoisted_5);
+    , _hoisted_4);
   }), 128
   /* KEYED_FRAGMENT */
   ))], 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , _hoisted_2)], 2
+  /* CLASS */
+  )]);
 }
 
 /***/ }),
@@ -25384,14 +25376,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "k-field"
 };
-var _hoisted_2 = {
-  "class": "k-textarea"
-};
-var _hoisted_3 = ["id", "rows", "value", "disabled"];
-var _hoisted_4 = {
-  key: 0,
-  "class": "k-field__error"
-};
+var _hoisted_2 = ["id", "rows", "value", "disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$props$rows;
 
@@ -25402,7 +25387,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.key
   }, null, 8
   /* PROPS */
-  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-textarea", {
+      'has-error': $props.modelValue.error
+    }])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: $props.key,
     "class": "k-textarea__textarea",
     rows: (_$props$rows = $props.rows) !== null && _$props$rows !== void 0 ? _$props$rows : 4,
@@ -25413,9 +25402,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: $props.disabled
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , _hoisted_2)], 2
+  /* CLASS */
+  )]);
 }
 
 /***/ }),
@@ -25465,15 +25454,12 @@ var _hoisted_1 = {
   "class": "k-field"
 };
 var _hoisted_2 = {
-  "class": "k-upload"
-};
-var _hoisted_3 = {
   "class": "k-upload__files"
 };
-var _hoisted_4 = ["textContent"];
-var _hoisted_5 = ["onClick"];
+var _hoisted_3 = ["textContent"];
+var _hoisted_4 = ["onClick"];
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "clip-rule": "evenodd",
   "fill-rule": "evenodd",
   "stroke-linejoin": "round",
@@ -25487,14 +25473,10 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = [_hoisted_6];
-var _hoisted_8 = ["disabled"];
-var _hoisted_9 = {
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = ["disabled"];
+var _hoisted_8 = {
   key: 0
-};
-var _hoisted_10 = {
-  key: 0,
-  "class": "k-field__error"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-label");
@@ -25504,7 +25486,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.key
   }, null, 8
   /* PROPS */
-  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.modelValue.value, function (upload) {
+  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-upload", {
+      'has-error': $props.modelValue.error
+    }])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.modelValue.value, function (upload) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "k-upload__file",
       key: upload.id
@@ -25513,14 +25499,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(upload.name)
     }, null, 8
     /* PROPS */
-    , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       "class": "k-upload__file__remove",
       onClick: function onClick($event) {
         return $options.deleteUpload(upload.id);
       }
-    }, _hoisted_7, 8
+    }, _hoisted_6, 8
     /* PROPS */
-    , _hoisted_5)]);
+    , _hoisted_4)]);
   }), 128
   /* KEYED_FRAGMENT */
   ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -25534,9 +25520,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     multiple: ""
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_8), $data.is_uploading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, "Uploading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , _hoisted_7), $data.is_uploading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_8, "Uploading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 2
+  /* CLASS */
+  )]);
 }
 
 /***/ }),
@@ -45097,7 +45083,7 @@ webpackContext.id = "./resources/js/data/form sync recursive ^\\.\\/V.*\\.json$"
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"component":"KTable","key":"current_financial_position","rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Current Bank Balance","key":"current_bank_balance"},{"name":"Club Reserves","key":"club_reserves"}]},{"component":"KTotal","props":{},"values":["current_financial_position_current_financial_position_.*_value"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","required":false}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Utilities","key":"utilities"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar/Food Purchases","key":"bar_food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest/Grant Repayments","key":"interest_grant_repayments"},{"name":"Broadband, Phone & TV","key":"broadband_phone_tv"},{"name":"Insurance","key":"insurance"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"},{"name":"Cleaning Contract & Laundry","key":"cleaning_contract_laundry"},{"name":"Security & Alarms","key":"security_alarm"},{"name":"Building Maintenance","key":"building_maintenance"},{"name":"VAT","key":"vat"}]},{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Staffing Costs"}},{"component":"KTable","key":"staffing_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","required":false}],"rows":[{"name":"Bar Staff","key":"bar_staff"},{"name":"Admin Staff","key":"admin_staff"},{"name":"Coach","key":"coach"},{"name":"Medics","key":"medics"},{"name":"Players","key":"players"}]}]},{"name":"Income","key":"income","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Income Generated Revenue"}},{"component":"KTable","key":"club_income_generated_revenue","canAddAdditional":true,"headings":["Activity","£","Brief description of activity"],"rowFields":[{"key":"income","component":"KInput","props":{"type":"number"}},{"key":"description","component":"KInput","required":false}],"rows":[{"name":"Player Membership","key":"player_membership"},{"name":"Other Membership","key":"other_membership"},{"name":"Tickets & Programmes","key":"tickets_and_programmes"},{"name":"Kit Sales","key":"kit_sales"},{"name":"Bar/Food Sales","key":"bar_food_sales"},{"name":"Social & Fund Raising","key":"social_and_fund_raising"},{"name":"Hire of Facilities","key":"hire_of_facilities"},{"name":"Sponsorship & Advertising","key":"sponsorship_and_advertising"},{"name":"Ticket Sales","key":"ticket_sales"},{"name":"Grants","key":"grants"},{"name":"Other Grants","key":"other_grants"}]}]},{"name":"Balance Sheet","key":"balance_sheet","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Balance Sheet"}},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Fixed Assets"}},{"component":"KTable","key":"fixed_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","required":false}],"rows":[{"name":"Freehold Property","key":"freehold_property"},{"name":"Plant & Equipment","key":"plant_and_equipment"},{"name":"Other Fixed Assets","key":"other_fixed_assets"}]},{"component":"KTotal","props":{"label":"Total Fixed Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Current Assets"}},{"component":"KTable","key":"current_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","required":false}],"rows":[{"name":"Rugby Stock","key":"rugby_stock"},{"name":"Clubhouse Stock","key":"clubhouse_stock"},{"name":"Investments","key":"investments"},{"name":"Debtors","key":"debtors"}]},{"component":"KTotal","props":{"label":"Total Current Assets"},"values":["balance_sheet_current_assets_.*_accounting_value"]},{"component":"KTotal","props":{"label":"Total Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value","balance_sheet_current_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Liabilities"}},{"component":"KTable","key":"liabilities","canAddAdditional":true,"headings":["Liability","Due Within 12 Months","Due After 12 Months"],"rowFields":[{"key":"due_within_12_months","component":"KInput","props":{"type":"number"}},{"key":"due_after_12_months","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"HMRC","key":"hmrc"},{"name":"Rugby Creditors","key":"rugby_creditors"},{"name":"GRFU Loans","key":"grfu_loans"},{"name":"RFU/RFF Loans","key":"rfu_rff_loans"},{"name":"Bank Loans","key":"bank_loans"},{"name":"Accruals","key":"accruals"}]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Off Balance Sheet Liabilities"}},{"component":"KTable","key":"off_balance_sheet_liabilities","canAddAdditional":true,"rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Related Party Guarantees","key":"releated_party_guarantees"},{"name":"Cross Holdings","key":"cross_holdings"}]}]}]}');
+module.exports = JSON.parse('{"version":1,"sections":[{"name":"General Details","key":"general_details","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"General Details"}},{"name":"Group Entities","key":"group_entities","component":"KTextarea","props":{"rows":6}},{"name":"Related Parties","key":"related_parties","component":"KTextarea"},{"name":"Ground Status","key":"ground_status","component":"KInput"},{"name":"Local Authority","key":"local_authority","component":"KInput"},{"name":"Details of Related Parties","key":"details_of_related_parties","component":"KTextarea"},{"name":"Accounts Upload","key":"accounts_upload","component":"KUpload"},{"name":"Howden\'s Risk Assesment Data","key":"howdens_risk_assesment_data","component":"KTextarea","disabled":true}]},{"name":"Current Financial Position","key":"current_financial_position","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Current Financial Position"}},{"name":"Current Bank Balance","key":"current_bank_balance","component":"KInput","props":{"type":"number"}},{"name":"Club Reserves","key":"club_reserves","component":"KInput","props":{"type":"number"}},{"component":"KTotal","props":{},"values":["current_financial_position_current_bank_balance","current_financial_position_club_reserves"]}]},{"name":"Running Costs","key":"running_costs","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Running Costs"}},{"component":"KTable","key":"club_running_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","required":false}],"rows":[{"name":"Rent/Lease (Building)","key":"rent_lease_building"},{"name":"Rates","key":"rates"},{"name":"Utilities","key":"utilities"},{"name":"Kit","key":"kit"},{"name":"Travel","key":"travel"},{"name":"Pitch Maintenance","key":"pitch_maintenance"},{"name":"Bar/Food Purchases","key":"bar_food_purchases"},{"name":"International Tickets","key":"international_tickets"},{"name":"Interest/Grant Repayments","key":"interest_grant_repayments"},{"name":"Broadband, Phone & TV","key":"broadband_phone_tv"},{"name":"Insurance","key":"insurance"},{"name":"Equipment Rental","key":"equipment_rental"},{"name":"Loan Repayments","key":"loan_repayments"},{"name":"Cleaning Contract & Laundry","key":"cleaning_contract_laundry"},{"name":"Security & Alarms","key":"security_alarm"},{"name":"Building Maintenance","key":"building_maintenance"},{"name":"VAT","key":"vat"}]},{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Staffing Costs"}},{"component":"KTable","key":"staffing_costs","canAddAdditional":true,"headings":["","Monthly £","Notes"],"rowFields":[{"key":"monthly","component":"KInput","props":{"type":"number"}},{"key":"note","component":"KInput","required":false}],"rows":[{"name":"Bar Staff","key":"bar_staff"},{"name":"Admin Staff","key":"admin_staff"},{"name":"Coach","key":"coach"},{"name":"Medics","key":"medics"},{"name":"Players","key":"players"}]}]},{"name":"Income","key":"income","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Club Income Generated Revenue"}},{"component":"KTable","key":"club_income_generated_revenue","canAddAdditional":true,"headings":["Activity","£","Brief description of activity"],"rowFields":[{"key":"income","component":"KInput","props":{"type":"number"}},{"key":"description","component":"KInput","required":false}],"rows":[{"name":"Player Membership","key":"player_membership"},{"name":"Other Membership","key":"other_membership"},{"name":"Tickets & Programmes","key":"tickets_and_programmes"},{"name":"Kit Sales","key":"kit_sales"},{"name":"Bar/Food Sales","key":"bar_food_sales"},{"name":"Social & Fund Raising","key":"social_and_fund_raising"},{"name":"Hire of Facilities","key":"hire_of_facilities"},{"name":"Sponsorship & Advertising","key":"sponsorship_and_advertising"},{"name":"Ticket Sales","key":"ticket_sales"},{"name":"Grants","key":"grants"},{"name":"Other Grants","key":"other_grants"}]}]},{"name":"Balance Sheet","key":"balance_sheet","fields":[{"component":"KHeader","props":{"classList":"mb-3 text-lg","text":"Balance Sheet"}},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Fixed Assets"}},{"component":"KTable","key":"fixed_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","required":false}],"rows":[{"name":"Freehold Property","key":"freehold_property"},{"name":"Plant & Equipment","key":"plant_and_equipment"},{"name":"Other Fixed Assets","key":"other_fixed_assets"}]},{"component":"KTotal","props":{"label":"Total Fixed Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Current Assets"}},{"component":"KTable","key":"current_assets","headings":["Asset","Accounting Value (£)","Notes"],"rowFields":[{"key":"accounting_value","component":"KInput","props":{"type":"number"}},{"key":"notes","component":"KInput","required":false}],"rows":[{"name":"Rugby Stock","key":"rugby_stock"},{"name":"Clubhouse Stock","key":"clubhouse_stock"},{"name":"Investments","key":"investments"},{"name":"Debtors","key":"debtors"}]},{"component":"KTotal","props":{"label":"Total Current Assets"},"values":["balance_sheet_current_assets_.*_accounting_value"]},{"component":"KTotal","props":{"label":"Total Assets"},"values":["balance_sheet_fixed_assets_.*_accounting_value","balance_sheet_current_assets_.*_accounting_value"]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Liabilities"}},{"component":"KTable","key":"liabilities","canAddAdditional":true,"headings":["Liability","Due Within 12 Months","Due After 12 Months"],"rowFields":[{"key":"due_within_12_months","component":"KInput","props":{"type":"number"}},{"key":"due_after_12_months","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"HMRC","key":"hmrc"},{"name":"Rugby Creditors","key":"rugby_creditors"},{"name":"GRFU Loans","key":"grfu_loans"},{"name":"RFU/RFF Loans","key":"rfu_rff_loans"},{"name":"Bank Loans","key":"bank_loans"},{"name":"Accruals","key":"accruals"}]},{"component":"KHeader","props":{"classList":"mb-3 text-md","text":"Off Balance Sheet Liabilities"}},{"component":"KTable","key":"off_balance_sheet_liabilities","canAddAdditional":true,"rowFields":[{"key":"value","component":"KInput","props":{"type":"number"}}],"rows":[{"name":"Related Party Guarantees","key":"releated_party_guarantees"},{"name":"Cross Holdings","key":"cross_holdings"}]}]}]}');
 
 /***/ })
 

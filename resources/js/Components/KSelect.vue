@@ -1,7 +1,7 @@
 <template>
     <div class="k-field">
         <k-label :value="label" :name="key" />
-        <div class="k-select">
+        <div class="k-select" :class="{ 'has-error': modelValue.error }">
             <select
                 class="k-select__select"
                 :value="modelValue.value"
@@ -17,9 +17,6 @@
                 ></option>
             </select>
         </div>
-        <p v-if="modelValue.error" class="k-field__error">
-            {{ modelValue.error }}
-        </p>
     </div>
 </template>
 

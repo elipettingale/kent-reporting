@@ -1,7 +1,7 @@
 <template>
     <div class="k-field">
         <k-label :value="label" :name="key" />
-        <div class="k-textarea">
+        <div class="k-textarea" :class="{ 'has-error': modelValue.error }">
             <textarea
                 :id="key"
                 class="k-textarea__textarea"
@@ -11,9 +11,6 @@
                 :disabled="disabled"
             ></textarea>
         </div>
-        <p v-if="modelValue.error" class="k-field__error">
-            {{ modelValue.error }}
-        </p>
     </div>
 </template>
 

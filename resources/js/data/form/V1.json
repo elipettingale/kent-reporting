@@ -65,33 +65,27 @@
                     }
                 },
                 {
-                    "component": "KTable",
-                    "key": "current_financial_position",
-                    "rowFields": [
-                        {
-                            "key": "value",
-                            "component": "KInput",
-                            "props": {
-                                "type": "number"
-                            }
-                        }
-                    ],
-                    "rows": [
-                        {
-                            "name": "Current Bank Balance",
-                            "key": "current_bank_balance"
-                        },
-                        {
-                            "name": "Club Reserves",
-                            "key": "club_reserves"
-                        }
-                    ]
+                    "name": "Current Bank Balance",
+                    "key": "current_bank_balance",
+                    "component": "KInput",
+                    "props": {
+                        "type": "number"
+                    }
+                },
+                {
+                    "name": "Club Reserves",
+                    "key": "club_reserves",
+                    "component": "KInput",
+                    "props": {
+                        "type": "number"
+                    }
                 },
                 {
                     "component": "KTotal",
                     "props": {},
                     "values": [
-                        "current_financial_position_current_financial_position_.*_value"
+                        "current_financial_position_current_bank_balance",
+                        "current_financial_position_club_reserves"
                     ]
                 }
             ]

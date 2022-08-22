@@ -1351,29 +1351,6 @@ html {
   --tw-ring-opacity: 0.5;
 }
 
-.k-table th {
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-  padding-left: 1rem;
-  padding-right: 0.75rem;
-  text-align: left;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 600;
-  color: var(--gray-900);
-}
-
-.k-table td {
-  white-space: nowrap;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: var(--gray-500);
-}
-
 .k-form-nav-item {
   border-width: 2px;
   border-color: var(--gray-200);
@@ -1449,6 +1426,33 @@ html {
   color: var(--red-500);
 }
 
+.k-upload__upload {
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: var(--gray-300);
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.k-upload__upload:focus {
+  border-color: var(--blue-300);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: var(--blue-200);
+  --tw-ring-opacity: 0.5;
+}
+
+.k-upload__upload {
+    padding: 0.25rem;
+}
+
+.k-upload__files {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
 .k-upload__file {
   display: flex;
   align-items: center;
@@ -1464,6 +1468,92 @@ html {
 
 .k-upload__file__remove svg {
   fill: var(--red-500);
+}
+
+.k-input.has-error input {
+  border-color: var(--red-500);
+}
+
+.k-textarea.has-error textarea {
+  border-color: var(--red-500);
+}
+
+.k-select.has-error select {
+  border-color: var(--red-500);
+}
+
+.k-upload.has-error input {
+  border-color: var(--red-500);
+}
+
+.k-table {
+  margin-bottom: 0.75rem;
+}
+
+.k-table table {
+    table-layout: fixed;
+}
+
+.k-table thead {
+  border-color: var(--blue-400);
+  background-color: var(--blue-400);
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+    border-width: 1px !important;
+}
+
+.k-table tbody {
+  border-color: var(--blue-400);
+    border-width: 1px !important;
+    padding: 0.5rem 0;
+}
+
+.k-table th {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  padding-left: 1rem;
+  padding-right: 0.75rem;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.k-table td {
+  white-space: nowrap;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--gray-500);
+    vertical-align: top;
+    padding: 0.5rem 0.75rem;
+}
+
+.k-table tr td:first-child {
+    width: 33.33%;
+}
+
+.k-table .k-field {
+    margin-bottom: 0;
+}
+
+.k-table tbody tr:first-child td {
+    padding-top: 1rem;
+}
+
+.k-table tbody tr:last-child td {
+    padding-bottom: 1rem;
+}
+
+.k-total {
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .hover\:border-gray-300:hover {

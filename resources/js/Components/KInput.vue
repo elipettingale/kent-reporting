@@ -1,7 +1,13 @@
 <template>
     <div class="k-field">
         <k-label :value="label" :name="key" />
-        <div class="k-input" :class="{ 'has-prefix': prefix }">
+        <div
+            class="k-input"
+            :class="{
+                'has-prefix': prefix,
+                'has-error': modelValue.error,
+            }"
+        >
             <span v-if="prefix" class="k-input__prefix" v-text="prefix"></span>
             <input
                 :type="type ?? 'text'"
@@ -11,9 +17,6 @@
                 :disabled="disabled"
             />
         </div>
-        <p v-if="modelValue.error" class="k-field__error">
-            {{ modelValue.error }}
-        </p>
     </div>
 </template>
 
