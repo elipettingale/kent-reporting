@@ -24798,6 +24798,10 @@ __webpack_require__.r(__webpack_exports__);
           });
           uploads.splice(index, 1);
 
+          if (uploads.length === 0) {
+            uploads = null;
+          }
+
           _this2.$emit("update:modelValue", {
             value: uploads,
             error: null
@@ -24998,6 +25002,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var sectionIsValid = true;
       var errorCount = 0;
       (0,_includes_helpers_js__WEBPACK_IMPORTED_MODULE_12__.forEachField)(section, function (key, field) {
+        console.log(_this4.form_data[key]);
+
         if (field.required !== false) {
           if (_this4.form_data[key]["value"] === null || _this4.form_data[key]["value"] === "") {
             _this4.form_data[key]["error"] = "Please fill in this field";
@@ -25467,9 +25473,17 @@ var _hoisted_3 = {
 var _hoisted_4 = ["textContent"];
 var _hoisted_5 = ["onClick"];
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-times"
-}, null, -1
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "clip-rule": "evenodd",
+  "fill-rule": "evenodd",
+  "stroke-linejoin": "round",
+  "stroke-miterlimit": "2",
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z",
+  "fill-rule": "nonzero"
+})], -1
 /* HOISTED */
 );
 
@@ -25499,7 +25513,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(upload.name)
     }, null, 8
     /* PROPS */
-    , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       "class": "k-upload__file__remove",
       onClick: function onClick($event) {
         return $options.deleteUpload(upload.id);

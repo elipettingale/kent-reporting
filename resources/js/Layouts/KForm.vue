@@ -391,6 +391,7 @@ export default {
             let errorCount = 0;
 
             forEachField(section, (key, field) => {
+                console.log(this.form_data[key]);
                 if (field.required !== false) {
                     if (
                         this.form_data[key]["value"] === null ||

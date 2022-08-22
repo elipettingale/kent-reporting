@@ -1282,6 +1282,10 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
+html {
+    font-size: 17px;
+}
+
 .k-field {
   margin-bottom: 0.75rem;
 }
@@ -1443,6 +1447,23 @@ select {
 
 .k-confirmation__section.has-errors {
   color: var(--red-500);
+}
+
+.k-upload__file {
+  display: flex;
+  align-items: center;
+}
+
+.k-upload__file__remove {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.k-upload__file__remove svg {
+  fill: var(--red-500);
 }
 
 .hover\:border-gray-300:hover {
