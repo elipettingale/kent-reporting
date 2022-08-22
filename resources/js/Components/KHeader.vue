@@ -1,5 +1,5 @@
 <template>
-    <p :class="classList">
+    <p class="font-bold" :class="classList">
         {{ text }}
     </p>
 </template>

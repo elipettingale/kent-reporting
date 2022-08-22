@@ -106,9 +106,9 @@
                     "key": "club_running_costs",
                     "canAddAdditional": true,
                     "headings": [
-                        "",
-                        "Monthly £",
-                        "Notes"
+                        "Category",
+                        "Monthly (£)",
+                        "Additional Notes"
                     ],
                     "rowFields": [
                         {
@@ -198,7 +198,7 @@
                 {
                     "component": "KHeader",
                     "props": {
-                        "classList": "mb-3 text-lg",
+                        "classList": "mb-3 mt-8 text-lg",
                         "text": "Staffing Costs"
                     }
                 },
@@ -207,9 +207,9 @@
                     "key": "staffing_costs",
                     "canAddAdditional": true,
                     "headings": [
-                        "",
-                        "Monthly £",
-                        "Notes"
+                        "Category",
+                        "Monthly (£)",
+                        "Additional Notes"
                     ],
                     "rowFields": [
                         {
@@ -266,9 +266,9 @@
                     "key": "club_income_generated_revenue",
                     "canAddAdditional": true,
                     "headings": [
-                        "Activity",
-                        "£",
-                        "Brief description of activity"
+                        "Category",
+                        "Monthly (£)",
+                        "Additional Notes"
                     ],
                     "rowFields": [
                         {
@@ -355,9 +355,9 @@
                     "component": "KTable",
                     "key": "fixed_assets",
                     "headings": [
-                        "Asset",
-                        "Accounting Value (£)",
-                        "Notes"
+                        "Category",
+                        "Total Value (£)",
+                        "Additonal Notes"
                     ],
                     "rowFields": [
                         {
@@ -400,7 +400,7 @@
                 {
                     "component": "KHeader",
                     "props": {
-                        "classList": "mb-3 text-md",
+                        "classList": "mb-3 mt-8 text-md",
                         "text": "Current Assets"
                     }
                 },
@@ -408,9 +408,9 @@
                     "component": "KTable",
                     "key": "current_assets",
                     "headings": [
-                        "Asset",
-                        "Accounting Value (£)",
-                        "Notes"
+                        "Category",
+                        "Total Value (£)",
+                        "Additional Notes"
                     ],
                     "rowFields": [
                         {
@@ -467,7 +467,7 @@
                 {
                     "component": "KHeader",
                     "props": {
-                        "classList": "mb-3 text-md",
+                        "classList": "mb-3 mt-8 text-md",
                         "text": "Liabilities"
                     }
                 },
@@ -476,9 +476,9 @@
                     "key": "liabilities",
                     "canAddAdditional": true,
                     "headings": [
-                        "Liability",
-                        "Due Within 12 Months",
-                        "Due After 12 Months"
+                        "Category",
+                        "Due Within 12 Months (£)",
+                        "Due After 12 Months (£)"
                     ],
                     "rowFields": [
                         {
@@ -526,7 +526,7 @@
                 {
                     "component": "KHeader",
                     "props": {
-                        "classList": "mb-3 text-md",
+                        "classList": "mb-3 mt-8 text-md",
                         "text": "Off Balance Sheet Liabilities"
                     }
                 },
@@ -534,6 +534,10 @@
                     "component": "KTable",
                     "key": "off_balance_sheet_liabilities",
                     "canAddAdditional": true,
+                    "headings": [
+                        "Category",
+                        "Value (£)"
+                    ],
                     "rowFields": [
                         {
                             "key": "value",

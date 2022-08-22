@@ -1551,9 +1551,11 @@ html {
 }
 
 .k-total {
-  margin-bottom: 0.75rem;
   display: flex;
   justify-content: space-between;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
 }
 
 .hover\:border-gray-300:hover {

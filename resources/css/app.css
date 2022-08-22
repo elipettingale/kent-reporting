@@ -168,5 +168,5 @@ html {
 }
 
 .k-total {
-    @apply flex justify-between mb-3;
+    @apply flex justify-between font-bold text-sm;
 }
