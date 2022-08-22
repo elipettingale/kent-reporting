@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ReportController extends Controller
 {
@@ -38,7 +39,7 @@ class ReportController extends Controller
 
     public function update(Report $report, Request $request)
     {
-        // todo: authorize (only owner, and can't be completed) 
+        // todo: authorize
 
         $report->data = $request->get('data');
 
@@ -55,5 +56,40 @@ class ReportController extends Controller
         return [
             'success' => true
         ];
+    }
+
+    public function storeFile(Report $report, Request $request)
+    {
+        // todo: authorize
+
+        $files = [];
+
+        $uploads = $request->file('uploads');
+
+        foreach ($uploads as $upload) {
+            $media = $report->addMedia($upload)
+                ->toMediaCollection();
+
+            $files[] = [
+                'id' => $media->id,
+                'name' => $media->file_name
+            ];
+        }
+
+        return [
+            'success' => true,
+            'files' => $files
+        ];
+    }
+
+    public function destroyFile(Report $report, Media $media)
+    {
+        // todo: authorise
+
+        $media->delete();
+
+        return [
+            'success' => true
+        ]; 
     }
 }

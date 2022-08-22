@@ -24745,6 +24745,66 @@ __webpack_require__.r(__webpack_exports__);
   props: ["label", "key", "modelValue", "disabled"],
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      is_uploading: false
+    };
+  },
+  methods: {
+    upload: function upload(event) {
+      var _this = this;
+
+      var data = new FormData();
+
+      for (var i = 0; i < event.target.files.length; i++) {
+        data.append("uploads[]", event.target.files[i]);
+      }
+
+      this.is_uploading = true;
+      axios.post(window.location.href + "/files", data, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        if (data.success) {
+          var uploads = Object.assign([], _this.modelValue.value);
+          data.files.forEach(function (file) {
+            uploads.push(file);
+          });
+
+          _this.$emit("update:modelValue", {
+            value: uploads,
+            error: null
+          });
+
+          _this.$refs.upload.value = "";
+          _this.is_uploading = false;
+        }
+      });
+    },
+    deleteUpload: function deleteUpload(id) {
+      var _this2 = this;
+
+      axios["delete"](window.location.href + "/files/".concat(id)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.success) {
+          var uploads = Object.assign([], _this2.modelValue.value);
+          var index = uploads.findIndex(function (upload) {
+            return upload.id === id;
+          });
+          uploads.splice(index, 1);
+
+          _this2.$emit("update:modelValue", {
+            value: uploads,
+            error: null
+          });
+        }
+      });
+    }
   }
 });
 
@@ -25401,8 +25461,24 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "k-upload"
 };
-var _hoisted_3 = ["disabled"];
-var _hoisted_4 = {
+var _hoisted_3 = {
+  "class": "k-upload__files"
+};
+var _hoisted_4 = ["textContent"];
+var _hoisted_5 = ["onClick"];
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-times"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_7 = [_hoisted_6];
+var _hoisted_8 = ["disabled"];
+var _hoisted_9 = {
+  key: 0
+};
+var _hoisted_10 = {
   key: 0,
   "class": "k-field__error"
 };
@@ -25414,12 +25490,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: $props.key
   }, null, 8
   /* PROPS */
-  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , ["value", "name"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.modelValue.value, function (upload) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": "k-upload__file",
+      key: upload.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      "class": "k-upload__file__name",
+      textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(upload.name)
+    }, null, 8
+    /* PROPS */
+    , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "k-upload__file__remove",
+      onClick: function onClick($event) {
+        return $options.deleteUpload(upload.id);
+      }
+    }, _hoisted_7, 8
+    /* PROPS */
+    , _hoisted_5)]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "k-upload__upload",
+    ref: "upload",
     type: "file",
-    disabled: $props.disabled
-  }, null, 8
-  /* PROPS */
-  , _hoisted_3)]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
+    disabled: $props.disabled,
+    onChange: _cache[0] || (_cache[0] = function () {
+      return $options.upload && $options.upload.apply($options, arguments);
+    }),
+    multiple: ""
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_8), $data.is_uploading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, "Uploading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $props.modelValue.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.modelValue.error), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
