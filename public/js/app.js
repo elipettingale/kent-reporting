@@ -24950,6 +24950,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       _this.form_data = form_data;
+
+      if (data.status === "complete") {
+        _this.blueprint.sections.forEach(function (section) {
+          _this.validateSection(section);
+        });
+      }
     });
   },
   data: function data() {

@@ -317,6 +317,12 @@ export default {
             }
 
             this.form_data = form_data;
+
+            if (data.status === "complete") {
+                this.blueprint.sections.forEach((section) => {
+                    this.validateSection(section);
+                });
+            }
         });
     },
     data: function () {
