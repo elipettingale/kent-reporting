@@ -196,7 +196,7 @@
                         </p>
                     </div>
 
-                    <p class="my-6">
+                    <p v-if="!is_locked" class="my-6">
                         Please ensure you have checked the information you have
                         entered and have filled out as many fields as you can.
                         <br />
@@ -204,7 +204,10 @@
                         submitted your it.
                     </p>
 
-                    <div class="flex items-center justify-end mt-4">
+                    <div
+                        v-if="!is_locked"
+                        class="flex items-center justify-end mt-4"
+                    >
                         <k-button @click="submit"
                             >Confirm & Submit Form</k-button
                         >
@@ -339,7 +342,6 @@ export default {
         form_data: {
             handler(value) {
                 if (!this.is_locked) {
-                    console.log("SAVE");
                     this.is_saved = false;
                     this.debounced_save(value);
                 }
@@ -466,7 +468,7 @@ export default {
 
             axios
                 .patch(window.location.href, {
-                    data: this.form,
+                    data: this.form_data,
                     status: "complete",
                 })
                 .then(({ data }) => {

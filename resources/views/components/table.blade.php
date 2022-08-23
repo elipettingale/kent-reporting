@@ -1,11 +1,11 @@
-<div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+<div class="mb-3 rounded-md border border-gray-200 overflow-hidden">
     <table class="min-w-full divide-y divide-gray-300">
-        <thead class="bg-gray-50">
+        <thead class="bg-blue-400 text-white">
             <tr>
                 {{ $thead }}
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
+        <tbody class="bg-white divide-y">
             {{ $tbody }}
         </tbody>
     </table>

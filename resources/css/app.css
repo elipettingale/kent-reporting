@@ -4,7 +4,8 @@
 @import "variables.css";
 
 html {
-    font-size: 17px;
+    font-size: 18px;
+    @apply text-gray-700;
 }
 
 .k-field {
@@ -40,7 +41,7 @@ html {
 }
 
 .k-form-nav-item {
-    @apply bg-white border-2 border-gray-200 sm:rounded-lg px-6 py-4;
+    @apply bg-white border-2 border-white sm:rounded-lg px-6 py-4 cursor-pointer;
 }
 
 .k-form-nav-item.has-errors {
@@ -52,7 +53,7 @@ html {
 }
 
 .k-form-nav-item.is-active {
-    @apply bg-blue-300 text-white;
+    @apply bg-blue-400 border-blue-400 text-white;
 }
 
 .k-textarea__textarea {
@@ -123,7 +124,8 @@ html {
 }
 
 .k-table {
-    @apply mb-3;
+    @apply mb-3 rounded-md border border-gray-200;
+    overflow: hidden;
 }
 
 .k-table table {
@@ -131,13 +133,10 @@ html {
 }
 
 .k-table thead {
-    @apply border-blue-400 bg-blue-400 text-white;
-    border-width: 1px !important;
+    @apply bg-blue-400 text-white;
 }
 
 .k-table tbody {
-    @apply border-blue-400;
-    border-width: 1px !important;
     padding: 0.5rem 0;
 }
 
