@@ -182,3 +182,7 @@ html {
 .k-spin {
     animation: infinite 1s spin;
 }
+
+.copy a {
+    @apply text-blue-500 font-bold;
+}

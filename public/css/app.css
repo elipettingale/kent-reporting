@@ -1602,6 +1602,11 @@ html {
             animation: infinite 1s spin;
 }
 
+.copy a {
+  font-weight: 700;
+  color: var(--blue-500);
+}
+
 .hover\:border-gray-300:hover {
   border-color: var(--gray-300);
 }
@@ -1616,6 +1621,10 @@ html {
 
 .hover\:bg-blue-700:hover {
   background-color: var(--blue-700);
+}
+
+.hover\:bg-blue-500:hover {
+  background-color: var(--blue-500);
 }
 
 .hover\:text-gray-500:hover {
@@ -1717,6 +1726,10 @@ html {
 
 .active\:bg-blue-900:active {
   background-color: var(--blue-900);
+}
+
+.active\:bg-blue-600:active {
+  background-color: var(--blue-600);
 }
 
 .active\:text-gray-700:active {

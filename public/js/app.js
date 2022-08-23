@@ -25054,9 +25054,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           text: "Please fill out as much information as you can. You can always return to this section later by clicking the heading at the top of the page.",
           showCancelButton: true,
           confirmButtonText: "Yes, Continue",
-          confirmButtonColor: "#031550",
+          confirmButtonColor: "#354473",
           cancelButtonText: "No, Go Back",
-          cancelButtonColor: "#c51515"
+          cancelButtonColor: "#ed5858"
         }).then(function (result) {
           if (result.isConfirmed) {
             _this5.goToNextSection();
@@ -25127,7 +25127,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
+  "class": "inline-flex items-center px-4 py-2 bg-blue-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-600 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")]);

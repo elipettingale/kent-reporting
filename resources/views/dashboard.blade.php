@@ -8,7 +8,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200 copy">
                     <p class="text-lg mb-2 font-bold">Welcome!</p>
                     <p>Thank you for visiting and welcome to Kent RFU's online reporting website for clubs.</p>
                     <p>Below are some Question & Answers to help you:</p>

@@ -426,9 +426,9 @@ export default {
                     text: "Please fill out as much information as you can. You can always return to this section later by clicking the heading at the top of the page.",
                     showCancelButton: true,
                     confirmButtonText: "Yes, Continue",
-                    confirmButtonColor: "#031550",
+                    confirmButtonColor: "#354473",
                     cancelButtonText: "No, Go Back",
-                    cancelButtonColor: "#c51515",
+                    cancelButtonColor: "#ed5858",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         this.goToNextSection();
