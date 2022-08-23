@@ -765,6 +765,9 @@ select {
 .mr-3 {
   margin-right: 0.75rem;
 }
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -1673,6 +1676,10 @@ html {
 
 .focus\:border-blue-900:focus {
   border-color: var(--blue-900);
+}
+
+.focus\:border-blue-600:focus {
+  border-color: var(--blue-600);
 }
 
 .focus\:bg-gray-100:focus {
