@@ -168,7 +168,9 @@
                     </template>
 
                     <div class="flex items-center justify-end mt-4">
-                        <k-button @click="validateAndGoToNextSection"
+                        <k-button
+                            ref="nextButton"
+                            @click="validateAndGoToNextSection"
                             >Next</k-button
                         >
                     </div>
@@ -231,6 +233,7 @@ import KHeader from "../Components/KHeader.vue";
 import KTotal from "../Components/KTotal.vue";
 import KSaveIndicator from "../Components/KSaveIndicator.vue";
 import { forEachField } from "../includes/helpers.js";
+import Swal from "sweetalert2";
 
 export default {
     name: "KForm",
@@ -385,7 +388,6 @@ export default {
             let errorCount = 0;
 
             forEachField(section, (key, field) => {
-                console.log(this.form_data[key]);
                 if (field.required !== false) {
                     if (
                         this.form_data[key]["value"] === null ||
@@ -408,11 +410,24 @@ export default {
 
         validateAndGoToNextSection() {
             let sectionIsValid = this.validateSection(this.current_section);
+            this.$refs.nextButton.$el.blur();
 
             if (sectionIsValid) {
                 this.goToNextSection();
             } else {
-                // todo: alert: you have not filled out all required fields, are you sure you want to continue?
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Please fill out as much information as you can. You can always return to this section later by clicking the heading at the top of the page.",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, Continue",
+                    confirmButtonColor: "#031550",
+                    cancelButtonText: "No, Go Back",
+                    cancelButtonColor: "#c51515",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.goToNextSection();
+                    }
+                });
             }
         },
 
