@@ -7,7 +7,7 @@
                     <k-form-nav-item
                         v-for="(section, index) in blueprint.sections"
                         :key="index"
-                        class="mr-4"
+                        class="mr-3"
                         :class="{
                             'is-active': current_section_index === index,
                             'is-complete': sections[section.key].isComplete,
