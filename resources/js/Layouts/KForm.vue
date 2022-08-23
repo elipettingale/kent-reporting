@@ -26,9 +26,7 @@
                         Confirmation
                     </k-form-nav-item>
                 </div>
-                <div class="flex flex-1 justify-end text-right items-center">
-                    <p v-text="save_status"></p>
-                </div>
+                <k-save-indicator :is_saved="is_saved" />
             </div>
         </div>
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -231,6 +229,7 @@ import KTable from "../Components/KTable.vue";
 import KTableRow from "../Components/KTableRow.vue";
 import KHeader from "../Components/KHeader.vue";
 import KTotal from "../Components/KTotal.vue";
+import KSaveIndicator from "../Components/KSaveIndicator.vue";
 import { forEachField } from "../includes/helpers.js";
 
 export default {
@@ -249,6 +248,7 @@ export default {
         KTableRow,
         KHeader,
         KTotal,
+        KSaveIndicator,
     },
     created() {
         this.debounced_save = _.debounce(this.save, 1000);
@@ -328,14 +328,6 @@ export default {
     computed: {
         current_section() {
             return this.blueprint.sections[this.current_section_index];
-        },
-
-        save_status() {
-            if (this.is_saved) {
-                return "Saved";
-            }
-
-            return "...Saving";
         },
     },
     watch: {

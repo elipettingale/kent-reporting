@@ -789,11 +789,11 @@ select {
 .h-6 {
   height: 1.5rem;
 }
-.h-16 {
-  height: 4rem;
+.h-20 {
+  height: 5rem;
 }
-.h-12 {
-  height: 3rem;
+.h-14 {
+  height: 3.5rem;
 }
 .h-4 {
   height: 1rem;
@@ -801,11 +801,8 @@ select {
 .h-8 {
   height: 2rem;
 }
-.h-20 {
-  height: 5rem;
-}
-.h-14 {
-  height: 3.5rem;
+.h-16 {
+  height: 4rem;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -818,6 +815,9 @@ select {
 }
 .w-6 {
   width: 1.5rem;
+}
+.w-11 {
+  width: 2.75rem;
 }
 .w-4 {
   width: 1rem;
@@ -836,21 +836,6 @@ select {
 }
 .w-auto {
   width: auto;
-}
-.w-7 {
-  width: 1.75rem;
-}
-.w-12 {
-  width: 3rem;
-}
-.w-10 {
-  width: 2.5rem;
-}
-.w-9 {
-  width: 2.25rem;
-}
-.w-11 {
-  width: 2.75rem;
 }
 .min-w-full {
   min-width: 100%;
@@ -1021,6 +1006,12 @@ select {
 .fill-gray-100 {
   fill: var(--gray-100);
 }
+.fill-green-500 {
+  fill: var(--green-500);
+}
+.fill-gray-500 {
+  fill: var(--gray-500);
+}
 .p-2 {
   padding: 0.5rem;
 }
@@ -1047,9 +1038,9 @@ select {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -1067,6 +1058,10 @@ select {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -1078,18 +1073,6 @@ select {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-}
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 .pl-4 {
   padding-left: 1rem;
@@ -1114,9 +1097,6 @@ select {
 }
 .pr-4 {
   padding-right: 1rem;
-}
-.pt-1 {
-  padding-top: 0.25rem;
 }
 .pt-6 {
   padding-top: 1.5rem;
@@ -1593,6 +1573,29 @@ html {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 700;
+}
+
+@-webkit-keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.k-spin {
+    -webkit-animation: infinite 1s spin;
+            animation: infinite 1s spin;
 }
 
 .hover\:border-gray-300:hover {
