@@ -485,7 +485,7 @@ export default {
                     status: "complete",
                 })
                 .then(({ data }) => {
-                    window.location.href = "/reports";
+                    window.location.href = "/my-reports";
                 });
         },
     },
