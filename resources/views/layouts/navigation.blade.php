@@ -25,6 +25,12 @@
                             {{ __('My Reports') }}
                         </x-nav-link>
                     @endif
+
+                    @if(is_admin())
+                        <x-nav-link :href="route('admin.stats')" :active="request()->routeIs('admin.stats')">
+                            {{ __('Statistics') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
