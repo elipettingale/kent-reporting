@@ -6,14 +6,17 @@
         </div>
         <div class="flex" v-if="club_id">
             <div class="w-full mr-2">
-                <k-select
-                    label="Financial Year"
-                    v-model="financial_year"
-                    :options="financial_year_options"
-                    :notNull="true"
-                />
+                <div class="mb-4">
+                    <k-select
+                        label="Financial Year"
+                        v-model="financial_year"
+                        :options="financial_year_options"
+                        :notNull="true"
+                        class="mb-2"
+                    />
+                </div>
 
-                <div>
+                <div class="bg-white rounded-md p-4">
                     <k-info-item
                         v-for="stat in selected_summary_stats.stats"
                         :key="stat.label"
@@ -23,7 +26,15 @@
                 </div>
             </div>
             <div class="w-full ml-2">
-                <k-select label="Statistic" v-model="statistic" :options="[]" />
+                <div class="mb-4">
+                    <k-select
+                        label="Statistic"
+                        v-model="statistic"
+                        :options="[]"
+                    />
+                </div>
+
+                <div class="bg-white rounded-md p-4"></div>
             </div>
         </div>
     </div>
