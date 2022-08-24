@@ -22,7 +22,14 @@
                     />
                 </div>
             </div>
-            <div class="w-full"></div>
+            <div class="w-full">
+                <k-select
+                    label="Financial Year"
+                    v-model="financial_year"
+                    :options="financial_year_options"
+                    :notNull="true"
+                />
+            </div>
         </div>
     </div>
 </template>
