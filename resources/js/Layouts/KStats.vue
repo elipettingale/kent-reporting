@@ -5,7 +5,7 @@
             <p v-if="club_error">This club has not registered yet.</p>
         </div>
         <div class="flex" v-if="club_id">
-            <div class="w-full">
+            <div class="w-full mr-2">
                 <k-select
                     label="Financial Year"
                     v-model="financial_year"
@@ -22,13 +22,8 @@
                     />
                 </div>
             </div>
-            <div class="w-full">
-                <k-select
-                    label="Financial Year"
-                    v-model="financial_year"
-                    :options="financial_year_options"
-                    :notNull="true"
-                />
+            <div class="w-full ml-2">
+                <k-select label="Statistic" v-model="statistic" :options="[]" />
             </div>
         </div>
     </div>
@@ -54,8 +49,6 @@ export default {
     },
     created() {
         this.clubs = clubs;
-
-        // todo: import all blueprints? then access by key?
     },
     data: function () {
         return {
@@ -67,6 +60,10 @@ export default {
             club_error: false,
             summary_stats: {},
             financial_year: {
+                value: null,
+                error: false,
+            },
+            statistic: {
                 value: null,
                 error: false,
             },

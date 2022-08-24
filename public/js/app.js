@@ -25167,7 +25167,7 @@ __webpack_require__.r(__webpack_exports__);
     KInfoItem: _Components_KInfoItem_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   created: function created() {
-    this.clubs = _data_clubs_json__WEBPACK_IMPORTED_MODULE_5__; // todo: import all blueprints? then access by key?
+    this.clubs = _data_clubs_json__WEBPACK_IMPORTED_MODULE_5__;
   },
   data: function data() {
     return {
@@ -25179,6 +25179,10 @@ __webpack_require__.r(__webpack_exports__);
       club_error: false,
       summary_stats: {},
       financial_year: {
+        value: null,
+        error: false
+      },
+      statistic: {
         value: null,
         error: false
       }
@@ -26113,10 +26117,10 @@ var _hoisted_2 = {
   "class": "flex"
 };
 var _hoisted_3 = {
-  "class": "w-full"
+  "class": "w-full mr-2"
 };
 var _hoisted_4 = {
-  "class": "w-full"
+  "class": "w-full ml-2"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_select = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-select");
@@ -26153,16 +26157,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_select, {
-    label: "Financial Year",
-    modelValue: _ctx.financial_year,
+    label: "Statistic",
+    modelValue: _ctx.statistic,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return _ctx.financial_year = $event;
+      return _ctx.statistic = $event;
     }),
-    options: $options.financial_year_options,
-    notNull: true
+    options: []
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["modelValue"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
