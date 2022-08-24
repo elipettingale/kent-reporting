@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
-                        {{ __('Your Reports') }}
+                        {{ __('My Reports') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <x-slot name="content">
                         
                         <x-dropdown-link :href="route('user.account.show')">
-                            {{ __('Your Account') }}
+                            {{ __('My Account') }}
                         </x-dropdown-link>
 
                         <form method="POST" action="{{ route('logout') }}">

@@ -28,14 +28,14 @@ Route::group([
 
     Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
 
-    Route::get('reports', [UserReportController::class, 'index'])->name('user.report.index');
-    Route::get('reports/{report}', [UserReportController::class, 'show'])->name('user.report.show');
-    Route::get('reports/{report}/data', [UserReportController::class, 'getData'])->name('user.report.getData');
-    Route::patch('reports/{report}', [UserReportController::class, 'update'])->name('user.report.update');
-    Route::post('reports/{report}/files', [UserReportController::class, 'storeFile'])->name('user.report.files.store');
-    Route::delete('reports/{report}/files/{media}', [UserReportController::class, 'destroyFile'])->name('user.report.files.destroy');
+    Route::get('my-reports', [UserReportController::class, 'index'])->name('user.report.index');
+    Route::get('my-reports/{report}', [UserReportController::class, 'show'])->name('user.report.show');
+    Route::get('my-reports/{report}/data', [UserReportController::class, 'getData'])->name('user.report.getData');
+    Route::patch('my-reports/{report}', [UserReportController::class, 'update'])->name('user.report.update');
+    Route::post('my-reports/{report}/files', [UserReportController::class, 'storeFile'])->name('user.report.files.store');
+    Route::delete('my-reports/{report}/files/{media}', [UserReportController::class, 'destroyFile'])->name('user.report.files.destroy');
 
-    Route::get('account', [UserAccountController::class, 'show'])->name('user.account.show');
-    Route::post('account', [UserAccountController::class, 'update'])->name('user.account.update');
+    Route::get('my-account', [UserAccountController::class, 'show'])->name('user.account.show');
+    Route::post('my-account', [UserAccountController::class, 'update'])->name('user.account.update');
     
 });
