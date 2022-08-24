@@ -43,6 +43,27 @@ class Report extends Model implements HasMedia
         return Status::PENDING;
     }
 
+    public function scopeWhereStatus($query, $value)
+    {
+        if ($value === Status::COMPLETE) {
+            return $query->whereNotNull('submitted_at');
+        }
+
+        if ($value === Status::OVERDUE) {
+            return $query
+                ->whereNull('submitted_at')
+                ->where('due_at', '<=', today()->format('Y-m-d H:i:s'));
+        }
+
+        if ($value === Status::PENDING) {
+            return $query
+                ->whereNull('submitted_at')
+                ->where('due_at', '>', today()->format('Y-m-d H:i:s'));
+        }
+
+        throw new \InvalidArgumentException("Status '{$value}' is invalid.");
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

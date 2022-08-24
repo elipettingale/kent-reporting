@@ -4,14 +4,31 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reports = Report::query()
-            ->orderBy('created_at')
-            ->get();
+        $query = Report::query()
+            ->orderBy('created_at');
+
+        if ($club = $request->input('club')) {
+            $query = $query->whereHas(User::class, function($query) use ($club) {
+                $query->where('club', $club);
+            });
+        }
+
+        if ($status = $request->input('status')) {
+            $query = $query->whereStatus($status);
+        }
+
+        if ($financialYear = $request->input('financial_year')) {
+            $query = $query->where('financial_year', $financialYear);
+        }
+
+        $reports = $query->get();
 
         return view('admin.reports', [
             'reports' => $reports
