@@ -44,12 +44,6 @@
                     "name": "Accounts Upload",
                     "key": "accounts_upload",
                     "component": "KUpload"
-                },
-                {
-                    "name": "Howden's Risk Assesment Data",
-                    "key": "howdens_risk_assesment_data",
-                    "component": "KTextarea",
-                    "disabled": true
                 }
             ]
         },

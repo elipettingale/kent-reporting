@@ -16,7 +16,9 @@
                     />
                 </div>
 
-                <div class="bg-white rounded-md p-4">
+                <div
+                    class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4"
+                >
                     <k-info-item
                         v-for="stat in selected_summary_stats.stats"
                         :key="stat.label"
@@ -34,7 +36,9 @@
                     />
                 </div>
 
-                <div class="bg-white rounded-md p-4"></div>
+                <div
+                    class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4"
+                ></div>
             </div>
         </div>
     </div>

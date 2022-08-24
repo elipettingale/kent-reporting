@@ -13,6 +13,7 @@
                         v-text="upload.name"
                     ></span>
                     <span
+                        v-if="!disabled"
                         class="k-upload__file__remove"
                         @click="deleteUpload(upload.id)"
                     >
@@ -65,6 +66,10 @@ export default {
 
     methods: {
         upload(event) {
+            if (this.disabled) {
+                return;
+            }
+
             let data = new FormData();
 
             for (var i = 0; i < event.target.files.length; i++) {

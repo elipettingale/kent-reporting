@@ -61,17 +61,22 @@ html {
 }
 
 .k-textarea__textarea:disabled {
-    @apply bg-gray-100;
+    @apply bg-gray-50;
     opacity: 1;
 }
 
 .k-input__input:disabled {
-    @apply bg-gray-100;
+    @apply bg-gray-50;
     opacity: 1;
 }
 
 .k-select__select:disabled {
-    @apply bg-gray-100;
+    @apply bg-gray-50;
+    opacity: 1;
+}
+
+.k-upload__upload:disabled {
+    @apply bg-gray-50;
     opacity: 1;
 }
 
