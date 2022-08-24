@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ReportController as UserReportController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
 use App\Http\Controllers\DashboardController;
 
@@ -38,4 +39,14 @@ Route::group([
     Route::get('my-account', [UserAccountController::class, 'show'])->name('user.account.show');
     Route::post('my-account', [UserAccountController::class, 'update'])->name('user.account.update');
     
+});
+
+Route::group([
+    'middleware' => ['auth', 'verified', 'admin']
+], function() {
+
+    Route::get('all-reports', [AdminReportController::class, 'index'])->name('admin.report.index');
+    Route::get('all-reports/{report}', [AdminReportController::class, 'show'])->name('admin.report.show');
+    Route::get('all-reports/{report}/data', [AdminReportController::class, 'getData'])->name('admin.report.getData');
+
 });

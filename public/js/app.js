@@ -24945,13 +24945,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         form_data = _objectSpread(_objectSpread({}, form_data), data.data);
       }
 
-      if (data.status !== "complete") {
+      if (!data.viewOnly) {
         _this.is_locked = false;
       }
 
       _this.form_data = form_data;
 
-      if (data.status === "complete") {
+      if (data.viewOnly) {
         _this.blueprint.sections.forEach(function (section) {
           _this.validateSection(section);
         });
@@ -25068,7 +25068,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.current_section_index + 1 < this.blueprint.sections.length) {
         this.current_section_index++;
       } else {
-        this.goToConfirmation();
+        this.goToSummary();
       }
 
       window.scrollTo(0, 0);
@@ -25080,7 +25080,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.current_section_index = index;
     },
-    goToConfirmation: function goToConfirmation() {
+    goToSummary: function goToSummary() {
       var _this6 = this;
 
       this.blueprint.sections.forEach(function (section) {
@@ -25660,7 +25660,7 @@ var _hoisted_4 = {
   "class": "flex"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirmation ");
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Summary ");
 
 var _hoisted_6 = {
   "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
@@ -25686,15 +25686,15 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-lg mb-3"
-}, "Confirmation", -1
+}, "Summary", -1
 /* HOISTED */
 );
 
 var _hoisted_15 = {
-  "class": "k-confirmation__section__name"
+  "class": "k-summary__section__name"
 };
 var _hoisted_16 = {
-  "class": "k-confirmation__section__counts"
+  "class": "k-summary__section__counts"
 };
 var _hoisted_17 = {
   key: 0,
@@ -25761,7 +25761,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'is-active': _ctx.current_section_index === 99
     }),
-    onClick: $options.goToConfirmation
+    onClick: $options.goToSummary
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_5];
@@ -25921,7 +25921,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.blueprint.sections, function (section, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           key: index,
-          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-confirmation__section", {
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["k-summary__section", {
             'has-errors': _ctx.sections[section.key].errorCount > 0
           }])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(section.name), 1

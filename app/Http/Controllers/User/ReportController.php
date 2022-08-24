@@ -25,7 +25,7 @@ class ReportController extends Controller
     public function getData(Report $report)
     {
         return [
-            'status' => $report->status(),
+            'viewOnly' => $report->status() === 'complete',
             'data' => $report->data
         ];
     }

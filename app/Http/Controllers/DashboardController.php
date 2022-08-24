@@ -8,6 +8,11 @@ class DashboardController extends Controller
 {
     public function show()
     {
-        return view('dashboard');
+        if (is_admin()) {
+            return view('admin.dashboard');
+        } else {
+            return view('user.dashboard');
+        }
+        
     }
 }

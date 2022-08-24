@@ -42,4 +42,14 @@ class Report extends Model implements HasMedia
 
         return Status::PENDING;
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getClubAttribute()
+    {
+        return $this->user->club;
+    }
 }

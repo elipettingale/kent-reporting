@@ -21,9 +21,9 @@
                         :class="{
                             'is-active': current_section_index === 99,
                         }"
-                        @click="goToConfirmation"
+                        @click="goToSummary"
                     >
-                        Confirmation
+                        Summary
                     </k-form-nav-item>
                 </div>
                 <k-save-indicator :is_saved="is_saved" />
@@ -176,19 +176,19 @@
                     </div>
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
-                    <p class="text-lg mb-3">Confirmation</p>
+                    <p class="text-lg mb-3">Summary</p>
                     <div
                         v-for="(section, index) in blueprint.sections"
                         :key="index"
-                        class="k-confirmation__section"
+                        class="k-summary__section"
                         :class="{
                             'has-errors': sections[section.key].errorCount > 0,
                         }"
                     >
-                        <p class="k-confirmation__section__name">
+                        <p class="k-summary__section__name">
                             {{ section.name }}
                         </p>
-                        <p class="k-confirmation__section__counts">
+                        <p class="k-summary__section__counts">
                             {{
                                 sections[section.key].totalRequiredFields -
                                 sections[section.key].errorCount
@@ -312,13 +312,13 @@ export default {
                 };
             }
 
-            if (data.status !== "complete") {
+            if (!data.viewOnly) {
                 this.is_locked = false;
             }
 
             this.form_data = form_data;
 
-            if (data.status === "complete") {
+            if (data.viewOnly) {
                 this.blueprint.sections.forEach((section) => {
                     this.validateSection(section);
                 });
@@ -444,7 +444,7 @@ export default {
             ) {
                 this.current_section_index++;
             } else {
-                this.goToConfirmation();
+                this.goToSummary();
             }
 
             window.scrollTo(0, 0);
@@ -458,7 +458,7 @@ export default {
             this.current_section_index = index;
         },
 
-        goToConfirmation() {
+        goToSummary() {
             this.blueprint.sections.forEach((section) => {
                 this.validateSection(section);
             });

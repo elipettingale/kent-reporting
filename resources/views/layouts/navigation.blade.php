@@ -16,9 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
-                        {{ __('My Reports') }}
-                    </x-nav-link>
+                    @if(is_admin())
+                        <x-nav-link :href="route('admin.report.index')" :active="request()->routeIs('admin.report.index')">
+                            {{ __('All Reports') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
+                            {{ __('My Reports') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -27,7 +33,13 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-md font-bold text-gray-100 hover:text-white focus:outline-none focus:text-white transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->club }}</div>
+                            <div>
+                                @if(is_admin())
+                                    {{ Auth::user()->name }}
+                                @else
+                                    {{ Auth::user()->club }}
+                                @endif
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="fill-gray-100 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -46,13 +58,11 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
-
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -77,9 +87,15 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
-                {{ __('Your Reports') }}
-            </x-responsive-nav-link>
+            @if(is_admin())
+                <x-responsive-nav-link :href="route('admin.report.index')" :active="request()->routeIs('admin.report.index')">
+                    {{ __('All Reports') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('user.report.index')" :active="request()->routeIs('user.report.index')">
+                    {{ __('Your Reports') }}
+                </x-responsive-nav-link>
+            @endif
 
             <x-responsive-nav-link :href="route('user.account.show')" :active="request()->routeIs('user.account.show')">
                 {{ __('Your Account') }}

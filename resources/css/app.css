@@ -75,11 +75,11 @@ html {
     opacity: 1;
 }
 
-.k-confirmation__section {
+.k-summary__section {
     @apply flex justify-between text-green-500;
 }
 
-.k-confirmation__section.has-errors {
+.k-summary__section.has-errors {
     @apply text-red-500;
 }
 
