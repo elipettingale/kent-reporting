@@ -26115,13 +26115,9 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "w-full"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_4 = {
   "class": "w-full"
-}, null, -1
-/* HOISTED */
-);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_k_select = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("k-select");
 
@@ -26156,7 +26152,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["label", "value"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), _hoisted_4])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_k_select, {
+    label: "Financial Year",
+    modelValue: _ctx.financial_year,
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return _ctx.financial_year = $event;
+    }),
+    options: $options.financial_year_options,
+    notNull: true
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "options"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
