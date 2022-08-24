@@ -33,13 +33,34 @@ class StatController extends Controller
 
         $years = [];
 
+        $blueprints = config('form');
+
         foreach ($reports as $report) {
-            $years[$report->financial_year] = [
+            $data = [
                 'status' => $report->status(),
-                'stats' => [
-                    'Total Assets' => '£1000'
-                ]
+                'stats' => []
             ];
+
+            foreach ($blueprints[$report->form_version]['stats'] as $stat) {
+                $total = 0;
+                $reportData = $report->data ?? [];
+
+                foreach ($stat['values'] as $value) {
+                    $fields = array_values(preg_grep("/{$value}/", array_keys($reportData)));
+
+                    foreach ($fields as $field) {
+                        $total += (float) $reportData[$field]['value'];
+                    }
+                }
+                
+                $data['stats'][] = [
+                    'label' => $stat['label'],
+                    'value' => '£' . $total
+                ];
+            }
+
+            $years[$report->financial_year] = $data;
+                
 
             // todo: stats can be dependant on the version, pulled from a config here in php (no need for the js to calculate them all)
         }

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <span class="font-bold">{{ label }}:</span> <span>{{ value }}</span>
+    <div class="flex justify-between">
+        <span>{{ label }}:</span> <span class="font-bold">{{ value }}</span>
     </div>
 </template>
 

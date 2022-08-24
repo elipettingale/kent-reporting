@@ -15,10 +15,10 @@
 
                 <div>
                     <k-info-item
-                        v-for="(value, label) in selected_summary_stats.stats"
-                        :key="label"
-                        :label="label"
-                        :value="value"
+                        v-for="stat in selected_summary_stats.stats"
+                        :key="stat.label"
+                        :label="stat.label"
+                        :value="stat.value"
                     />
                 </div>
             </div>
