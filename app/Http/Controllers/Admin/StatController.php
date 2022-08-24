@@ -33,7 +33,7 @@ class StatController extends Controller
 
         $years = [];
 
-        $blueprints = config('form');
+        $stats = config('form.stats');
 
         foreach ($reports as $report) {
             $data = [
@@ -41,7 +41,7 @@ class StatController extends Controller
                 'stats' => []
             ];
 
-            foreach ($blueprints[$report->form_version]['stats'] as $stat) {
+            foreach ($stats as $stat) {
                 $total = 0;
                 $reportData = $report->data ?? [];
 
@@ -55,14 +55,11 @@ class StatController extends Controller
                 
                 $data['stats'][] = [
                     'label' => $stat['label'],
-                    'value' => '£' . $total
+                    'value' => '£' . number_format($total, 2)
                 ];
             }
 
             $years[$report->financial_year] = $data;
-                
-
-            // todo: stats can be dependant on the version, pulled from a config here in php (no need for the js to calculate them all)
         }
 
         return [
