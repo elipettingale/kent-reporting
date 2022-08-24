@@ -8,7 +8,7 @@
                 @input="updateValue"
                 :disabled="disabled"
             >
-                <option></option>
+                <option v-if="notNull !== true"></option>
                 <option
                     v-for="option in options"
                     :key="option"
@@ -25,7 +25,7 @@ import KLabel from "./KLabel.vue";
 
 export default {
     name: "KSelect",
-    props: ["label", "key", "modelValue", "options", "disabled"],
+    props: ["label", "key", "modelValue", "options", "disabled", "notNull"],
     components: {
         KLabel,
     },
