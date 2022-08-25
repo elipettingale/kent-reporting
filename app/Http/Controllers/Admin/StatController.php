@@ -81,7 +81,8 @@ class StatController extends Controller
 
         if (!$user) {
             return [
-                'success' => false
+                'success' => false,
+                'error' => 'Club data not found.'
             ];
         }
 
@@ -97,10 +98,11 @@ class StatController extends Controller
 
         $reports = Report::query()
             ->where('user_id', $user->id)
-            ->orderBy('financial_year', 'desc')
+            ->orderBy('financial_year', 'asc')
             ->get();
 
-        $years = [];
+        $labels = [];
+        $values = [];
 
         foreach ($reports as $report) {
             $total = 0;
@@ -114,15 +116,14 @@ class StatController extends Controller
                 }
             }
 
-            $years[] = [
-                'year' => $report->financial_year,
-                'value' => number_format($total, 2)
-            ];
+            $labels[] = $report->financial_year;
+            $values[] = number_format($total, 2);
         }
 
         return [
             'success' => true,
-            'years' => $years
+            'labels' => $labels,
+            'values' => $values
         ];
     }
 }

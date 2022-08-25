@@ -33,12 +33,26 @@
                         label="Statistic"
                         v-model="statistic"
                         :options="stat_list"
+                        :notNull="true"
                     />
                 </div>
 
                 <div
                     class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4"
-                ></div>
+                    style="height: 305px"
+                >
+                    <k-chart
+                        v-if="!chart_is_loading"
+                        :stat="statistic.value"
+                        :labels="chart_labels"
+                        :values="chart_values"
+                    />
+                    <p
+                        v-if="chart_error"
+                        v-text="chart_error"
+                        class="text-red-500"
+                    ></p>
+                </div>
             </div>
         </div>
     </div>
@@ -50,8 +64,8 @@ import KLabel from "../Components/KLabel.vue";
 import KInput from "../Components/KInput.vue";
 import KSelect from "../Components/KSelect.vue";
 import KInfoItem from "../Components/KInfoItem.vue";
+import KChart from "../Components/KChart.vue";
 import clubs from "../data/clubs.json";
-import Swal from "sweetalert2";
 
 export default {
     name: "KStats",
@@ -61,6 +75,7 @@ export default {
         KInput,
         KSelect,
         KInfoItem,
+        KChart,
     },
     created() {
         this.clubs = clubs;
@@ -83,8 +98,10 @@ export default {
                 value: null,
                 error: false,
             },
+            chart_error: null,
             chart_is_loading: true,
-            chart_data: null,
+            chart_labels: [],
+            chart_values: [],
         };
     },
     computed: {
@@ -125,6 +142,9 @@ export default {
 
         "statistic.value": function (stat) {
             this.chart_is_loading = true;
+            this.chart_error = null;
+            this.chart_labels = [];
+            this.chart_values = [];
 
             axios
                 .get(
@@ -133,12 +153,16 @@ export default {
                 )
                 .then(({ data }) => {
                     if (data.success) {
-                        console.log(data);
+                        this.chart_labels = data.labels;
+                        this.chart_values = data.values;
                     } else {
-                        this.chart_error = true;
+                        this.chart_error = data.error;
                     }
 
                     this.chart_is_loading = false;
+                })
+                .catch(({ response }) => {
+                    this.chart_error = response.data.message;
                 });
         },
     },
