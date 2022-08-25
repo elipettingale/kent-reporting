@@ -32,7 +32,7 @@
                     <k-select
                         label="Statistic"
                         v-model="statistic"
-                        :options="[]"
+                        :options="stat_list"
                     />
                 </div>
 
@@ -74,6 +74,7 @@ export default {
             club_id: null,
             club_error: false,
             summary_stats: {},
+            stat_list: [],
             financial_year: {
                 value: null,
                 error: false,
@@ -82,6 +83,8 @@ export default {
                 value: null,
                 error: false,
             },
+            chart_is_loading: true,
+            chart_data: null,
         };
     },
     computed: {
@@ -109,12 +112,33 @@ export default {
                     if (data.success) {
                         this.club_id = data.id;
                         this.summary_stats = data.years;
+                        this.stat_list = data.statList;
                         this.financial_year.value = Object.keys(
                             data.years
                         ).reverse()[0];
+                        this.statistic.value = data.statList[0];
                     } else {
                         this.club_error = true;
                     }
+                });
+        },
+
+        "statistic.value": function (stat) {
+            this.chart_is_loading = true;
+
+            axios
+                .get(
+                    window.location.href +
+                        `/stat?club=${this.club_id}&stat=${stat}`
+                )
+                .then(({ data }) => {
+                    if (data.success) {
+                        console.log(data);
+                    } else {
+                        this.chart_error = true;
+                    }
+
+                    this.chart_is_loading = false;
                 });
         },
     },

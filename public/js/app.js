@@ -25182,6 +25182,7 @@ __webpack_require__.r(__webpack_exports__);
       club_id: null,
       club_error: false,
       summary_stats: {},
+      stat_list: [],
       financial_year: {
         value: null,
         error: false
@@ -25189,7 +25190,9 @@ __webpack_require__.r(__webpack_exports__);
       statistic: {
         value: null,
         error: false
-      }
+      },
+      chart_is_loading: true,
+      chart_data: null
     };
   },
   computed: {
@@ -25218,10 +25221,28 @@ __webpack_require__.r(__webpack_exports__);
         if (data.success) {
           _this.club_id = data.id;
           _this.summary_stats = data.years;
+          _this.stat_list = data.statList;
           _this.financial_year.value = Object.keys(data.years).reverse()[0];
+          _this.statistic.value = data.statList[0];
         } else {
           _this.club_error = true;
         }
+      });
+    },
+    "statistic.value": function statisticValue(stat) {
+      var _this2 = this;
+
+      this.chart_is_loading = true;
+      axios.get(window.location.href + "/stat?club=".concat(this.club_id, "&stat=").concat(stat)).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.success) {
+          console.log(data);
+        } else {
+          _this2.chart_error = true;
+        }
+
+        _this2.chart_is_loading = false;
       });
     }
   }
@@ -26184,10 +26205,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return _ctx.statistic = $event;
     }),
-    options: []
+    options: _ctx.stat_list
   }, null, 8
   /* PROPS */
-  , ["modelValue"])]), _hoisted_8])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["modelValue", "options"])]), _hoisted_8])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),

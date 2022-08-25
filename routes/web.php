@@ -52,5 +52,6 @@ Route::group([
 
     Route::get('statistics', [AdminStatController::class, 'show'])->name('admin.stats');
     Route::get('statistics/club', [AdminStatController::class, 'getClub'])->name('admin.stats.getClub');
+    Route::get('statistics/stat', [AdminStatController::class, 'getStat'])->name('admin.stats.getStat');
 
 });
