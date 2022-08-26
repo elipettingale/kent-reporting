@@ -29,8 +29,8 @@
                         class="text-sm mt-3 italic"
                         v-if="selected_summary_stats.status !== 'complete'"
                     >
-                        Subject to change, user has not submitted this report
-                        yet.
+                        Subject to change, user has not submitted this year's
+                        report yet.
                     </p>
                 </div>
             </div>
