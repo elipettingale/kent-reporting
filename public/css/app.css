@@ -744,11 +744,11 @@ select {
 .mb-3 {
   margin-bottom: 0.75rem;
 }
-.ml-2 {
-  margin-left: 0.5rem;
-}
 .mr-2 {
   margin-right: 0.5rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
 }
 .mt-8 {
   margin-top: 2rem;
@@ -1221,14 +1221,14 @@ select {
 .text-gray-900 {
   color: var(--gray-900);
 }
+.text-gray-300 {
+  color: var(--gray-300);
+}
 .text-blue-600 {
   color: var(--blue-600);
 }
 .text-gray-200 {
   color: var(--gray-200);
-}
-.text-gray-300 {
-  color: var(--gray-300);
 }
 .underline {
   -webkit-text-decoration-line: underline;

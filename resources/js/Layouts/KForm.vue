@@ -176,7 +176,7 @@
                     </div>
                 </k-form-section>
                 <k-form-section v-if="current_section_index === 99">
-                    <p class="text-lg mb-3">Summary</p>
+                    <p class="text-lg mb-3 font-bold">Summary</p>
                     <div
                         v-for="(section, index) in blueprint.sections"
                         :key="index"
