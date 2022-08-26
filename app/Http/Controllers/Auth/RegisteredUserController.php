@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\LogEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\User;
@@ -42,6 +43,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // todo: custom club validation (not already registered, with message)
+        // todo: if club already registered, log special event
 
         $user = User::create([
             'name' => $request->name,
@@ -51,6 +53,11 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        record_log(LogEvent::REGISTERED, [
+            'user' => $user->name,
+            'club' => $user->club
+        ]);
 
         Auth::login($user);
 

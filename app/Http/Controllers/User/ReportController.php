@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\LogEvent;
 use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
@@ -32,6 +33,11 @@ class ReportController extends Controller
 
     public function show(Report $report)
     {
+        record_log(LogEvent::VIEWED_REPORT, [
+            'club' => Auth()->user()->club,
+            'year' => $report->financial_year
+        ]);
+
         return view('user.report', [
             'report' => $report
         ]);
@@ -46,8 +52,13 @@ class ReportController extends Controller
         if ($request->has('status')) {
             if ($request->get('status') === Status::COMPLETE) {
                 $report->submitted_at = now();
+
+                record_log(LogEvent::SUBMITTED_REPORT, [
+                    'club' => Auth()->user()->club,
+                    'year' => $report->financial_year
+                ]);
             } else {
-                $report->submitted_at = now();
+                $report->submitted_at = null;
             }
         }
 

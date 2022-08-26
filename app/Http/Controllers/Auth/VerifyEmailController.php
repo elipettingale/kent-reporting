@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\LogEvent;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
@@ -23,6 +24,10 @@ class VerifyEmailController extends Controller
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
+
+            record_log(LogEvent::VERIFIED_EMAIL, [
+                'club' => $request->user()->club
+            ]);
         }
 
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
