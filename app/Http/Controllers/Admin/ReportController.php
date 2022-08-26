@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -15,8 +14,8 @@ class ReportController extends Controller
             ->orderBy('created_at');
 
         if ($club = $request->input('club')) {
-            $query = $query->whereHas(User::class, function($query) use ($club) {
-                $query->where('club', $club);
+            $query = $query->whereHas('user', function($query) use ($club) {
+                return $query->where('club', $club);
             });
         }
 
