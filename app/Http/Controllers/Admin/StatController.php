@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\User;
@@ -42,19 +43,23 @@ class StatController extends Controller
 
             foreach ($stats as $stat) {
                 $total = 0;
+                $allFieldsAreNull = true;
                 $reportData = $report->data ?? [];
 
                 foreach ($stat['values'] as $value) {
                     $fields = array_values(preg_grep("/{$value}/", array_keys($reportData)));
 
                     foreach ($fields as $field) {
-                        $total += (float) $reportData[$field]['value'];
+                        if ($reportData[$field]['value'] !== null) {
+                            $total += (float) $reportData[$field]['value'];
+                            $allFieldsAreNull = false;
+                        }
                     }
                 }
                 
                 $data['stats'][] = [
                     'label' => $stat['label'],
-                    'value' => '£' . number_format($total, 2)
+                    'value' => $allFieldsAreNull ? null : '£' . number_format($total, 2)
                 ];
             }
 
@@ -107,17 +112,22 @@ class StatController extends Controller
         foreach ($reports as $report) {
             $total = 0;
             $reportData = $report->data ?? [];
+            $allFieldsAreNull = true;
 
             foreach ($requestedStatBlueprint['values'] as $value) {
                 $fields = array_values(preg_grep("/{$value}/", array_keys($reportData)));
 
                 foreach ($fields as $field) {
-                    $total += (float) $reportData[$field]['value'];
+                    if ($reportData[$field]['value'] !== null) {
+                        $total += (float) $reportData[$field]['value'];
+                        $allFieldsAreNull = false;
+                    }
                 }
             }
 
             $labels[] = $report->financial_year;
-            $values[] = number_format($total, 2);
+            $values[] = $allFieldsAreNull ? null : $total;
+           
         }
 
         return [

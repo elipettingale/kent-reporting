@@ -25,6 +25,13 @@
                         :label="stat.label"
                         :value="stat.value"
                     />
+                    <p
+                        class="text-sm mt-3 italic"
+                        v-if="selected_summary_stats.status !== 'complete'"
+                    >
+                        Subject to change, user has not submitted this report
+                        yet.
+                    </p>
                 </div>
             </div>
             <div class="w-full ml-2">
