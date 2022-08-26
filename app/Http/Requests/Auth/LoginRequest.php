@@ -58,7 +58,7 @@ class LoginRequest extends FormRequest
                     'club' => $user->club
                 ]);
             } else {
-                record_log(LogEvent::FAILED_LOGIN, [
+                record_log(LogEvent::INVALID_LOGIN, [
                     'email' => $this->input('email')
                 ]);
             }

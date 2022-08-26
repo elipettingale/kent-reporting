@@ -10,7 +10,7 @@ function is_admin(): bool {
 function record_log($key, $replace)
 {
     Log::create([
-        'key' => $key,
+        'key' => "log.$key",
         'replace' => $replace
     ]);
 }
