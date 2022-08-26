@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 100%">
         <canvas ref="canvas"></canvas>
     </div>
 </template>
@@ -32,6 +32,8 @@ export default {
                 ],
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 animation: false,
                 plugins: {
                     legend: null,

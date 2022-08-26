@@ -39,7 +39,7 @@
 
                 <div
                     class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4"
-                    style="height: 305px"
+                    style="height: 350px"
                 >
                     <k-chart
                         v-if="!chart_is_loading"

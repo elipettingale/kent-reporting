@@ -24557,6 +24557,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         animation: false,
         plugins: {
           legend: null
@@ -25352,10 +25354,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
+  style: {
+    "height": "100%"
+  }
+};
+var _hoisted_2 = {
   ref: "canvas"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", _hoisted_1, null, 512
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", _hoisted_2, null, 512
   /* NEED_PATCH */
   )]);
 }
@@ -26250,7 +26257,7 @@ var _hoisted_7 = {
 var _hoisted_8 = {
   "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg p-4",
   style: {
-    "height": "305px"
+    "height": "350px"
   }
 };
 var _hoisted_9 = ["textContent"];
