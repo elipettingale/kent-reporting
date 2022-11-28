@@ -2,6 +2,8 @@
 
 return [
 
+    'version' => '1',
+
     'stats' => [
         [
             'label' => 'Current Financial Position',
