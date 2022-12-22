@@ -15,7 +15,7 @@
 
             <!-- Club -->
             <div class="mt-4">
-                <x-label for="club" :value="__('Club')" />
+                <x-label for="club" :value="__('Your Club')" />
 
                 <x-select id="club" class="block mt-1 w-full" type="text" name="club" required>
                     <option selected></option>
@@ -23,6 +23,15 @@
                         <option value="{{ $club }}" @selected(old('club') == $club)>{{ $club }}</option>
                     @endforeach
                 </x-select>
+            </div>
+
+            <!-- Club Confirmation -->
+            <div class="mt-4">
+                <x-label for="club_confirmation">
+                    Confirm Your Club <span class="text-xs">(Please type full club name)</span>
+                </x-label>
+        
+                <x-input id="club_confirmation" class="block mt-1 w-full" type="text" name="club_confirmation" :value="old('club_confirmation')" required />
             </div>
 
             <!-- Email Address -->

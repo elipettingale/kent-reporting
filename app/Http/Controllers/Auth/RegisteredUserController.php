@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'club' => ['required'],
+            'club_confirmation' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -50,6 +51,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'club' => $request->club,
+            'club_confirmation' => $request->club_confirmation,
             'password' => Hash::make($request->password),
         ]);
 
