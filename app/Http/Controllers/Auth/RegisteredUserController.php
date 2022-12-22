@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,14 +62,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // todo: add this years financial report only if registered between certain dates
-        // set due date when you have it
+        // todo: should be the current year (but they might register early BEFORE new year)
+        $now = Carbon::createFromDate(2023, 1, 1);
 
         Report::create([
             'user_id' => $user->id,
-            'financial_year' => now()->format('Y'),
+            'financial_year' => $now->year,
             'form_version' => config('form.version'),
-            'due_at' => now()->addMonth()
+            'due_at' => $now->endOfYear()
         ]);
 
         return redirect(RouteServiceProvider::HOME);

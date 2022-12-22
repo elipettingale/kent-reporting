@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-table>
                 <x-slot name="thead">
-                    <x-th>Financial Year</x-th>
+                    <x-th>Season</x-th>
                     <x-th>Status</x-th>
                     <x-th>Due</x-th>
                     <x-th>Submitted</x-th>
@@ -20,7 +20,7 @@
                 <x-slot name="tbody">
                     @foreach($reports as $report)
                         <tr>
-                            <x-td>{{ $report->financial_year }}</x-td>
+                            <x-td>{{ substr($report->financial_year - 1, 2, 2) }}/{{ substr($report->financial_year, 2, 2) }}</x-td>
                             <x-td>
                                 <x-status status="{{ $report->status() }}" />
                             </x-td>
