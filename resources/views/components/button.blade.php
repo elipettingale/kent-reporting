@@ -3,7 +3,7 @@ $defaultClasses = 'inline-flex items-center px-4 py-2 bg-blue-400 border border-
 @endphp
 
 @if($attributes->has('href'))
-    <a {{ $attributes->merge(['type' => 'submit', 'class' => $defaultClasses]) }}>
+    <a {{ $attributes->merge(['class' => $defaultClasses]) }}>
         {{ $slot }}
     </a>
 @else
