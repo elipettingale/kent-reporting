@@ -51,6 +51,8 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
+
+                <x-password-strength name="password" />
             </div>
 
             <!-- Confirm Password -->

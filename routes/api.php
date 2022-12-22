@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use ZxcvbnPhp\Zxcvbn;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('password-strength', function (Request $request) {
+    $value = $request->get('password');
+
+    $analysis = (new Zxcvbn())->passwordStrength($value);
+
+    return [
+        'success' => true,
+        'score' => $analysis['score'] + 1
+    ];
 });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\StrongPassword;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class RegisteredUserController extends Controller
             'club' => ['required'],
             'club_confirmation' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', new StrongPassword(4)],
         ]);
 
         // todo: custom club validation (not already registered, with message)

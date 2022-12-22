@@ -196,3 +196,67 @@ html {
     width: calc(50% - 0.5rem);
     display: inline-block;
 }
+
+.password-strength__bar {
+    position: relative;
+    height: 5px;
+    background: #eeeff0;
+    margin: 6px auto;
+    border-radius: 3px;
+}
+
+.password-strength__bar::before,
+.password-strength__bar::after {
+    content: "";
+    height: inherit;
+    background: transparent;
+    display: block;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 5px;
+    position: absolute;
+    width: 20%;
+    z-index: 10;
+}
+
+.password-strength__bar::before {
+    left: 20%;
+}
+
+.password-strength__bar::after {
+    right: 20%;
+}
+
+.password-strength__fill {
+    height: inherit;
+    position: absolute;
+    border-radius: inherit;
+    transition: width 0.5s ease-in-out, background 0.25s;
+    background: transparent;
+    width: 0;
+}
+
+.password-strength__fill[data-score="1"] {
+    background: #960000;
+    width: 20%;
+}
+
+.password-strength__fill[data-score="2"] {
+    background: #e64d52;
+    width: 60%;
+}
+
+.password-strength__fill[data-score="3"] {
+    background: #ffa32a;
+    width: 20%;
+}
+
+.password-strength__fill[data-score="4"] {
+    background: #daee44;
+    width: 80%;
+}
+
+.password-strength__fill[data-score="5"] {
+    background: #40d13d;
+    width: 100%;
+}

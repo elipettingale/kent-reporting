@@ -26364,6 +26364,29 @@ if (document.getElementById("stats")) {
   stats.mount("#stats");
 }
 
+var debounced_check_password = _.debounce(function (fill, value) {
+  axios.get("api/password-strength?password=".concat(value)).then(function (_ref) {
+    var data = _ref.data;
+
+    if (data.success) {
+      fill.setAttribute('data-score', data.score);
+    }
+  });
+}, 500);
+
+document.querySelectorAll('.password-strength__bar').forEach(function (bar) {
+  var input = document.querySelector("#".concat(bar.getAttribute('data-input')));
+  var fill = bar.querySelector('.password-strength__fill');
+  input.addEventListener('input', function () {
+    if (input.value === '') {
+      fill.setAttribute('data-score', '0');
+      return;
+    }
+
+    debounced_check_password(fill, input.value);
+  });
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
