@@ -31,11 +31,6 @@
                         </x-select>
                     </div>
 
-                    <div class="mr-3">
-                        <x-label for="financial_year" :value="__('Financial Year')" />
-                        <x-input id="financial_year" class="block mt-1 w-full" type="text" name="financial_year" :value="request('financial_year')" />
-                    </div>
-
                     <div>
                         <x-button href="{{ route('admin.report.index') }}" class="h-11 bg-gray-400 hover:bg-gray-500 active:bg-gray-600">
                             Reset
@@ -54,7 +49,7 @@
             <x-table>
                 <x-slot name="thead">
                     <x-th>Club</x-th>
-                    <x-th>Financial Year</x-th>
+                    <x-th>Season</x-th>
                     <x-th>Status</x-th>
                     <x-th>Due</x-th>
                     <x-th>Submitted</x-th>
@@ -66,7 +61,7 @@
                     @foreach($reports as $report)
                         <tr>
                             <x-td>{{ $report->club }}</x-td>
-                            <x-td>{{ $report->financial_year }}</x-td>
+                            <x-td>{{ $report->season() }}</x-td>
                             <x-td>
                                 <x-status status="{{ $report->status() }}" />
                             </x-td>

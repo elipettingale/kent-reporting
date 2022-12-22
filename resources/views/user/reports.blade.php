@@ -20,7 +20,7 @@
                 <x-slot name="tbody">
                     @foreach($reports as $report)
                         <tr>
-                            <x-td>{{ substr($report->financial_year - 1, 2, 2) }}/{{ substr($report->financial_year, 2, 2) }}</x-td>
+                            <x-td>{{ $report->season() }}</x-td>
                             <x-td>
                                 <x-status status="{{ $report->status() }}" />
                             </x-td>
