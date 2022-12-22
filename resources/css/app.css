@@ -191,3 +191,8 @@ html {
 .copy a {
     @apply text-blue-500 font-bold;
 }
+
+.k-half-field {
+    width: calc(50% - 0.5rem);
+    display: inline-block;
+}

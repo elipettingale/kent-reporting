@@ -13,11 +13,30 @@
                     }
                 },
                 {
+                    "name": "Accounting Year Start",
+                    "key": "accounting_year_start",
+                    "component": "KInput",
+                    "props": {
+                        "classList": "k-half-field mr-4",
+                        "type": "date"
+                    }
+                },
+                {
+                    "name": "Accounting Year End",
+                    "key": "accounting_year_end",
+                    "component": "KInput",
+                    "props": {
+                        "classList": "k-half-field",
+                        "type": "date"
+                    }
+                },
+                {
                     "name": "Group Entities",
                     "key": "group_entities",
                     "component": "KTextarea",
                     "props": {
-                        "rows": 6
+                        "rows": 6,
+                        "classList": "mt-3"
                     }
                 },
                 {
