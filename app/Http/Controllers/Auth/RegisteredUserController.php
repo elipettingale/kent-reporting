@@ -66,13 +66,12 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // todo: should be the current year (but they might register early BEFORE new year)
-        $now = Carbon::createFromDate(2023, 1, 1);
 
         Report::create([
             'user_id' => $user->id,
-            'financial_year' => $now->year,
+            'financial_year' => 2022,
             'form_version' => config('form.version'),
-            'due_at' => $now->endOfYear()
+            'due_at' => Carbon::createFromDate(2023, 1, 1)->endOfYear()
         ]);
 
         return redirect(RouteServiceProvider::HOME);
