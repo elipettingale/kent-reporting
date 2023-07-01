@@ -36,6 +36,7 @@ Route::group([
     Route::patch('my-reports/{report}', [UserReportController::class, 'update'])->name('user.report.update');
     Route::post('my-reports/{report}/files', [UserReportController::class, 'storeFile'])->name('user.report.files.store');
     Route::delete('my-reports/{report}/files/{media}', [UserReportController::class, 'destroyFile'])->name('user.report.files.destroy');
+    Route::get('my-reports/{report}/files/{media}', [UserReportController::class, 'downloadFile'])->name('user.report.files.download');
 
     Route::get('my-account', [UserAccountController::class, 'show'])->name('user.account.show');
     Route::post('my-account', [UserAccountController::class, 'update'])->name('user.account.update');
@@ -54,4 +55,5 @@ Route::group([
     Route::get('statistics/club', [AdminStatController::class, 'getClub'])->name('admin.stats.getClub');
     Route::get('statistics/stat', [AdminStatController::class, 'getStat'])->name('admin.stats.getStat');
 
+    Route::get('all-reports/{report}/files/{media}', [AdminReportController::class, 'downloadFile'])->name('admin.report.files.download');
 });

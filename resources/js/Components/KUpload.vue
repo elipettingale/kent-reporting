@@ -8,10 +8,11 @@
                     v-for="upload in modelValue.value"
                     :key="upload.id"
                 >
-                    <span
+                    <a
                         class="k-upload__file__name"
                         v-text="upload.name"
-                    ></span>
+                        :href="window.location.href + `/files/${upload.id}`"
+                    ></a>
                     <span
                         v-if="!disabled"
                         class="k-upload__file__remove"
@@ -33,7 +34,7 @@
                     </span>
                 </div>
             </div>
-            <div>
+            <div v-if="!disabled">
                 <input
                     class="k-upload__upload"
                     ref="upload"
@@ -56,6 +57,10 @@ export default {
     props: ["label", "key", "modelValue", "disabled"],
     components: {
         KLabel,
+    },
+
+    created() {
+        this.window = window;
     },
 
     data() {

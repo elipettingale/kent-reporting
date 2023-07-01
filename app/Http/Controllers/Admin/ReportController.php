@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ReportController extends Controller
 {
@@ -47,5 +48,14 @@ class ReportController extends Controller
         return view('user.report', [
             'report' => $report
         ]);
+    }
+
+    public function downloadFile(Report $report, Media $media)
+    {   
+        if ($media->model_id !== $report->id) {
+            abort(404);
+        }
+
+        return response()->download($media->getPath(), $media->file_name);
     }
 }

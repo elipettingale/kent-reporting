@@ -7,6 +7,7 @@ use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ReportController extends Controller
@@ -25,6 +26,10 @@ class ReportController extends Controller
 
     public function getData(Report $report)
     {
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
+        
         return [
             'viewOnly' => $report->status() === 'complete',
             'data' => $report->data
@@ -33,6 +38,10 @@ class ReportController extends Controller
 
     public function show(Report $report)
     {
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
+        
         record_log(LogEvent::VIEWED_REPORT, [
             'club' => Auth()->user()->club,
             'year' => $report->financial_year
@@ -45,7 +54,9 @@ class ReportController extends Controller
 
     public function update(Report $report, Request $request)
     {
-        // todo: authorize
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
 
         $report->data = $request->get('data');
 
@@ -71,7 +82,9 @@ class ReportController extends Controller
 
     public function storeFile(Report $report, Request $request)
     {
-        // todo: authorize
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
 
         $files = [];
 
@@ -95,12 +108,27 @@ class ReportController extends Controller
 
     public function destroyFile(Report $report, Media $media)
     {
-        // todo: authorise
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
 
         $media->delete();
 
         return [
             'success' => true
         ]; 
+    }
+
+    public function downloadFile(Report $report, Media $media)
+    {
+        if (Auth::user()->id !== $report->user_id) {
+            abort(403);
+        }
+
+        if ($media->model_id !== $report->id) {
+            abort(404);
+        }
+
+        return response()->download($media->getPath(), $media->file_name);
     }
 }

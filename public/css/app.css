@@ -1507,6 +1507,15 @@ html {
     cursor: pointer;
 }
 
+.k-upload__file__name {
+  cursor: pointer;
+  color: var(--blue-400);
+}
+
+.k-upload__file__name:hover {
+  color: var(--blue-300);
+}
+
 .k-upload__file__remove svg {
   fill: var(--red-500);
 }

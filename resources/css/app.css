@@ -108,6 +108,15 @@ html {
     @apply ml-2 cursor-pointer;
 }
 
+.k-upload__file__name {
+    @apply text-blue-400 cursor-pointer;
+
+}
+
+.k-upload__file__name:hover {
+    @apply text-blue-300;
+}
+
 .k-upload__file__remove svg {
     @apply fill-red-500;
 }

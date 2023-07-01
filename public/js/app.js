@@ -24841,6 +24841,9 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     KLabel: _KLabel_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  created: function created() {
+    this.window = window;
+  },
   data: function data() {
     return {
       is_uploading: false
@@ -25824,7 +25827,7 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "k-upload__files"
 };
-var _hoisted_3 = ["textContent"];
+var _hoisted_3 = ["textContent", "href"];
 var _hoisted_4 = ["onClick"];
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -25842,8 +25845,11 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = [_hoisted_5];
-var _hoisted_7 = ["disabled"];
-var _hoisted_8 = {
+var _hoisted_7 = {
+  key: 0
+};
+var _hoisted_8 = ["disabled"];
+var _hoisted_9 = {
   key: 0
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -25862,9 +25868,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "k-upload__file",
       key: upload.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "k-upload__file__name",
-      textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(upload.name)
+      textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(upload.name),
+      href: _ctx.window.location.href + "/files/".concat(upload.id)
     }, null, 8
     /* PROPS */
     , _hoisted_3), !$props.disabled ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
@@ -25878,7 +25885,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ))]), !$props.disabled ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "k-upload__upload",
     ref: "upload",
     type: "file",
@@ -25889,7 +25896,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     multiple: ""
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_7), $data.is_uploading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_8, "Uploading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 2
+  , _hoisted_8), $data.is_uploading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, "Uploading...")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   )]);
 }
