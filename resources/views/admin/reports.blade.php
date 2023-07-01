@@ -8,35 +8,47 @@
     <div class="pt-8 mb-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form method="GET" action="{{ route('admin.report.index') }}">
-                <div class="flex items-end">
-                    <div class="mr-3">
-                        <x-label for="club" :value="__('Club')" />
+                <div class="flex items-end justify-between">
+                    <div class="flex items-end">
+                        <div class="mr-3 search__filter">
+                            <x-label for="club" :value="__('Club')" />
 
-                        <x-select id="club" class="block mt-1 w-full" type="text" name="club">
-                            <option value="" selected>All</option>
-                            @foreach(config('clubs') as $club)
-                                <option value="{{ $club }}" @selected(request('club') === $club)>{{ $club }}</option>
-                            @endforeach
-                        </x-select>
-                    </div>
+                            <x-select id="club" class="block mt-1 w-full" type="text" name="club">
+                                <option value="" selected>All</option>
+                                @foreach(config('clubs') as $club)
+                                    <option value="{{ $club }}" @selected(request('club') === $club)>{{ $club }}</option>
+                                @endforeach
+                            </x-select>
+                        </div>
 
-                    <div class="mr-3">
-                        <x-label for="status" :value="__('Status')" />
+                        <div class="mr-3 search__filter">
+                            <x-label for="financial_year" :value="__('Season')" />
 
-                        <x-select id="status" class="block mt-1 w-full" type="text" name="status">
-                            <option value="" selected>All</option>
-                            <option value="pending" @selected(request('status') === 'pending')>Pending</option>
-                            <option value="overdue" @selected(request('status') === 'overdue')>Overdue</option>
-                            <option value="complete" @selected(request('status') === 'complete')>Complete</option>
-                        </x-select>
+                            <x-select id="financial_year" class="block mt-1 w-full" type="text" name="financial_year">
+                                <option value="" selected>All</option>
+                                <option value="2022" @selected(request('financial_year') === '2022')>22/23</option>
+                                <option value="2023" @selected(request('financial_year') === '2023')>23/24</option>
+                            </x-select>
+                        </div>
+
+                        <div class="mr-3 search__filter">
+                            <x-label for="status" :value="__('Status')" />
+
+                            <x-select id="status" class="block mt-1 w-full" type="text" name="status">
+                                <option value="" selected>All</option>
+                                <option value="pending" @selected(request('status') === 'pending')>Pending</option>
+                                <option value="overdue" @selected(request('status') === 'overdue')>Overdue</option>
+                                <option value="complete" @selected(request('status') === 'complete')>Complete</option>
+                            </x-select>
+                        </div>
                     </div>
 
                     <div>
-                        <x-button href="{{ route('admin.report.index') }}" class="h-11 bg-gray-400 hover:bg-gray-500 active:bg-gray-600">
-                            Reset
-                        </x-button>
                         <x-button class="h-11">
                             Search
+                        </x-button>
+                        <x-button href="{{ route('admin.report.index') }}" class="h-11 bg-gray-400 hover:bg-gray-500 active:bg-gray-600">
+                            Reset
                         </x-button>
                     </div>
                 </div>

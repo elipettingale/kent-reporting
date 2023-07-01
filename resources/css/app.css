@@ -260,3 +260,7 @@ html {
     background: #40d13d;
     width: 100%;
 }
+
+.search__filter {
+    min-width: 150px;
+}

@@ -1696,6 +1696,10 @@ html {
     width: 100%;
 }
 
+.search__filter {
+    min-width: 150px;
+}
+
 .hover\:bg-gray-100:hover {
   background-color: var(--gray-100);
 }
