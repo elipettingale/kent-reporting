@@ -29,7 +29,7 @@ class ReportController extends Controller
         if (Auth::user()->id !== $report->user_id) {
             abort(403);
         }
-        
+
         return [
             'viewOnly' => $report->status() === 'complete',
             'data' => $report->data
@@ -44,7 +44,7 @@ class ReportController extends Controller
         
         record_log(LogEvent::VIEWED_REPORT, [
             'club' => Auth()->user()->club,
-            'year' => $report->financial_year
+            'year' => $report->season()
         ]);
 
         return view('user.report', [
@@ -66,7 +66,7 @@ class ReportController extends Controller
 
                 record_log(LogEvent::SUBMITTED_REPORT, [
                     'club' => Auth()->user()->club,
-                    'year' => $report->financial_year
+                    'year' => $report->season()
                 ]);
             } else {
                 $report->submitted_at = null;
