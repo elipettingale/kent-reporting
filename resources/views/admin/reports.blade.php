@@ -47,7 +47,7 @@
                         <x-button class="h-11">
                             Search
                         </x-button>
-                        <x-button href="{{ route('admin.report.index') }}" class="h-11 bg-gray-400 hover:bg-gray-500 active:bg-gray-600">
+                        <x-button href="{{ route('admin.report.index') }}" class="h-11 is-gray">
                             Reset
                         </x-button>
                     </div>

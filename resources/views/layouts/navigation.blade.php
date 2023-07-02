@@ -27,6 +27,12 @@
                     @endif
 
                     @if(is_admin())
+                        <x-nav-link :href="route('admin.club.index')" :active="request()->routeIs('admin.club.index')">
+                            {{ __('Clubs') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(is_admin())
                         <x-nav-link :href="route('admin.stats')" :active="request()->routeIs('admin.stats')">
                             {{ __('Statistics') }}
                         </x-nav-link>

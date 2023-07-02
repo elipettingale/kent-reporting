@@ -27,6 +27,14 @@ class Status extends Component
             'overdue' => [
                 'label' => 'Overdue',
                 'icon' => 'danger'
+            ],
+            'registered' => [
+                'label' => 'Registered',
+                'icon' => 'success'
+            ],
+            'not_registered' => [
+                'label' => 'Not Registered',
+                'icon' => 'danger'
             ]
         ];
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\User\ReportController as UserReportController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\User\AccountController as UserAccountController;
 use App\Http\Controllers\Admin\StatController as AdminStatController;
+use App\Http\Controllers\Admin\ClubController as AdminClubController;
 use App\Http\Controllers\DashboardController;
 
 /*
@@ -51,10 +52,13 @@ Route::group([
     Route::get('all-reports', [AdminReportController::class, 'index'])->name('admin.report.index');
     Route::get('all-reports/{report}', [AdminReportController::class, 'show'])->name('admin.report.show');
     Route::get('all-reports/{report}/data', [AdminReportController::class, 'getData'])->name('admin.report.getData');
+    Route::get('all-reports/{report}/files/{media}', [AdminReportController::class, 'downloadFile'])->name('admin.report.files.download');
 
     Route::get('statistics', [AdminStatController::class, 'show'])->name('admin.stats');
     Route::get('statistics/club', [AdminStatController::class, 'getClub'])->name('admin.stats.getClub');
     Route::get('statistics/stat', [AdminStatController::class, 'getStat'])->name('admin.stats.getStat');
 
-    Route::get('all-reports/{report}/files/{media}', [AdminReportController::class, 'downloadFile'])->name('admin.report.files.download');
+    Route::get('clubs', [AdminClubController::class, 'index'])->name('admin.club.index');
+    Route::post('clubs/{user}', [AdminClubController::class, 'update'])->name('admin.club.update');
+    
 });
