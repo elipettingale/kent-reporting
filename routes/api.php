@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use ZxcvbnPhp\Zxcvbn;
@@ -27,5 +28,24 @@ Route::get('password-strength', function (Request $request) {
     return [
         'success' => true,
         'score' => $analysis['score'] + 1
+    ];
+});
+
+Route::get('club-registered', function (Request $request) {
+    $club = $request->input('club');
+
+    $user = User::query()
+        ->where('club', $club)
+        ->first();
+
+    if (!$user) {
+        return [
+            'exists' => false
+        ];
+    }
+
+    return [
+        'exists' => true,
+        'hint' => substr($user->email, 0, 8)
     ];
 });

@@ -46,3 +46,26 @@ document.querySelectorAll('.password-strength__bar').forEach((bar) => {
         debounced_check_password(fill, input.value);
     })
 });
+
+if (document.querySelector('#register-form select#club')) {
+    let select = document.querySelector('#register-form select#club');
+
+    select.addEventListener('change', () => {
+        let club = select.value;
+
+        if (!club) {
+            return;
+        }
+
+        axios.get(`api/club-registered?club=${club}`)
+            .then(({data}) => {
+                let registered = Boolean(data.exists);
+
+                if (registered) {
+                    let modal = document.getElementById('already-registered-modal')
+                    modal.querySelector('#email-hint').innerHTML = data.hint;
+                    modal.style.display = '';
+                }
+            });
+    });
+}

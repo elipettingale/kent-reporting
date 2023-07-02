@@ -1730,7 +1730,7 @@ html {
 
 .k-modal {
     background: white;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 1rem;
     width: 600px;
 }

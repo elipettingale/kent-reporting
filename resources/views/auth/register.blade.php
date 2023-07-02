@@ -3,7 +3,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form id="register-form" method="POST" action="{{ route('register') }}">
             @csrf
 
             <!-- Name -->
@@ -69,10 +69,31 @@
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-button class="ml-4">
+                <x-button id="register-button" class="ml-4">
                     {{ __('Register') }}
                 </x-button>
             </div>
         </form>
+
+        <div id="already-registered-modal" class="k-modal__wrapper" style="display: none">
+            <div class="k-modal">
+                <h2 class="text-lg font-bold mb-2">Already Registered<h1>
+                <p class="mb-4">Someone has already created a login for this club. Please login using your existing email and password.</p>
+
+                <div class="mb-4">
+                    <p class="text-xs">Your email is: <span id="email-hint"></span>...</p>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <x-button href="{{ route('login') }}">
+                        {{ __('Log In') }}
+                    </x-button>
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                </div>
+            </div>
+        </div>
     </x-auth-card>
 </x-guest-layout>

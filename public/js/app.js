@@ -26394,6 +26394,28 @@ document.querySelectorAll('.password-strength__bar').forEach(function (bar) {
   });
 });
 
+if (document.querySelector('#register-form select#club')) {
+  var select = document.querySelector('#register-form select#club');
+  select.addEventListener('change', function () {
+    var club = select.value;
+
+    if (!club) {
+      return;
+    }
+
+    axios.get("api/club-registered?club=".concat(club)).then(function (_ref2) {
+      var data = _ref2.data;
+      var registered = Boolean(data.exists);
+
+      if (registered) {
+        var modal = document.getElementById('already-registered-modal');
+        modal.querySelector('#email-hint').innerHTML = data.hint;
+        modal.style.display = '';
+      }
+    });
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
