@@ -77,8 +77,7 @@ class RegisteredUserController extends Controller
         Report::create([
             'user_id' => $user->id,
             'financial_year' => 2022,
-            'form_version' => config('form.version'),
-            'due_at' => Carbon::createFromDate(2023, 1, 1)->endOfYear()
+            'form_version' => config('form.version')
         ]);
 
         return redirect(RouteServiceProvider::HOME);

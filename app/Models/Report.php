@@ -15,13 +15,11 @@ class Report extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'financial_year',
-        'form_version',
-        'due_at'
+        'form_version'
     ];
 
     protected $casts = [
         'data' => 'array',
-        'due_at' => 'datetime',
         'submitted_at' => 'datetime',
     ];
 
@@ -34,10 +32,6 @@ class Report extends Model implements HasMedia
     {
         if ($this->submitted_at) {
             return Status::COMPLETE;
-        }
-
-        if ($this->due_at <= today()->format('Y-m-d H:i:s')) {
-            return Status::OVERDUE;
         }
 
         return Status::PENDING;
@@ -54,16 +48,9 @@ class Report extends Model implements HasMedia
             return $query->whereNotNull('submitted_at');
         }
 
-        if ($value === Status::OVERDUE) {
-            return $query
-                ->whereNull('submitted_at')
-                ->where('due_at', '<=', today()->format('Y-m-d H:i:s'));
-        }
-
         if ($value === Status::PENDING) {
             return $query
-                ->whereNull('submitted_at')
-                ->where('due_at', '>', today()->format('Y-m-d H:i:s'));
+                ->whereNull('submitted_at');
         }
 
         throw new \InvalidArgumentException("Status '{$value}' is invalid.");

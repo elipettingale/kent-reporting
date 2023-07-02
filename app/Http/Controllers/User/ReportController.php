@@ -56,13 +56,11 @@ class ReportController extends Controller
     public function store(Request $request)
     {   
         $financialYear = (int) $request->input('financial_year', now()->format('Y'));
-        $dueAt = Carbon::createFromFormat('Y', $financialYear)->addYear()->endOfYear();
 
         $report = Report::create([
             'user_id' => Auth::user()->id,
             'financial_year' => $financialYear,
-            'form_version' => config('form.version'),
-            'due_at' => $dueAt
+            'form_version' => config('form.version')
         ]);
 
         $preFill = (bool) $request->input('pre_fill');

@@ -24,10 +24,6 @@ class Status extends Component
                 'label' => 'Pending',
                 'icon' => 'warning'
             ],
-            'overdue' => [
-                'label' => 'Overdue',
-                'icon' => 'danger'
-            ],
             'registered' => [
                 'label' => 'Registered',
                 'icon' => 'success'
