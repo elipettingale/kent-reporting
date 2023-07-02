@@ -17,6 +17,7 @@ class User extends Authenticatable
         'club',
         'club_confirmation',
         'email',
+        'notes',
         'password',
     ];
 

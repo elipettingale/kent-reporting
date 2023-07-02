@@ -31,19 +31,12 @@ class ClubController extends Controller
                 }
             }
 
-            $lastYearReport = null;
-            $thisYearReport = null;
+            $lastSeasonReport = null;
 
             if ($user) {
-                $lastYearReport = Report::query()
+                $lastSeasonReport = Report::query()
                     ->where('user_id', $user->id)
                     ->where('financial_year', now()->subYear()->format('Y'))
-                    ->whereNotNull('submitted_at')
-                    ->first();
-
-                $thisYearReport = Report::query()
-                    ->where('user_id', $user->id)
-                    ->where('financial_year', now()->format('Y'))
                     ->whereNotNull('submitted_at')
                     ->first();
             }
@@ -53,8 +46,10 @@ class ClubController extends Controller
                 'user_id' => $user?->id ?? null,
                 'status' => $user ? 'registered' : 'not_registered',
                 'email' => $user->email ?? null,
-                'last_year_report_submitted_at' => $lastYearReport?->submitted_at?->format('d/m/Y') ?? null,
-                'this_year_report_submitted_at' => $thisYearReport?->submitted_at?->format('d/m/Y') ?? null,
+                'notes' => $user->notes ?? null,
+                'last_season' => (object) [
+                    'report' => $lastSeasonReport
+                ]
             ];
         }
 
@@ -65,7 +60,7 @@ class ClubController extends Controller
 
     public function update(User $user, Request $request)
     {
-        $user->email = $request->input('email');
+        $user->fill($request->all());
         $user->save();
 
         return back();

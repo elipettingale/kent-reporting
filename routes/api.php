@@ -54,3 +54,9 @@ Route::get('club-registered', function (Request $request) {
         'hint' => substr($user->email, 0, 8)
     ];
 });
+
+Route::get('send-reminder', function (Request $request) {
+    $user = User::findOrFail($request->input('user_id'));
+    
+    dd($user);
+});

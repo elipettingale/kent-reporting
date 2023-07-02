@@ -955,8 +955,14 @@ select {
 .overflow-hidden {
   overflow: hidden;
 }
+.whitespace-normal {
+  white-space: normal;
+}
 .whitespace-nowrap {
   white-space: nowrap;
+}
+.whitespace-pre {
+  white-space: pre;
 }
 .break-all {
   word-break: break-all;
@@ -1014,9 +1020,6 @@ select {
 }
 .bg-gray-100 {
   background-color: var(--gray-100);
-}
-.bg-gray-400 {
-  background-color: var(--gray-400);
 }
 .bg-gray-700 {
   background-color: var(--gray-700);
@@ -1800,10 +1803,6 @@ html {
   background-color: var(--gray-50);
 }
 
-.hover\:bg-gray-500:hover {
-  background-color: var(--gray-500);
-}
-
 .hover\:bg-blue-500:hover {
   background-color: var(--blue-500);
 }
@@ -1895,10 +1894,6 @@ html {
 
 .active\:bg-gray-100:active {
   background-color: var(--gray-100);
-}
-
-.active\:bg-gray-600:active {
-  background-color: var(--gray-600);
 }
 
 .active\:bg-blue-600:active {

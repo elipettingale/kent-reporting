@@ -41,7 +41,7 @@
                     <x-th>Club</x-th>
                     <x-th>Email</x-th>
                     <x-th>Season {{ now()->subYears(2)->format('y') }}/{{ now()->subYears(1)->format('y') }}</x-th>
-                    <x-th>Season {{ now()->subYears(1)->format('y') }}/{{ now()->format('y') }}</x-th>
+                    <x-th>Notes</x-th>
                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                         <span class="sr-only">Actions</span>
                     </th>
@@ -57,10 +57,25 @@
                                     <x-status status="{{ $club->status }}" />
                                 @endif
                             </x-td>
-                            <x-td>{{ $club->last_year_report_submitted_at }}</x-td>
-                            <x-td>{{ $club->this_year_report_submitted_at }}</x-td>
-                            <x-td class="text-right">
+                            <x-td>
+                                @if($club->last_season->report)
+                                    <span class="flex">
+                                        {{ $club->last_season->report->submitted_at->format('d/m/Y') }} <x-icon class="ml-2 "icon="success" />
+                                    </span>
+                                @else
+                                    <p class="text-xs">Reminder Sent: 02/07/2023</p>
+                                @endif
+                            </x-td>
+                            <x-td>
+                                <p class="text-xs whitespace-normal">{{ $club->notes }}</p>
+                            </x-td>
+                            <x-td class="flex justify-end">
+                            
                                 @if($club->status === 'registered')
+                                    <x-button class="mr-2 is-gray">
+                                        Send Reminder
+                                    </x-button>
+
                                     <div x-data="{ open: false }">
                                         <x-button @click="open = true">
                                             Edit
@@ -74,6 +89,11 @@
                                                     <div class="mb-3">
                                                         <x-label for="email" :value="__('Email')" />
                                                         <x-input id="email" type="email" name="email" class="w-full" value="{{ $club->email }}" required />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <x-label for="notes" :value="__('Notes')" />
+                                                        <x-textarea id="notes" name="notes" rows="5" class="w-full">{{ $club->notes }}</x-textarea>
                                                     </div>
 
                                                     <x-button class="is-green">
