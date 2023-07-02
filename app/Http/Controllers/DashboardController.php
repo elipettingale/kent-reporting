@@ -13,10 +13,9 @@ class DashboardController extends Controller
             return view('user.dashboard');
         }
 
-
         $logs = Log::query()
             ->orderByDesc('created_at')
-            ->limit(20)
+            ->limit(200)
             ->get();
        
         return view('admin.dashboard', [
