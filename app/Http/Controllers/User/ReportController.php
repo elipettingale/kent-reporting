@@ -84,6 +84,16 @@ class ReportController extends Controller
                 }
             }
 
+            if ($data['general_details_accounting_year_start']['value'] !== null) {
+                $accountingYearStart = Carbon::createFromFormat('Y-m-d', $data['general_details_accounting_year_start']['value'])->addYear();
+                $data['general_details_accounting_year_start']['value'] = $accountingYearStart->format('Y-m-d');
+            }
+
+            if ($data['general_details_accounting_year_end']['value'] !== null) {
+                $accountingYearStart = Carbon::createFromFormat('Y-m-d', $data['general_details_accounting_year_end']['value'])->addYear();
+                $data['general_details_accounting_year_end']['value'] = $accountingYearStart->format('Y-m-d');
+            }
+
             $report->data = $data;
             $report->save();
         }
