@@ -31,6 +31,7 @@ Route::group([
     Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
 
     Route::get('my-reports', [UserReportController::class, 'index'])->name('user.report.index');
+    Route::post('my-reports', [UserReportController::class, 'store'])->name('user.report.store');
     Route::get('my-reports/{report}', [UserReportController::class, 'show'])->name('user.report.show');
     Route::get('my-reports/{report}/data', [UserReportController::class, 'getData'])->name('user.report.getData');
     Route::patch('my-reports/{report}', [UserReportController::class, 'update'])->name('user.report.update');

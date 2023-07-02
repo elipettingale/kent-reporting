@@ -6,6 +6,7 @@ use App\Enums\LogEvent;
 use App\Enums\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -50,6 +51,44 @@ class ReportController extends Controller
         return view('user.report', [
             'report' => $report
         ]);
+    }
+
+    public function store(Request $request)
+    {   
+        $financialYear = (int) $request->input('financial_year', now()->format('Y'));
+        $dueAt = Carbon::createFromFormat('Y', $financialYear)->addYear()->endOfYear();
+
+        $report = Report::create([
+            'user_id' => Auth::user()->id,
+            'financial_year' => $financialYear,
+            'form_version' => config('form.version'),
+            'due_at' => $dueAt
+        ]);
+
+        $preFill = (bool) $request->input('pre_fill');
+
+        if ($preFill) {
+            $previousReport = Report::query()
+                ->where('user_id', Auth::user()->id)
+                ->where('financial_year', $financialYear - 1)
+                ->whereNotNull('submitted_at')
+                ->first();
+
+            $data = $previousReport->data;
+
+            $data['general_details_accounts_upload']['value'] = null;
+
+            foreach ($data as $key => $value) {
+                if (is_array($value) && isset($value['error'])) {
+                    $data[$key]['error'] = null;
+                }
+            }
+
+            $report->data = $data;
+            $report->save();
+        }
+
+        return redirect()->back();
     }
 
     public function update(Report $report, Request $request)

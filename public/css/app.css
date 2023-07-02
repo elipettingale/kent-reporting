@@ -771,6 +771,9 @@ select {
 .mr-4 {
   margin-right: 1rem;
 }
+.mr-1 {
+  margin-right: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -891,6 +894,9 @@ select {
 }
 .cursor-default {
   cursor: default;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .list-inside {
   list-style-position: inside;
@@ -1709,6 +1715,60 @@ html {
     min-width: 150px;
 }
 
+.k-modal__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.k-modal {
+    background: white;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 600px;
+}
+
+.k-button {
+  background-color: var(--blue-400);
+  --tw-ring-color: var(--blue-300);
+}
+
+.k-button:hover {
+  background-color: var(--blue-500);
+}
+
+.k-button:focus {
+  border-color: var(--blue-100);
+}
+
+.k-button:active {
+  background-color: var(--blue-600);
+}
+
+.k-button.is-green {
+  background-color: var(--green-600);
+  --tw-ring-color: var(--green-500);
+}
+
+.k-button.is-green:hover {
+  background-color: var(--green-700);
+}
+
+.k-button.is-green:focus {
+  border-color: var(--green-300);
+}
+
+.k-button.is-green:active {
+  background-color: var(--green-900);
+}
+
 .hover\:bg-gray-100:hover {
   background-color: var(--gray-100);
 }
@@ -1717,12 +1777,12 @@ html {
   background-color: var(--gray-50);
 }
 
-.hover\:bg-blue-500:hover {
-  background-color: var(--blue-500);
-}
-
 .hover\:bg-gray-500:hover {
   background-color: var(--gray-500);
+}
+
+.hover\:bg-blue-500:hover {
+  background-color: var(--blue-500);
 }
 
 .hover\:text-gray-500:hover {
@@ -1814,12 +1874,12 @@ html {
   background-color: var(--gray-100);
 }
 
-.active\:bg-blue-600:active {
-  background-color: var(--blue-600);
-}
-
 .active\:bg-gray-600:active {
   background-color: var(--gray-600);
+}
+
+.active\:bg-blue-600:active {
+  background-color: var(--blue-600);
 }
 
 .active\:text-gray-700:active {

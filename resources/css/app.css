@@ -273,3 +273,31 @@ html {
 .search__filter {
     min-width: 150px;
 }
+
+.k-modal__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.k-modal {
+    background: white;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 600px;
+}
+
+.k-button {
+    @apply bg-blue-400 hover:bg-blue-500 active:bg-blue-600 focus:border-blue-100 ring-blue-300;
+}
+
+.k-button.is-green {
+    @apply bg-green-600 hover:bg-green-700 active:bg-green-900 focus:border-green-300 ring-green-500;
+}
