@@ -80,8 +80,9 @@
                 <h2 class="text-lg font-bold mb-2">Already Registered<h1>
                 <p class="mb-4">Someone has already created a login for this club. Please login using your existing email and password.</p>
 
-                <div class="mb-4">
-                    <p class="text-xs">Your email is: <span id="email-hint"></span>...</p>
+                <div class="mb-4 text-xs">
+                    <p class="mb-1">Your email is: <span id="email-hint"></span>...</p>
+                    <p>If you no longer have access to this email please contact <a class="text-blue-400" href="mailto:office@kent-rugby.org">office@kent-rugby.org</a>.</p>
                 </div>
 
                 <div class="flex justify-between items-center">

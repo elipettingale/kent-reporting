@@ -45,8 +45,15 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', new StrongPassword(4)],
         ]);
 
-        // todo: custom club validation (not already registered, with message)
-        // todo: if club already registered, log special event
+        $alreadyRegistered = User::query()
+            ->where('club', $request->input('club'))
+            ->exists();
+
+        if ($alreadyRegistered) {
+            return back()->withErrors([
+                'club' => 'A login has already been created for this club.'
+            ]);
+        }
 
         $user = User::create([
             'name' => $request->name,

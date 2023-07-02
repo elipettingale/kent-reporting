@@ -5,6 +5,7 @@ namespace App\Enums;
 class LogEvent {
     
     public const REGISTERED = 'registered';
+    public const TRIED_TO_REREGISTER = 'tried_to_reregister';
     public const LOGGED_IN = 'logged_in';
     public const FAILED_LOGIN = 'failed_login';
     public const INVALID_LOGIN = 'invalid_login';

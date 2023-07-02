@@ -3,6 +3,7 @@
 return [
 
     'registered' => ':user registered on behalf of :club',
+    'tried_to_reregister' => 'Someone tried to register twice for :club',
     'logged_in' => ':club logged in',
     'failed_login' => ':club failed to login',
     'invalid_login' => ':email failed to login',

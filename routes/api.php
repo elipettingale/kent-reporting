@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\LogEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,10 @@ Route::get('club-registered', function (Request $request) {
             'exists' => false
         ];
     }
+
+    record_log(LogEvent::TRIED_TO_REREGISTER, [
+        'club' => $club
+    ]);
 
     return [
         'exists' => true,
