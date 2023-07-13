@@ -961,9 +961,6 @@ select {
 .whitespace-nowrap {
   white-space: nowrap;
 }
-.whitespace-pre {
-  white-space: pre;
-}
 .break-all {
   word-break: break-all;
 }

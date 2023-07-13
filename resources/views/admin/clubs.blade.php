@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="pb-8">
+    <div id="clubs-table" class="pb-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-table>
                 <x-slot name="thead">
@@ -57,24 +57,27 @@
                                     <x-status status="{{ $club->status }}" />
                                 @endif
                             </x-td>
-                            <x-td>
+                            <x-td data-reminder="{{ $club->user_id }}">
                                 @if($club->last_season->report)
                                     <span class="flex">
                                         {{ $club->last_season->report->submitted_at->format('d/m/Y') }} <x-icon class="ml-2 "icon="success" />
                                     </span>
                                 @else
-                                    <p class="text-xs">Reminder Sent: 02/07/2023</p>
+                                    @if($club->last_season->reminder)
+                                        <p class="text-xs">Reminder Sent: {{ $club->last_season->reminder->sent_at->format('d/m/Y') }} </p>
+                                    @endif
                                 @endif
                             </x-td>
                             <x-td>
                                 <p class="text-xs whitespace-normal">{{ $club->notes }}</p>
                             </x-td>
                             <x-td class="flex justify-end">
-                            
                                 @if($club->status === 'registered')
-                                    <x-button class="mr-2 is-gray">
-                                        Send Reminder
-                                    </x-button>
+                                    @if(!$club->last_season->report)
+                                        <x-button id="send-reminder" class="mr-2 is-gray" data-user="{{ $club->user_id }}">
+                                            Send Reminder
+                                        </x-button>
+                                    @endif
 
                                     <div x-data="{ open: false }">
                                         <x-button @click="open = true">

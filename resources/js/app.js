@@ -69,3 +69,19 @@ if (document.querySelector('#register-form select#club')) {
             });
     });
 }
+
+if (document.querySelector('#clubs-table')) {
+    document.querySelectorAll('#clubs-table #send-reminder').forEach((button) => {
+        button.addEventListener('click', () => {
+            let user = button.getAttribute('data-user');
+            button.disabled = true;
+
+            axios.post('api/send-reminder', { user_id: user })
+                .then(({data}) => {
+                    if (data.success) {
+                        document.querySelector(`td[data-reminder="${user}"`).innerHTML = `<p class="text-xs">Reminder Sent: ${data.sent_at}</p>`
+                    }
+                });
+        });
+    });
+}

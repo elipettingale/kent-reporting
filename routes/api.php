@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\LogEvent;
+use App\Models\ReportReminder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,8 +56,19 @@ Route::get('club-registered', function (Request $request) {
     ];
 });
 
-Route::get('send-reminder', function (Request $request) {
+Route::post('send-reminder', function (Request $request) {
     $user = User::findOrFail($request->input('user_id'));
-    
-    dd($user);
+    $financialYear = now()->subYear()->format('Y');
+
+    $reminder = ReportReminder::create([
+        'user_id' => $user->id,
+        'financial_year' => $financialYear
+    ]);
+
+    $reminder->send();
+
+    return [
+        'success' => true,
+        'sent_at' => now()->format('d/m/Y')
+    ];
 });

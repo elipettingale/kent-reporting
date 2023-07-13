@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Models\ReportReminder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use stdClass;
@@ -32,12 +33,20 @@ class ClubController extends Controller
             }
 
             $lastSeasonReport = null;
+            $lastSeasonReminder = null;
 
             if ($user) {
                 $lastSeasonReport = Report::query()
                     ->where('user_id', $user->id)
                     ->where('financial_year', now()->subYear()->format('Y'))
                     ->whereNotNull('submitted_at')
+                    ->first();
+
+                $lastSeasonReminder = ReportReminder::query()
+                    ->where('user_id', $user->id)
+                    ->where('financial_year', now()->subYear()->format('Y'))
+                    ->whereNotNull('sent_at')
+                    ->orderByDesc('created_at')
                     ->first();
             }
 
@@ -48,7 +57,8 @@ class ClubController extends Controller
                 'email' => $user->email ?? null,
                 'notes' => $user->notes ?? null,
                 'last_season' => (object) [
-                    'report' => $lastSeasonReport
+                    'report' => $lastSeasonReport,
+                    'reminder' => $lastSeasonReminder
                 ]
             ];
         }

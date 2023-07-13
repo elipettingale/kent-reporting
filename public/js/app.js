@@ -26416,6 +26416,24 @@ if (document.querySelector('#register-form select#club')) {
   });
 }
 
+if (document.querySelector('#clubs-table')) {
+  document.querySelectorAll('#clubs-table #send-reminder').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var user = button.getAttribute('data-user');
+      button.disabled = true;
+      axios.post('api/send-reminder', {
+        user_id: user
+      }).then(function (_ref3) {
+        var data = _ref3.data;
+
+        if (data.success) {
+          document.querySelector("td[data-reminder=\"".concat(user, "\"")).innerHTML = "<p class=\"text-xs\">Reminder Sent: ".concat(data.sent_at, "</p>");
+        }
+      });
+    });
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
