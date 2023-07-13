@@ -4,6 +4,10 @@
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 
+        <div class="mb-4 text-sm text-gray-600">
+            If you have also forgotten your email or do not receive a reset link within 30 minutes please contact <a href="mailto:office@kent-rugby.org">office@kent-rugby.org</a>.
+        </div>
+
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
