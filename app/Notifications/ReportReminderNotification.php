@@ -28,7 +28,7 @@ class ReportReminderNotification extends Notification
 
         return (new MailMessage)
             ->line("This is a reminder that you have yet to submit your accounts for the {$season} season.")
-            ->action('Login', route('login'))
+            ->action('Log In', route('login'))
             ->line('Please do so at your earliest convinience.');
     }
 }
