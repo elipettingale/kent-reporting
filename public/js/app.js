@@ -26347,7 +26347,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _Layouts_KForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Layouts/KForm */ "./resources/js/Layouts/KForm.vue");
 /* harmony import */ var _Layouts_KStats__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layouts/KStats */ "./resources/js/Layouts/KStats.vue");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -26419,15 +26422,31 @@ if (document.querySelector('#register-form select#club')) {
 if (document.querySelector('#clubs-table')) {
   document.querySelectorAll('#clubs-table #send-reminder').forEach(function (button) {
     button.addEventListener('click', function () {
-      var user = button.getAttribute('data-user');
       button.disabled = true;
-      axios.post('api/send-reminder', {
-        user_id: user
-      }).then(function (_ref3) {
-        var data = _ref3.data;
+      var club = button.getAttribute('data-club');
+      var email = button.getAttribute('data-email');
+      var user = button.getAttribute('data-user');
+      sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().fire({
+        title: "Are you sure?",
+        text: "An email will be sent to ".concat(club, " ").concat(email, "."),
+        showCancelButton: true,
+        confirmButtonText: "Yes, Continue",
+        confirmButtonColor: "#354473",
+        cancelButtonText: "No, Go Back",
+        cancelButtonColor: "#ed5858"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post('api/send-reminder', {
+            user_id: user
+          }).then(function (_ref3) {
+            var data = _ref3.data;
 
-        if (data.success) {
-          document.querySelector("td[data-reminder=\"".concat(user, "\"")).innerHTML = "<p class=\"text-xs\">Reminder Sent: ".concat(data.sent_at, "</p>");
+            if (data.success) {
+              document.querySelector("td[data-reminder=\"".concat(user, "\"")).innerHTML = "<p class=\"text-xs\">Reminder Sent: ".concat(data.sent_at, "</p>");
+            }
+          });
+        } else {
+          button.disabled = false;
         }
       });
     });

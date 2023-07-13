@@ -74,7 +74,7 @@
                             <x-td class="flex justify-end">
                                 @if($club->status === 'registered')
                                     @if(!$club->last_season->report)
-                                        <x-button id="send-reminder" class="mr-2 is-gray" data-user="{{ $club->user_id }}">
+                                        <x-button id="send-reminder" class="mr-2 is-gray" data-club="{{ $club->name }}" data-email="{{ $club->email }}" data-user="{{ $club->user_id }}">
                                             Send Reminder
                                         </x-button>
                                     @endif

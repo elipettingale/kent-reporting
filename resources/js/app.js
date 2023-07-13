@@ -3,6 +3,7 @@ require("./bootstrap");
 import { createApp } from "vue";
 import KForm from "./Layouts/KForm";
 import KStats from "./Layouts/KStats";
+import Swal from "sweetalert2";
 
 if (document.getElementById("report")) {
     let report = createApp({
@@ -73,15 +74,32 @@ if (document.querySelector('#register-form select#club')) {
 if (document.querySelector('#clubs-table')) {
     document.querySelectorAll('#clubs-table #send-reminder').forEach((button) => {
         button.addEventListener('click', () => {
-            let user = button.getAttribute('data-user');
             button.disabled = true;
 
-            axios.post('api/send-reminder', { user_id: user })
-                .then(({data}) => {
-                    if (data.success) {
-                        document.querySelector(`td[data-reminder="${user}"`).innerHTML = `<p class="text-xs">Reminder Sent: ${data.sent_at}</p>`
-                    }
-                });
+            let club = button.getAttribute('data-club');
+            let email = button.getAttribute('data-email');
+            let user = button.getAttribute('data-user');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: `An email will be sent to ${club} ${email}.`,
+                showCancelButton: true,
+                confirmButtonText: "Yes, Continue",
+                confirmButtonColor: "#354473",
+                cancelButtonText: "No, Go Back",
+                cancelButtonColor: "#ed5858",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('api/send-reminder', { user_id: user })
+                        .then(({data}) => {
+                            if (data.success) {
+                                document.querySelector(`td[data-reminder="${user}"`).innerHTML = `<p class="text-xs">Reminder Sent: ${data.sent_at}</p>`
+                            }
+                        });
+                } else {
+                    button.disabled = false;
+                }
+            });
         });
     });
 }
