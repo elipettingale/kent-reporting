@@ -15,8 +15,9 @@
 
                             <x-select id="club" class="block mt-1 w-full" type="text" name="club">
                                 <option value="" selected>All</option>
-                                @foreach(config('clubs') as $club)
-                                    <option value="{{ $club }}" @selected(request('club') === $club)>{{ $club }}</option>
+                                @foreach (config('clubs') as $club)
+                                    <option value="{{ $club }}" @selected(request('club') === $club)>{{ $club }}
+                                    </option>
                                 @endforeach
                             </x-select>
                         </div>
@@ -24,10 +25,11 @@
                         <div class="mr-3 search__filter">
                             <x-label for="financial_year" :value="__('Season')" />
 
-                            <x-select id="financial_year" class="block mt-1 w-full" type="text" name="financial_year">
+                            <x-select id="financial_year" class="block mt-1 w-full" type="text"
+                                name="financial_year">
                                 <option value="" selected>All</option>
-                                <option value="2022" @selected(request('financial_year') === '2022')>22/23</option>
-                                <option value="2023" @selected(request('financial_year') === '2023')>23/24</option>
+                                <option value="2022" @selected(request('financial_year') === '2022')>21/22</option>
+                                <option value="2023" @selected(request('financial_year') === '2023')>22/23</option>
                             </x-select>
                         </div>
 
@@ -68,7 +70,7 @@
                     </th>
                 </x-slot>
                 <x-slot name="tbody">
-                    @foreach($reports as $report)
+                    @foreach ($reports as $report)
                         <tr>
                             <x-td>{{ $report->club }}</x-td>
                             <x-td>{{ $report->season() }}</x-td>
