@@ -9,6 +9,7 @@ return [
     'invalid_login' => ':email failed to login',
     'verified_email' => ':club verified their email',
     'viewed_report' => ':club viewed report for :year',
-    'submitted_report' => ':club submitted report for :year'
+    'submitted_report' => ':club submitted report for :year',
+    'requested_password_reset' => ':email requested a password reset'
 
 ];
