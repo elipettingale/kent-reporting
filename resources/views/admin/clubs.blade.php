@@ -78,29 +78,37 @@
 
                                         <div x-show="open" class="k-modal__wrapper" style="display: none;">
                                             <div class="k-modal text-left" @click.outside="open = false">
-                                                <form method="post"
-                                                    action="{{ route('admin.club.update', $club->user_id) }}">
-                                                    @csrf
 
-                                                    <div class="mb-3">
-                                                        <x-label for="email" :value="__('Email')" />
-                                                        <x-input id="email" type="email" name="email"
-                                                            class="w-full" value="{{ $club->email }}" required />
-                                                    </div>
+                                                <div class="mb-4">
+                                                    <p class="text-xl mb-1">Edit Details</p>
 
-                                                    <div class="mb-3">
-                                                        <x-label for="notes" :value="__('Notes')" />
-                                                        <x-textarea id="notes" name="notes" rows="5"
-                                                            class="w-full">{{ $club->notes }}</x-textarea>
-                                                    </div>
+                                                    <form method="post"
+                                                        action="{{ route('admin.club.update', $club->user_id) }}">
+                                                        @csrf
 
-                                                    <x-button class="is-green">
-                                                        Save
-                                                    </x-button>
-                                                </form>
+                                                        <div class="mb-3">
+                                                            <x-label for="email" :value="__('Email')" />
+                                                            <x-input id="email" type="email" name="email"
+                                                                class="w-full" value="{{ $club->email }}" required />
+                                                        </div>
 
-                                                <p>Send Password Reset</p>
-                                                {{-- maybe reset password here? could get a randomly generated one she can just send back? --}}
+                                                        <div class="mb-3">
+                                                            <x-label for="notes" :value="__('Notes')" />
+                                                            <x-textarea id="notes" name="notes" rows="5"
+                                                                class="w-full">{{ $club->notes }}</x-textarea>
+                                                        </div>
+
+                                                        <x-button class="is-green">
+                                                            Save
+                                                        </x-button>
+                                                    </form>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="mt-4">
+                                                    <x-button>Send Password Reset</x-button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

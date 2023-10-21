@@ -698,6 +698,10 @@ select {
   margin-left: auto;
   margin-right: auto;
 }
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -707,6 +711,15 @@ select {
 }
 .-ml-px {
   margin-left: -1px;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 .mt-2 {
   margin-top: 0.5rem;
@@ -734,15 +747,6 @@ select {
 }
 .mr-2 {
   margin-right: 0.5rem;
-}
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-.mt-6 {
-  margin-top: 1.5rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
 }
 .mt-20 {
   margin-top: 5rem;
@@ -981,11 +985,11 @@ select {
 .border {
   border-width: 1px;
 }
-.border-t {
-  border-top-width: 1px;
-}
 .border-b {
   border-bottom-width: 1px;
+}
+.border-t {
+  border-top-width: 1px;
 }
 .border-r-4 {
   border-right-width: 4px;
@@ -1030,11 +1034,11 @@ select {
 .fill-gray-500 {
   fill: var(--gray-500);
 }
-.p-2 {
-  padding: 0.5rem;
-}
 .p-6 {
   padding: 1.5rem;
+}
+.p-2 {
+  padding: 0.5rem;
 }
 .p-4 {
   padding: 1rem;
@@ -1050,6 +1054,10 @@ select {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .py-1 {
   padding-top: 0.25rem;
@@ -1070,10 +1078,6 @@ select {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 .px-1 {
   padding-left: 0.25rem;
@@ -1148,6 +1152,10 @@ select {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -1155,10 +1163,6 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 .font-medium {
   font-weight: 500;
@@ -1196,6 +1200,9 @@ select {
 .text-gray-700 {
   color: var(--gray-700);
 }
+.text-gray-800 {
+  color: var(--gray-800);
+}
 .text-green-500 {
   color: var(--green-500);
 }
@@ -1217,9 +1224,6 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-gray-800 {
-  color: var(--gray-800);
 }
 .text-gray-600 {
   color: var(--gray-600);
