@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 class Status extends Component
 {
     private $status;
-    
+
     public function __construct($status)
     {
         $this->status = $status;

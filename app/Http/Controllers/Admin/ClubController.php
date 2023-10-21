@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\ReportReminder;
 use App\Models\User;
+use App\Repositories\ReportRepository;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -32,22 +33,13 @@ class ClubController extends Controller
                 }
             }
 
-            $lastSeasonReport = null;
-            $lastSeasonReminder = null;
+            $reports = [];
 
             if ($user) {
-                $lastSeasonReport = Report::query()
-                    ->where('user_id', $user->id)
-                    ->where('financial_year', now()->subYear()->format('Y'))
-                    ->whereNotNull('submitted_at')
-                    ->first();
+                // between start year and this year?
 
-                $lastSeasonReminder = ReportReminder::query()
-                    ->where('user_id', $user->id)
-                    ->where('financial_year', now()->subYear()->format('Y'))
-                    ->whereNotNull('sent_at')
-                    ->orderByDesc('created_at')
-                    ->first();
+                $reports[2022] = ReportRepository::getByUserAndYear($user, 2022);
+                $reports[2023] = ReportRepository::getByUserAndYear($user, 2023);
             }
 
             $clubs[] = (object) [
@@ -56,10 +48,7 @@ class ClubController extends Controller
                 'status' => $user ? 'registered' : 'not_registered',
                 'email' => $user->email ?? null,
                 'notes' => $user->notes ?? null,
-                'last_season' => (object) [
-                    'report' => $lastSeasonReport,
-                    'reminder' => $lastSeasonReminder
-                ]
+                'reports' => (object) $reports
             ];
         }
 
