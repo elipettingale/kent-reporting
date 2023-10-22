@@ -63,7 +63,11 @@ class ReportController extends Controller
             ->exists();
 
         if ($alreadyExists) {
-            throw new \Exception("Report already exists.");
+            $season = substr($financialYear - 1, 2) . '/' . substr($financialYear, 2);
+
+            return redirect()->back()->withErrors([
+                'error' => "You have already created a report for the {$season} season."
+            ]);
         }
     
         $report = Report::create([

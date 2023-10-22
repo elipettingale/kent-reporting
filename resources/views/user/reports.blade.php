@@ -5,11 +5,18 @@
         </h2>
     </x-slot>
 
+    
+
     <div class="pt-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{ open: false }">
-            <x-button class="h-11 is-green" @click="open = true">
-                Submit New Report
-            </x-button>
+            <div class="flex items-center">
+                <x-button class="h-11 is-green mr-4" @click="open = true">
+                    Submit New Report
+                </x-button>
+                @if($errors->any())
+                    <h4 class='text-red-500'>{{$errors->first()}}</h4>
+                @endif
+            </div>
             <div x-show="open" class="k-modal__wrapper" style="display: none;">
                 <div class="k-modal" @click.outside="open = false">
                     <form method="post" action="{{ route('user.report.store') }}">
