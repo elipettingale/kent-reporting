@@ -1,10 +1,12 @@
 <?php
 
 use App\Enums\LogEvent;
+use App\Mail\TestEmail;
 use App\Models\ReportReminder;
 use App\Models\User;
 use App\Services\ReminderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use ZxcvbnPhp\Zxcvbn;
 
