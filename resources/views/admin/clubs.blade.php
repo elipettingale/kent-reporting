@@ -89,7 +89,7 @@
             <x-table>
                 <x-slot name="thead">
                     <x-th>Club</x-th>
-                    <x-th>Email</x-th>
+                    <x-th>Representative</x-th>
                     <x-th>
                         Season
                         <x-select id="season-filter" class="text-gray-900 ml-1">
@@ -105,10 +105,16 @@
                 <x-slot name="tbody">
                     @foreach ($clubs as $club)
                         <tr data-status="{{ $club->status }}">
-                            <x-td>{{ $club->name }}</x-td>
+                            <x-td>
+                                {{ $club->name }}
+                            </x-td>
                             <x-td>
                                 @if ($club->email)
+                                    {{ $club->user_name}} <br>
                                     {{ $club->email }}
+                                  
+                            
+                           
                                 @else
                                     <x-status status="{{ $club->status }}" />
                                 @endif
@@ -148,6 +154,12 @@
                                                         @csrf
 
                                                         <div class="mb-3">
+                                                            <x-label for="name" :value="__('Name')" />
+                                                            <x-input id="name" name="name" type="text"
+                                                                class="w-full" value="{{ $club->user_name }}" required />
+                                                        </div>
+
+                                                        <div class="mb-3">
                                                             <x-label for="email" :value="__('Email')" />
                                                             <x-input id="email" type="email" name="email"
                                                                 class="w-full" value="{{ $club->email }}" required />
@@ -163,12 +175,6 @@
                                                             Save
                                                         </x-button>
                                                     </form>
-                                                </div>
-
-                                                <hr>
-
-                                                <div class="mt-4">
-                                                    <x-button>Send Password Reset</x-button>
                                                 </div>
                                             </div>
                                         </div>

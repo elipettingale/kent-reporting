@@ -45,6 +45,7 @@ class ClubController extends Controller
             $clubs[] = (object) [
                 'name' => $club,
                 'user_id' => $user?->id ?? null,
+                'user_name' => $user?->name ?? null,
                 'status' => $user ? 'registered' : 'not_registered',
                 'email' => $user->email ?? null,
                 'notes' => $user->notes ?? null,
