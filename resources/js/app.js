@@ -141,4 +141,38 @@ if (document.querySelector("#clubs-table")) {
                 }
             });
     });
+
+    let reminderForm = document.querySelector("#reminder-form");
+    let reminderSend = document.querySelector("#send-reminder");
+    let reminderMessage = document.querySelector("#send-message");
+
+    reminderSend.addEventListener("click", () => {
+        let data = {
+            message_before: reminderForm.querySelector("#message_before").value,
+            message_after: reminderForm.querySelector("#message_after").value,
+        };
+
+        reminderForm.querySelector("fieldset").disabled = true;
+        reminderSend.disabled = true;
+        reminderSend.innerHTML = "Sending...";
+
+        axios
+            .post("api/send-reminders", data)
+            .then(({ data }) => {
+                if (data.success) {
+                    reminderMessage.innerHTML =
+                        "All reminders sent successfully.";
+                    reminderSend.style.display = "none";
+                } else {
+                    reminderMessage.innerHTML =
+                        "An error occured, please contact support.";
+                    reminderSend.style.display = "none";
+                }
+            })
+            .catch(() => {
+                reminderMessage.innerHTML =
+                    "An error occured, please contact support.";
+                reminderSend.style.display = "none";
+            });
+    });
 }

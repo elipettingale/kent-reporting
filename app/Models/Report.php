@@ -37,6 +37,11 @@ class Report extends Model implements HasMedia
         return Status::PENDING;
     }
 
+    public function isComplete()
+    {
+        return $this->status() === Status::COMPLETE;
+    }
+
     public function season()
     {
         return substr($this->financial_year - 1, 2, 2) . '/' . substr($this->financial_year, 2, 2);

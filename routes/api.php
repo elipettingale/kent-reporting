@@ -3,6 +3,7 @@
 use App\Enums\LogEvent;
 use App\Models\ReportReminder;
 use App\Models\User;
+use App\Services\ReminderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use ZxcvbnPhp\Zxcvbn;
@@ -70,5 +71,28 @@ Route::post('send-reminder', function (Request $request) {
     return [
         'success' => true,
         'sent_at' => now()->format('d/m/Y')
+    ];
+});
+
+Route::post('send-reminders', function (Request $request) {
+    $reminderService = new ReminderService(
+        $request->input('message_before'),
+        $request->input('message_after')
+    );
+
+    foreach (config('clubs') as $club) {
+        $user = User::query()
+            ->where('club', $club)
+            ->first();
+
+        if (!$user) {
+            continue;
+        }
+
+        $reminderService->remind($user);
+    }
+
+    return [
+        'success' => true
     ];
 });

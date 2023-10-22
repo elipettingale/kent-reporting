@@ -10,11 +10,15 @@ use Illuminate\Notifications\Notification;
 
 class ReportReminderNotification extends Notification
 {
-    private $reportReminder;
+    private $messageBefore;
+    private $messageAfter;
+    private $breakdown;
 
-    public function __construct(ReportReminder $reportReminder)
+    public function __construct($messageBefore, $messageAfter, $breakdown)
     {
-        $this->reportReminder = $reportReminder;
+        $this->messageBefore = $messageBefore;
+        $this->messageAfter = $messageAfter;
+        $this->breakdown = $breakdown;
     }
 
     public function via($notifiable)
@@ -24,11 +28,11 @@ class ReportReminderNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $season = substr((int) $this->reportReminder->financial_year - 1, 2) . '/' . substr($this->reportReminder->financial_year, 2);
-
-        return (new MailMessage)
-            ->line("This is a reminder that you have yet to submit your accounts for the {$season} season.")
-            ->action('Log In', route('login'))
-            ->line('Please do so at your earliest convinience.');
+        return (new MailMessage)->markdown('emails.report-reminder', [
+            'user' => $notifiable,
+            'messageBefore' => $this->messageBefore,
+            'messageAfter' => $this->messageAfter,
+            'breakdown' => $this->breakdown
+        ]);
     }
 }

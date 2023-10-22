@@ -26480,6 +26480,32 @@ if (document.querySelector("#clubs-table")) {
       }
     });
   });
+  var reminderForm = document.querySelector("#reminder-form");
+  var reminderSend = document.querySelector("#send-reminder");
+  var reminderMessage = document.querySelector("#send-message");
+  reminderSend.addEventListener("click", function () {
+    var data = {
+      message_before: reminderForm.querySelector("#message_before").value,
+      message_after: reminderForm.querySelector("#message_after").value
+    };
+    reminderForm.querySelector("fieldset").disabled = true;
+    reminderSend.disabled = true;
+    reminderSend.innerHTML = "Sending...";
+    axios.post("api/send-reminders", data).then(function (_ref4) {
+      var data = _ref4.data;
+
+      if (data.success) {
+        reminderMessage.innerHTML = "All reminders sent successfully.";
+        reminderSend.style.display = "none";
+      } else {
+        reminderMessage.innerHTML = "An error occured, please contact support.";
+        reminderSend.style.display = "none";
+      }
+    })["catch"](function () {
+      reminderMessage.innerHTML = "An error occured, please contact support.";
+      reminderSend.style.display = "none";
+    });
+  });
 }
 
 /***/ }),

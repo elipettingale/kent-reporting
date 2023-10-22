@@ -19,6 +19,67 @@
                         </x-select>
                     </div>
                 </div>
+                <div x-data="{ open: false, message_before: '', message_after: '' }">
+                    <x-button @click="open = true" class="is-gray">
+                        Send Reminders
+                    </x-button>
+
+                    <div x-show="open" class="k-modal__wrapper" style="display: none;">
+                        <div id="reminder-form" class="k-modal text-left" style="width: 900px"
+                            @click.outside="open = false">
+                            <div class="mb-6">
+                                <p class="text-xl mb-2">Send Reminder</p>
+
+                                <small class="mb-4 block">To all clubs who have incomplete reports.</small>
+
+                                <fieldset>
+                                    <div>
+                                        <x-label for="message_before" :value="__('Message')" />
+                                        <x-textarea x-model="message_before" class="block mt-1 w-full" rows="6"
+                                            id="message_before"></x-textarea>
+                                    </div>
+
+                                    <div class="my-2">[Breakdown]</div>
+
+                                    <div>
+                                        <x-label for="message_after" :value="__('Message')" />
+                                        <x-textarea x-model="message_after" class="block mt-1 w-full" rows="4"
+                                            id="message_after"></x-textarea>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <hr>
+
+                            <div class="mt-6">
+                                <p class="text-xl mb-2">Preview</p>
+                                <div class="bg-gray-50 p-2 rounded mb-2">
+                                    <p class="mb-2">To Dave Test (Test RFC),</p>
+                                    <div x-html="message_before.replaceAll('\n', '<br>')"></div>
+                                    <div class="mb-2 mt-4">
+                                        <div class="flex">
+                                            <strong class="mr-2">21/22 Season:</strong> Started, Not Submitted
+                                        </div>
+                                        <div class="flex">
+                                            <strong class="mr-2">22/23 Season:</strong> Not Started
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <p>
+                                            Please click <a href="#" class="text-blue-400 font-bold">here</a> to
+                                            login.
+                                        </p>
+                                    </div>
+                                    <div x-html="message_after.replaceAll('\n', '<br>')"></div>
+                                </div>
+                                <div class="flex justify-end items-center h-8">
+                                    <p id="send-message"></p>
+                                    <x-button id="send-reminder" class="is-green">Send</x-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -698,9 +698,9 @@ select {
   margin-left: auto;
   margin-right: auto;
 }
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .my-6 {
   margin-top: 1.5rem;
@@ -825,6 +825,9 @@ select {
 }
 .h-16 {
   height: 4rem;
+}
+.h-12 {
+  height: 3rem;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -1024,6 +1027,9 @@ select {
 }
 .bg-gray-700 {
   background-color: var(--gray-700);
+}
+.bg-gray-50 {
+  background-color: var(--gray-50);
 }
 .fill-gray-100 {
   fill: var(--gray-100);
@@ -1732,7 +1738,7 @@ html {
     height: 100vh;
     width: 100vw;
     z-index: 99;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1743,6 +1749,8 @@ html {
     border-radius: 10px;
     padding: 1rem;
     width: 600px;
+    overflow: scroll;
+    max-height: 90vh;
 }
 
 .k-button {
@@ -1794,6 +1802,10 @@ html {
 
 .k-button.is-gray:active {
   background-color: var(--gray-600);
+}
+
+fieldset:disabled {
+  opacity: 0.5;
 }
 
 .hover\:bg-gray-100:hover {
