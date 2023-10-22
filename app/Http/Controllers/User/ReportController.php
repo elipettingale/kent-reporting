@@ -69,14 +69,30 @@ class ReportController extends Controller
                 'error' => "You have already created a report for the {$season} season."
             ]);
         }
+
+        $preFill = (bool) $request->input('pre_fill');
+
+        if ($preFill) {
+            $previousReport = Report::query()
+                ->where('user_id', Auth::user()->id)
+                ->where('financial_year', $financialYear - 1)
+                ->whereNotNull('submitted_at')
+                ->exists();
+
+            if (!$previousReport) {
+                $season = substr($financialYear - 2, 2) . '/' . substr($financialYear - 1, 2);
+
+                return redirect()->back()->withErrors([
+                    'error' => "Cannot copy data from previous report because you have not submitted a report for the {$season} season."
+                ]);
+            }
+        }
     
         $report = Report::create([
             'user_id' => Auth::user()->id,
             'financial_year' => $financialYear,
             'form_version' => config('form.version')
         ]);
-
-        $preFill = (bool) $request->input('pre_fill');
 
         if ($preFill) {
             $previousReport = Report::query()
