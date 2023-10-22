@@ -20,11 +20,11 @@
 
                         <p>Create a new report for the Season:</p>
 
-                        <div x-data="{ year: {{ now()->format('y') }} }" class="mb-4">
-                            <input id="financial_year" type="hidden" name="financial_year" x-model="year + 2000" />
+                        <div x-data="{ year: {{ now()->format('Y') }} }" class="mb-4">
+                            <input id="financial_year" type="hidden" name="financial_year" x-model="year" />
 
                             <p class="text-lg">
-                                <span x-text="year - 1"></span>/<span x-text="year"></span>
+                                <span x-text="year - 2001"></span>/<span x-text="year - 2000"></span>
                             </p>
                             <x-button type="button" @click="year--">-</x-button>
                             <x-button type="button" @click="year++">+</x-button>

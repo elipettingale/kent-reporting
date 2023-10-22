@@ -57,6 +57,15 @@ class ReportController extends Controller
     {   
         $financialYear = (int) $request->input('financial_year', now()->format('Y'));
 
+        $alreadyExists = Report::query()
+            ->where('user_id', Auth::user()->id)
+            ->where('financial_year', $financialYear)
+            ->exists();
+
+        if ($alreadyExists) {
+            throw new \Exception("Report already exists.");
+        }
+    
         $report = Report::create([
             'user_id' => Auth::user()->id,
             'financial_year' => $financialYear,
