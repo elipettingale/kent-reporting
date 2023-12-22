@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Report;
 use App\Models\User;
 use App\Notifications\ReportReminderNotification;
 use App\Repositories\ReportRepository;
@@ -17,31 +18,23 @@ class ReminderService
         $this->messageAfter = $messageAfter;
     }
 
-    public function remind(User $user)
+    public function remind(User $user, $financialYear)
     {
-        $reports = [
-            '21/22' => ReportRepository::getByUserAndYear($user, 2022),
-            '22/23' => ReportRepository::getByUserAndYear($user, 2023)
-        ];
+        $status = financialYearToSeason($financialYear) . ' Season: ';
 
-        $breakdown = [];
+        $reportExists = Report::query()
+            ->where('user_id', $user->id)
+            ->where('financial_year', $financialYear)
+            ->exists();
 
-        foreach ($reports as $year => $report) {
-            if (!$report) {
-                $breakdown[$year] = 'Not Started';
-            }
-
-            if ($report && !$report->isComplete()) {
-                $breakdown[$year] = 'Started, Not Complete';
-            }
-        }
-
-        if (count($breakdown) === 0) {
-            return false;
+        if ($reportExists) {
+            $status .= 'Started, Not Complete';
+        } else {
+            $status .= 'Not Started';
         }
 
         $user->notify(
-            new ReportReminderNotification($this->messageBefore, $this->messageAfter, $breakdown)
+            new ReportReminderNotification($this->messageBefore, $this->messageAfter, $status)
         );
 
         return true;

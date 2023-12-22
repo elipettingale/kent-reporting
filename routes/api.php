@@ -106,8 +106,8 @@ Route::post('send-reminders', function (Request $request) {
             continue;
         }
 
+        $reminderService->remind($user, $forSeason);
         $reminders[] = $club;
-        // $reminderService->remind($user);
     }
 
     return [

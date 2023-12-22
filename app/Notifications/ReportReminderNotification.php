@@ -12,13 +12,13 @@ class ReportReminderNotification extends Notification
 {
     private $messageBefore;
     private $messageAfter;
-    private $breakdown;
+    private $status;
 
-    public function __construct($messageBefore, $messageAfter, $breakdown)
+    public function __construct($messageBefore, $messageAfter, $status)
     {
         $this->messageBefore = $messageBefore;
         $this->messageAfter = $messageAfter;
-        $this->breakdown = $breakdown;
+        $this->status = $status;
     }
 
     public function via($notifiable)
@@ -32,7 +32,7 @@ class ReportReminderNotification extends Notification
             'user' => $notifiable,
             'messageBefore' => $this->messageBefore,
             'messageAfter' => $this->messageAfter,
-            'breakdown' => $this->breakdown
+            'status' => $this->status
         ]);
     }
 }
