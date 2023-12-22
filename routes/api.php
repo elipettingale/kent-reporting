@@ -2,6 +2,7 @@
 
 use App\Enums\LogEvent;
 use App\Mail\TestEmail;
+use App\Models\Report;
 use App\Models\ReportReminder;
 use App\Models\User;
 use App\Services\ReminderService;
@@ -82,6 +83,10 @@ Route::post('send-reminders', function (Request $request) {
         $request->input('message_after')
     );
 
+    $forSeason = $request->input('for_season');
+
+    $reminders = [];
+
     foreach (config('clubs') as $club) {
         $user = User::query()
             ->where('club', $club)
@@ -91,10 +96,22 @@ Route::post('send-reminders', function (Request $request) {
             continue;
         }
 
-        $reminderService->remind($user);
+        $completed = Report::query()
+            ->where('user_id', $user->id)
+            ->where('financial_year', $forSeason)
+            ->whereNotNull('submitted_at')
+            ->exists();
+
+        if ($completed) {
+            continue;
+        }
+
+        $reminders[] = $club;
+        // $reminderService->remind($user);
     }
 
     return [
-        'success' => true
+        'success' => true,
+        'reminders_sent' => count($reminders)
     ];
 });

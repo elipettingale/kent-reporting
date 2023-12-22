@@ -146,8 +146,21 @@ if (document.querySelector("#clubs-table")) {
     let reminderSend = document.querySelector("#send-reminder");
     let reminderMessage = document.querySelector("#send-message");
 
+    document
+        .querySelector("#season-filter")
+        .addEventListener("change", function () {
+            let option = this.querySelector(
+                `option[value="${this.value}"]`
+            ).innerHTML;
+
+            document.querySelectorAll("#reminder_season").forEach((span) => {
+                span.innerHTML = option;
+            });
+        });
+
     reminderSend.addEventListener("click", () => {
         let data = {
+            for_season: document.querySelector("#season-filter").value,
             message_before: reminderForm.querySelector("#message_before").value,
             message_after: reminderForm.querySelector("#message_after").value,
         };
@@ -159,9 +172,10 @@ if (document.querySelector("#clubs-table")) {
         axios
             .post("api/send-reminders", data)
             .then(({ data }) => {
+                console.log(data);
+
                 if (data.success) {
-                    reminderMessage.innerHTML =
-                        "All reminders sent successfully.";
+                    reminderMessage.innerHTML = `${data.reminders_sent} reminders sent successfully.`;
                     reminderSend.style.display = "none";
                 } else {
                     reminderMessage.innerHTML =
@@ -176,3 +190,14 @@ if (document.querySelector("#clubs-table")) {
             });
     });
 }
+
+window.resetReminderForm = function () {
+    let form = document.querySelector("#reminder-form");
+    form.querySelector("fieldset").disabled = false;
+    form.querySelector("#send-message").innerHTML = "";
+
+    let button = form.querySelector("#send-reminder");
+    button.innerHTML = "Send";
+    button.disabled = false;
+    button.style.display = "block";
+};

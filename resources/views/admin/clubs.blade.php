@@ -26,11 +26,14 @@
 
                     <div x-show="open" class="k-modal__wrapper" style="display: none;">
                         <div id="reminder-form" class="k-modal text-left" style="width: 900px"
-                            @click.outside="open = false">
+                            @click.outside="open = false; message_before = ''; message_after = ''; resetReminderForm();">
                             <div class="mb-6">
                                 <p class="text-xl mb-2">Send Reminder</p>
 
-                                <small class="mb-4 block">To all clubs who have incomplete reports.</small>
+                                <small class="mb-4 block">
+                                    To all clubs who have not completed Season <strong
+                                        id="reminder_season">21/22</strong>.
+                                </small>
 
                                 <fieldset>
                                     <div>
@@ -58,10 +61,8 @@
                                     <div x-html="message_before.replaceAll('\n', '<br>')"></div>
                                     <div class="mb-2 mt-4">
                                         <div class="flex">
-                                            <strong class="mr-2">21/22 Season:</strong> Started, Not Submitted
-                                        </div>
-                                        <div class="flex">
-                                            <strong class="mr-2">22/23 Season:</strong> Not Started
+                                            <strong class="mr-2"><span id="reminder_season">21/22</span>
+                                                Season:</strong> Started, Not Submitted
                                         </div>
                                     </div>
                                     <div class="mb-4">
@@ -110,11 +111,8 @@
                             </x-td>
                             <x-td>
                                 @if ($club->email)
-                                    {{ $club->user_name}} <br>
+                                    {{ $club->user_name }} <br>
                                     {{ $club->email }}
-                                  
-                            
-                           
                                 @else
                                     <x-status status="{{ $club->status }}" />
                                 @endif
@@ -156,7 +154,8 @@
                                                         <div class="mb-3">
                                                             <x-label for="name" :value="__('Name')" />
                                                             <x-input id="name" name="name" type="text"
-                                                                class="w-full" value="{{ $club->user_name }}" required />
+                                                                class="w-full" value="{{ $club->user_name }}"
+                                                                required />
                                                         </div>
 
                                                         <div class="mb-3">
