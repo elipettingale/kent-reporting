@@ -96,6 +96,8 @@
                         <x-select id="season-filter" class="text-gray-900 ml-1">
                             <option value="2022" selected>21/22</option>
                             <option value="2023">22/23</option>
+                            <option value="2024">23/24</option>
+                            <option value="2025">24/25</option>
                         </x-select>
                     </x-th>
                     <x-th>Notes</x-th>

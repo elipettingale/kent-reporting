@@ -36,10 +36,12 @@ class ClubController extends Controller
             $reports = [];
 
             if ($user) {
-                // between start year and this year?
+                $startYear = 2022;
+                $currentYear = (int) now()->format('Y');
 
-                $reports[2022] = ReportRepository::getByUserAndYear($user, 2022);
-                $reports[2023] = ReportRepository::getByUserAndYear($user, 2023);
+                for ($year = $startYear; $year <= $currentYear; $year++) {
+                    $reports[$year] = ReportRepository::getByUserAndYear($user, $year);
+                }
             }
 
             $clubs[] = (object) [

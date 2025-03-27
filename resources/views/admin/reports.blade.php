@@ -30,6 +30,8 @@
                                 <option value="" selected>All</option>
                                 <option value="2022" @selected(request('financial_year') === '2022')>21/22</option>
                                 <option value="2023" @selected(request('financial_year') === '2023')>22/23</option>
+                                <option value="2024" @selected(request('financial_year') === '2024')>23/24</option>
+                                <option value="2025" @selected(request('financial_year') === '2025')>24/25</option>
                             </x-select>
                         </div>
 
