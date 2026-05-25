@@ -172,6 +172,19 @@
                                                                 class="w-full">{{ $club->notes }}</x-textarea>
                                                         </div>
 
+                                                        <div class="mb-3">
+                                                            <label for="is_archived_{{ $club->user_id }}"
+                                                                class="inline-flex items-center">
+                                                                <input id="is_archived_{{ $club->user_id }}"
+                                                                    type="checkbox"
+                                                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                                                    name="is_archived" value="1"
+                                                                    @checked($club->is_archived) />
+                                                                <span
+                                                                    class="ml-2 text-sm text-gray-600">{{ __('Archive') }}</span>
+                                                            </label>
+                                                        </div>
+
                                                         <x-button class="is-green">
                                                             Save
                                                         </x-button>

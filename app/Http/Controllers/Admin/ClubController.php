@@ -51,6 +51,7 @@ class ClubController extends Controller
                 'status' => $user ? 'registered' : 'not_registered',
                 'email' => $user->email ?? null,
                 'notes' => $user->notes ?? null,
+                'is_archived' => $user?->is_archived ?? false,
                 'reports' => (object) $reports
             ];
         }
@@ -62,7 +63,8 @@ class ClubController extends Controller
 
     public function update(User $user, Request $request)
     {
-        $user->fill($request->all());
+        $user->fill($request->only(['name', 'email', 'notes']));
+        $user->is_archived = $request->boolean('is_archived');
         $user->save();
 
         return back();

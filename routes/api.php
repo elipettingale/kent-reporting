@@ -96,6 +96,10 @@ Route::post('send-reminders', function (Request $request) {
             continue;
         }
 
+        if ($user->is_archived) {
+            continue;
+        }
+
         $completed = Report::query()
             ->where('user_id', $user->id)
             ->where('financial_year', $forSeason)
